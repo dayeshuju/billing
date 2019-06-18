@@ -8,9 +8,11 @@ spring:
     password: daye2019
     url: jdbc:mysql://www.tdd-nas.cn:3306/daye_billing?characterEncoding=utf-8&useSSL=false
 
-mybatis:
+mybatis-plus:
   mapper-locations: classpath:mapping/*Mapper.xml
-  type-aliases-package: com.daye.entity
+  type-aliases-package: com.daye.sys.entity
+  configuration:
+    cache-enabled: true
 
 logging:
   level:

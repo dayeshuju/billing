@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.daye.mapper")
+@MapperScan("com.daye.sys.mapper")
 public class BillingApplication {
 
     public static void main(String[] args) {
