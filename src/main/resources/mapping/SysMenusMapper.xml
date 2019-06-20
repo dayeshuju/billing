@@ -4,5 +4,8 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-
+    
+    <select id="getGnfls" resultType="SysMenus">
+        select * from sysMenus m where m.parentId=0
+    </select>
 </mapper>

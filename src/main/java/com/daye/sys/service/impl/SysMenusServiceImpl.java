@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.sys.entity.SysMenus;
 import com.daye.sys.mapper.SysMenusMapper;
 import com.daye.sys.service.SysMenusService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysMenusServiceImpl extends ServiceImpl<SysMenusMapper, SysMenus> implements SysMenusService {
 
+    @Autowired
+    SysMenusMapper sysMenusMapper;
+
+    @Override
+    public List<SysMenus> getGnfls() {
+        return sysMenusMapper.getGnfls();
+    }
 }
