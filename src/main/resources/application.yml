@@ -7,10 +7,18 @@ spring:
     username: daye
     password: daye2019
     url: jdbc:mysql://www.tdd-nas.cn:3306/daye_billing?characterEncoding=utf-8&useSSL=false
+    dbcp2:                                          # 进行数据库连接池的配置
+      min-idle: 5                                   # 数据库连接池的最小维持连接数
+      initial-size: 5                               # 初始化提供的连接数
+      max-total: 5                                  # 最大的连接数
+      max-wait-millis: 200                          # 等待连接获取的最大超时时间
+  mvc:
+    view:
+      suffix: .html
 
 mybatis-plus:
-  mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.daye.sys.entity
+  mapper-locations: classpath:mapping/*Mapper.xml
   configuration:
     cache-enabled: true
 
