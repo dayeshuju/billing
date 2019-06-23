@@ -75,9 +75,9 @@ public class ShiroUserRealm extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		//1.获取客户端提交的用户信息.获取用户名
-		String username=(String)token.getPrincipal();
+		String nickname=(String)token.getPrincipal();
 		//2.基于用户名从数据库查询用户信息
-		SysUser user=sysUserMapper.findUserByUserName(username);
+		SysUser user=sysUserMapper.findUserByNickname(nickname);
 		//3.校验用户信息(用户是否存在,是否被禁用)
 		if(user==null)
 			throw new AuthenticationException("用户名不正确");

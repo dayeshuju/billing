@@ -1,0 +1,22 @@
+body.login{
+	background-image: url(../../page/images/bg1.jpg);
+	background-repeat:no-repeat;
+    background-size: cover;
+    padding-top: 0px;
+}
+#title{
+	color: black;
+	font-family: "Microsoft YaHei", "微软雅黑";
+}
+.checkbox{
+	color: white;
+}
+.div1{
+	margin-top: 270px;
+	margin-left:auto;
+	margin-right:auto;
+	width: 25% !important;
+	background-color: rgba(203,200,194,0.60) !important;
+}
+.form-wrapper{
+}

@@ -1,0 +1,169 @@
+.kv-table {
+    border-right: 1px solid #dadada \9;
+    *border-right: 1px solid #dadada
+}
+
+.kv-table .kv-table-row {
+    border-bottom: 1px solid #dadada
+}
+
+.kv-table .kv-table-row .kv-item {
+    padding-left: 134px
+}
+
+.kv-table .kv-table-row .kv-item .kv-label {
+    float: left;
+    padding: 0 10px;
+    margin-left: -134px;
+    width: 112px;
+    background: #f5f5f5;
+    border: 1px solid #dadada;
+    border-bottom: none;
+    border-top: none
+}
+
+.kv-table .kv-table-row .kv-item .kv-content-wrap {
+    float: left;
+    width: 100%
+}
+
+.kv-table .kv-table-row .kv-item .kv-content {
+    padding: 10px
+}
+
+.kv-table .kv-table-row.col-3 .kv-item-wrap {
+    float: left;
+    width: 33.33%
+}
+
+.kv-table .kv-table-row.col-2 .kv-item-wrap {
+    float: left;
+    width: 33.33%
+}
+
+table.kv-table {
+    width: 100%
+}
+
+table.kv-table .kv-label {
+    padding: 0 10px;
+    width: 114px;
+    background: #f5f5f5;
+    border: 1px solid #dadada;
+    border-top: none
+}
+
+table.kv-table td.kv-content,
+table.kv-table td.kv-label {
+    height: 34px;
+    padding: 5px 0;
+    border-bottom: 1px solid #dadada;
+    font-size: 14px;
+    padding-left: 20px
+}
+
+table.kv-table tr:first-child td.kv-content,
+table.kv-table tr:first-child td.kv-label {
+    border-top: 3px solid #4daaee
+}
+
+table.kv-table tr:first-child td.kv-content:first-child,
+table.kv-table tr:first-child td.kv-label:first-child {
+    border-top-color: #ffaa05
+}
+
+table.kv-table tr td.kv-content:last-child {
+    border-right: 1px solid #dadada
+}
+
+table.kv-table tr .button {
+    text-align: center;
+    border-radius: 0;
+    text-indent: 0;
+    height: 32px
+}
+
+table.kv-table .kv-content {
+    width: 260px;
+    padding: 5px 10px
+}
+
+table.kv-table .textarea-wrap textarea {
+    width: 98%
+}
+
+.kv-group-outer {
+    margin-bottom: 15px
+}
+
+.kv-group {
+    border-bottom: 1px solid #dadada;
+    padding-bottom: 7px
+}
+
+.kv-group .kv-item {
+    float: left;
+    height: 38px;
+    width: auto;
+    margin-right: 20px;
+    margin-bottom: 8px
+}
+
+.kv-group .kv-item.right {
+    float: right
+}
+
+.kv-group .kv-item .item-lt {
+    float: left;
+    color: #000;
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    font-weight: bold;
+    width: auto
+}
+
+.kv-group .kv-item .item-rt {
+    float: left;
+    width: auto;
+    line-height: 38px
+}
+
+.kv-group .kv-item .item-rt .button {
+    float: left;
+    border-radius: 0;
+    text-align: center;
+    padding: 0 20px;
+    margin-right: 10px
+}
+
+.kv-group .kv-item .item-rt .button:hover {
+    color: #fff
+}
+
+.kv-group .kv-item .item-rt input[type=text] {
+    float: left;
+    margin-right: 10px
+}
+
+.kv-group .kv-item .item-rt .date {
+    float: left;
+    position: relative
+}
+
+.kv-group .kv-item .item-rt .date input[type=text] {
+    width: 190px;
+    padding-right: 30px
+}
+
+.kv-group .kv-item .item-rt .date i {
+    position: absolute;
+    right: 16px;
+    top: -3px;
+    font-size: 22px;
+    cursor: pointer
+}
+
+.kv-group .kv-item .item-rt .date i:hover {
+    color: #0c9d72
+}

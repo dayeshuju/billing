@@ -3,6 +3,7 @@ package com.daye.sys.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.SysMenu;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     List<String> findPermissions(@Param("menuIds") Integer... menuIds);
+
+    @Select({"SELECT * FROM sysMenus"})
+    List<SysMenu> findObject();
 }

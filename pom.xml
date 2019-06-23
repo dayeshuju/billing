@@ -17,6 +17,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- set thymeleaf version -->
+        <!--<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>-->
         <java.version>1.8</java.version>
     </properties>
 
@@ -26,12 +29,18 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- 热部署支持 -->
+        <!--引入thymeleaf-->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- 热部署支持 -->
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -105,11 +114,11 @@
             <version>1.4.1</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
             <version>1.4.1</version>
-        </dependency>-->
+        </dependency>
 
     </dependencies>
 

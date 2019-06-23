@@ -5,7 +5,7 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <select id="findPermissions" resultType="string">
-        select permission from sys_menus where id in
+        select permission from sysMenus where id in
         <foreach collection="menuIds" open="(" close=")" separator="," item="menuId" >
             #{menuId}
         </foreach>

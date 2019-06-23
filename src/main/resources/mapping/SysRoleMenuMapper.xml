@@ -5,9 +5,9 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <select id="findMenuIdsByRoleId" resultType="int">
-        select distinct menu_id
-        from sys_role_menus
-        where role_id in
+        select distinct menuId
+        from sysRoleMenus
+        where roleId in
         <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">#{roleId}</foreach>
     </select>
 

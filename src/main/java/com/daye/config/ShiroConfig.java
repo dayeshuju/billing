@@ -1,11 +1,14 @@
 package com.daye.config;
 
 import com.daye.sys.service.realm.ShiroUserRealm;
+import net.sf.ehcache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +20,8 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+
+    private int tomcatTimeout = 3600;
 
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
@@ -31,9 +36,11 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SecurityManager securityManager(){
+    public SecurityManager securityManager(EhCacheManager ehCacheManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(shiroUserRealm());
+        securityManager.setCacheManager(ehCacheManager);
+        securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
 
@@ -46,10 +53,25 @@ public class ShiroConfig {
         map.put("/logout", "logout");// 登出
         map.put("/**","authc");
         map.put("/assets/**","anon");
+        map.put("/doLogin","anon");
 
-        shiroFilterFactoryBean.setLoginUrl("/sign_in.html");
+        shiroFilterFactoryBean.setLoginUrl("/doLoginUI");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
+    }
+
+    @Bean
+    public EhCacheManager ehCacheManager(CacheManager cacheManager){
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManager(cacheManager);
+        return ehCacheManager;
+    }
+
+    @Bean
+    public DefaultWebSessionManager sessionManager(){
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(tomcatTimeout*1000);
+        return sessionManager;
     }
 
     @Bean

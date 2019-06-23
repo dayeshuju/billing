@@ -13,5 +13,5 @@ import com.daye.sys.entity.SysUser;
  */
 public interface SysUserService extends IService<SysUser> {
 
-    SysUser getUser(String id);
+    boolean updateObject(String oldpwd, String newpwd);
 }

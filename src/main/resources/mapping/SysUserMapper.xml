@@ -4,11 +4,11 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-    <select id="findUserByUserName" resultType="com.daye.sys.entity.SysUser">
+    <select id="findUserByNickname" resultType="com.daye.sys.entity.SysUser">
         select *
 		from
-		sys_users
-		where username=#{username}
+		sysUsers
+		where nickname=#{username}
     </select>
 
 </mapper>
