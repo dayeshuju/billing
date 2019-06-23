@@ -11,7 +11,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface RequiredLog {
-	 String operation() default "";
+
+	int value() default 1;
+
+	 String operation() default "unkown";
 	 //.....
 }
 

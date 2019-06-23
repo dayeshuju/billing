@@ -7,6 +7,7 @@ import com.daye.sys.entity.SysLog;
 import com.daye.sys.entity.SysUser;
 import com.daye.sys.mapper.SysLogMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -80,19 +81,21 @@ public class SysLogAspect {
 			RequiredLog rLog=
 			targetMethod.getDeclaredAnnotation(RequiredLog.class);
 			//1.3.3获取注解中定义的操作名
-			String operation=rLog!=null?rLog.operation():"unkown";
+			String operation=rLog.operation();
 			//1.4 获取方法名(目标类的名字+方法名)
-			String method=targetCls.getSimpleName()+"."+targetMethod.getName();
+			String method = targetCls.getSimpleName() + "." + targetMethod.getName();
 			//1.5 获取用户传递的实际参数(将参数转换为字符串)
-			/*String params=new ObjectMapper()//jackson
-			.writeValueAsString(jp.getArgs());*/
+			String params = null;
+			if(rLog.value() == 1) {
+				params=new ObjectMapper().writeValueAsString(jp.getArgs());
+			}
 			//2.封装用户行为数据
 			SysLog log=new SysLog();
 			log.setIp(ip);
 			log.setUserId(userId);
 			log.setOperation(operation);
 			log.setMethod(method);
-			/*log.setParams(params);*/
+			log.setParams(params);
 			log.setTime(time);
 			//3.将用户行为数据写入到数据库
 			sysLogMapper.insert(log);

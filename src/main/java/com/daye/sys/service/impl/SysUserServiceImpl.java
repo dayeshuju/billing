@@ -1,6 +1,7 @@
 package com.daye.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.daye.common.annotation.RequiredLog;
 import com.daye.common.exception.ServiceException;
 import com.daye.common.util.ShiroUtils;
 import com.daye.sys.entity.SysUser;
@@ -28,6 +29,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     SysUserMapper sysUserMapper;
 
     @Override
+    @RequiredLog(value = 0, operation = "修改个人密码")
     public boolean updateObject(String oldpwd, String newpwd) {
         if(StringUtils.isEmpty(oldpwd) || StringUtils.isEmpty(newpwd)){
             throw new ServiceException("数据不合法！！！");
