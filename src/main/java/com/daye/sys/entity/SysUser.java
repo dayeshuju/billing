@@ -37,6 +37,10 @@ public class SysUser implements Serializable {
      */
     private String salt;
     /**
+     * 角色
+     */
+    private Integer roleId;
+    /**
      * 邮箱
      */
     private String email;
@@ -100,6 +104,10 @@ public class SysUser implements Serializable {
         this.salt = salt;
     }
 
+    public Integer getRoleId() { return roleId;}
+
+    public void setRoleId(Integer roleId) { this.roleId = roleId;}
+
     public String getEmail() {
         return email;
     }
@@ -148,6 +156,7 @@ public class SysUser implements Serializable {
         ", password=" + password +
         ", name=" + name +
         ", salt=" + salt +
+        ", role="+ roleId +
         ", email=" + email +
         ", mobile=" + mobile +
         ", valid=" + valid +

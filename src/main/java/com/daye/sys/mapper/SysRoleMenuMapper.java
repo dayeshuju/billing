@@ -2,7 +2,6 @@ package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.SysRoleMenu;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +15,5 @@ import java.util.List;
  */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
-    List<Integer> findMenuIdsByRoleId(@Param("roleIds") Integer... roleIds);
+    List<Integer> findMenuIdsByRoleId(Integer roleId);
 }

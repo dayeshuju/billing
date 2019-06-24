@@ -4,7 +4,6 @@ import com.daye.sys.entity.SysUser;
 import com.daye.sys.mapper.SysMenuMapper;
 import com.daye.sys.mapper.SysRoleMenuMapper;
 import com.daye.sys.mapper.SysUserMapper;
-import com.daye.sys.mapper.SysUserRoleMapper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,8 +27,6 @@ public class ShiroUserRealm extends AuthorizingRealm{
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
-	private SysUserRoleMapper sysUserRoleMapper;
-	@Autowired
 	private SysRoleMenuMapper sysRoleMenuMapper;
 	@Autowired
 	private SysMenuMapper sysMenuMapper;
@@ -50,12 +47,12 @@ public class ShiroUserRealm extends AuthorizingRealm{
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		//1.基于用户id查找角色id
 		SysUser user=(SysUser)principals.getPrimaryPrincipal();
-		List<Integer> roleIds=
-		sysUserRoleMapper.findRoleIdsByUserId(user.getId());
+		Integer roleId=
+		sysUserMapper.findRoleIdById(user.getId());
 		//2.基于角色id查找菜单id
-		Integer[] array={};
-		List<Integer>  menuIds = sysRoleMenuMapper.findMenuIdsByRoleId(roleIds.toArray(array));
+		List<Integer>  menuIds = sysRoleMenuMapper.findMenuIdsByRoleId(roleId);
 		//3.基于菜单id查找权限标识
+		Integer[] array={};
 		List<String> permissions=
 		sysMenuMapper.findPermissions(menuIds.toArray(array));
 		//4.对权限标识进行去重和空的操作

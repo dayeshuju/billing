@@ -15,8 +15,6 @@ body.login{
 	margin-top: 270px;
 	margin-left:auto;
 	margin-right:auto;
-	width: 25% !important;
+	width: 440px !important;
 	background-color: rgba(203,200,194,0.60) !important;
-}
-.form-wrapper{
 }

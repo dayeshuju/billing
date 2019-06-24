@@ -10,5 +10,8 @@
 		sysUsers
 		where nickname=#{username}
     </select>
+    <select id="findRoleIdById" resultType="java.lang.Integer">
+        select roleId from sysUsers where id=#{id}
+    </select>
 
 </mapper>

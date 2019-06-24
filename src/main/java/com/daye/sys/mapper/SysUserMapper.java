@@ -14,4 +14,6 @@ import com.daye.sys.entity.SysUser;
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     SysUser findUserByNickname(String nickname);
+
+    Integer findRoleIdById(Integer id);
 }

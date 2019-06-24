@@ -7,8 +7,7 @@
     <select id="findMenuIdsByRoleId" resultType="int">
         select distinct menuId
         from sysRoleMenus
-        where roleId in
-        <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">#{roleId}</foreach>
+        where roleId=#{roleId}
     </select>
 
 </mapper>
