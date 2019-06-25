@@ -7,7 +7,7 @@
         setMaxLength();
         setValidateForm();
         setSortable($(".sortable"));
-        setSelect2();
+        //setSelect2();
         $(".datetimepicker").datetimepicker();
         $(".datepicker").datetimepicker({
             pickTime: false
@@ -83,14 +83,14 @@
                     return input.removeClass("placeholder");
                 }
             }).blur(function() {
-                    var input;
+                var input;
 
-                    input = $(this);
-                    if (input.val() === "" || input.val() === input.attr("placeholder")) {
-                        input.addClass("placeholder");
-                        return input.val(input.attr("placeholder"));
-                    }
-                }).blur();
+                input = $(this);
+                if (input.val() === "" || input.val() === input.attr("placeholder")) {
+                    input.addClass("placeholder");
+                    return input.val(input.attr("placeholder"));
+                }
+            }).blur();
             $("[placeholder]").parents("form").submit(function() {
                 return $(this).find("[placeholder]").each(function() {
                     var input;
@@ -143,11 +143,179 @@
         return selector.dataTable({
             sDom: "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
             sPaginationType: "bootstrap",
-            oLanguage: {
-                sLengthMenu: "_MENU_ records per page"
-            }
+            bRetrieve:true,
+            bDestroy: true
+
         });
     };
+
+    
+    this.setDataTable_ajax = function(selector, new_filter_url,aoColumns,  aoColumnDefs,trueorfalse) {
+        
+        if(trueorfalse==undefined){
+            trueorfalse=true;
+        };
+        var count_count = 10;
+        if (new_filter_url.substr(0,16)=="zheshiyigeshibie") {
+            count_count = 1000;
+        }
+        return selector.dataTable({
+            sDom: "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
+            iDisplayLength: count_count, 
+            sPaginationType: "bootstrap",
+            sAjaxSource: new_filter_url,
+            bFilter: trueorfalse,
+            oLanguage: {
+                sLengthMenu: "_MENU_ 条/页",
+                sSearch: "搜索:",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
+                "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
+                "sInfoEmpty": "当前显示0到0条，共0条记录",
+                "sEmptyTable": "没有获取到数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "末页"
+                } 
+                
+
+            },
+            //bLengthChange: true,
+            bInfo: true,
+            bSortL:true,
+            bRetrieve:true,
+            bDestroy: true,
+            bAutoWidth: true,
+            bStateSave: false,
+            bProcessing: true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+            bServerSide: true, //开启服务器模式，使用服务器端处理配置datatable。注意：sAjaxSource参数也必须被给予为了给datatable源代码来获取所需的数据对于每个画。 这个翻译有点别扭。开启此模式后，你对datatables的每个操作 每页显示多少条记录、下一页、上一页、排序（表头）、搜索，这些都会传给服务器相应的值。 
+            aoColumns: aoColumns,
+            aoColumnDefs: aoColumnDefs,
+
+            fnServerData: function(sSource, aoData, fnCallback) {
+                if (sSource.substr(0,16)=="zheshiyigeshibie") {
+                    sSource=sSource.slice(16);
+                    aoData[4]["value"] = 10000;
+                }
+                $.ajax({
+                    url: sSource, //这个就是请求地址对应sAjaxSource
+                    data: {
+                        "aoData": JSON.stringify(aoData)
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+                    success: function(result) {
+                        //alert("ss");
+                        //var obj=JSON.parse(result);
+                        //alert(JSON.stringify(result));
+                        fnCallback(result); //把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+                        // alert("status:" + XMLHttpRequest.status + ",readyState:" + XMLHttpRequest.readyState + ",textStatus:" + textStatus);
+
+                    }
+                });
+
+            }
+
+
+        });
+
+        
+
+
+
+    };
+
+    this.setDataTable_ajax_5 = function(selector, new_filter_url,aoColumns,  aoColumnDefs,trueorfalse) {
+        
+        if(trueorfalse==undefined){
+            trueorfalse=true;
+        };
+        var count_count = 5;
+        if (new_filter_url.substr(0,16)=="zheshiyigeshibie") {
+            count_count = 1000;
+        }
+        return selector.dataTable({
+            sDom: "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
+            iDisplayLength: count_count, 
+            sPaginationType: "bootstrap",
+            sAjaxSource: new_filter_url,
+            bFilter: trueorfalse,
+            oLanguage: {
+                sLengthMenu: "_MENU_ 条/页",
+                sSearch: "搜索:",
+                "sZeroRecords": "没有检索到数据",
+                "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
+                "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
+                "sInfoEmpty": "当前显示0到0条，共0条记录",
+                "sEmptyTable": "没有获取到数据",
+                "sProcessing": "正在加载数据...",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "末页"
+                } 
+                
+
+            },
+            //bLengthChange: true,
+            bInfo: true,
+            bSortL:true,
+            bRetrieve:true,
+            bDestroy: true,
+            bAutoWidth: true,
+            bStateSave: false,
+            bProcessing: true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+            bServerSide: true, //开启服务器模式，使用服务器端处理配置datatable。注意：sAjaxSource参数也必须被给予为了给datatable源代码来获取所需的数据对于每个画。 这个翻译有点别扭。开启此模式后，你对datatables的每个操作 每页显示多少条记录、下一页、上一页、排序（表头）、搜索，这些都会传给服务器相应的值。 
+            aoColumns: aoColumns,
+            aoColumnDefs: aoColumnDefs,
+
+            fnServerData: function(sSource, aoData, fnCallback) {
+                if (sSource.substr(0,16)=="zheshiyigeshibie") {
+                    sSource=sSource.slice(16);
+                    aoData[4]["value"] = 10000;
+                }
+                $.ajax({
+                    url: sSource, //这个就是请求地址对应sAjaxSource
+                    data: {
+                        "aoData": JSON.stringify(aoData)
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+                    success: function(result) {
+                        //alert("ss");
+                        //var obj=JSON.parse(result);
+                        //alert(JSON.stringify(result));
+                        fnCallback(result); //把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+                        // alert("status:" + XMLHttpRequest.status + ",readyState:" + XMLHttpRequest.readyState + ",textStatus:" + textStatus);
+
+                    }
+                });
+
+            }
+
+
+        });
+
+        
+
+
+
+    };
+
+
+
 
     this.setMaxLength = function(selector) {
         if (selector == null) {

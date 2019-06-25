@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
 import com.daye.common.exception.ServiceException;
 import com.daye.common.util.ShiroUtils;
+import com.daye.common.vo.PageInfo;
 import com.daye.sys.entity.SysUser;
 import com.daye.sys.mapper.SysUserMapper;
 import com.daye.sys.service.SysUserService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -47,5 +50,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         sysUserMapper.updateById(user);
         return true;
+    }
+
+    @Override
+    @RequiredLog(value = 0, operation = "获得所有用户信息")
+    public PageInfo<SysUser> findObject(Map<String,String> aoData) {
+        Integer count = sysUserMapper.findCount();
+        PageInfo<SysUser> pageInfo = new PageInfo<>();
+        pageInfo.setITotalDisplayRecords(count);
+        pageInfo.setITotalRecords(count);
+        Object drawStr = aoData.get("sEcho");
+        Integer draw = (Integer) drawStr;
+        pageInfo.setDraw(draw);
+        List<SysUser> sysUserList = sysUserMapper.findObject(aoData);
+        pageInfo.setAaData(sysUserList);
+        return pageInfo;
     }
 }

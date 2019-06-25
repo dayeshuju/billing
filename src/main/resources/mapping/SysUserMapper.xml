@@ -13,5 +13,43 @@
     <select id="findRoleIdById" resultType="java.lang.Integer">
         select roleId from sysUsers where id=#{id}
     </select>
+    <select id="findObject" resultType="com.daye.sys.entity.SysUser">
+        select id,nickname,name,mobile,email,roleId,valid from sysUsers
+        <where>
+            '1'='1'
+            <choose>
+                <when test="sSearch != null and sSearch != ''">
+                    or id like concat("%",#{sSearch},"%")
+                    or nickname like concat("%",#{sSearch},"%")
+                    or name like concat("%",#{sSearch},"%")
+                    or mobile like concat("%",#{sSearch},"%")
+                    or email like concat("%",#{sSearch},"%")
+                </when>
+                <otherwise>
+                    <if test="sSearch_0 != null and sSearch_0 != ''">
+                        and id like concat("%",#{sSearch_0},"%")
+                    </if>
+                    <if test="sSearch_1 != null and sSearch_1 != ''">
+                        and nickname like concat("%",#{sSearch_1},"%")
+                    </if>
+                    <if test="sSearch_2 != null and sSearch_2 != ''">
+                        and name like concat("%",#{sSearch_2},"%")
+                    </if>
+                    <if test="sSearch_3 != null and sSearch_3 != ''">
+                        and mobile like concat("%",#{sSearch_3},"%")
+                    </if>
+                    <if test="sSearch_4 != null and sSearch_4 != ''">
+                        and email like concat("%",#{sSearch_4},"%")
+                    </if>
+                    <if test="sSearch_5 != null and sSearch_5 != ''">
+                        and roleId like concat("%",#{sSearch_5},"%")
+                    </if>
+                </otherwise>
+            </choose>
+            order by createdTime desc
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
+
 
 </mapper>

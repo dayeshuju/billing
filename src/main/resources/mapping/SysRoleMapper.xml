@@ -4,5 +4,8 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-    
+    <select id="findObject" resultType="com.daye.sys.entity.SysRole">
+        select * from sysRoles
+    </select>
+
 </mapper>

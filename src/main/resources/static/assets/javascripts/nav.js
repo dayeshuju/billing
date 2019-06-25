@@ -9,6 +9,8 @@
         nav_closed_width = 50;
         nav_open = body.hasClass("main-nav-opened") || nav.width() > nav_closed_width;
         $("#main-nav .dropdown-collapse").on("click", function(e) {
+
+
             var link, list;
 
             e.preventDefault();
@@ -24,11 +26,23 @@
                     });
                 }
             } else {
+
                 link.addClass("in");
+
+                link.parent().addClass("active");
+                link.parent().siblings().removeClass("active");
+                link.parent().siblings().find("> ul").slideUp("300");
+                link.parent().siblings().children().removeClass("in");
+
                 list.slideDown(300, function() {
                     return $(this).addClass("in");
                 });
             }
+
+
+
+
+
             return false;
         });
         nav.swiperight(function(event, touch) {

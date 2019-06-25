@@ -1,13 +1,18 @@
 package com.daye.sys.controller;
 
 
+import com.daye.common.util.JsonToMap;
 import com.daye.common.util.ShiroUtils;
 import com.daye.common.vo.JsonResult;
+import com.daye.common.vo.PageInfo;
 import com.daye.sys.entity.SysUser;
 import com.daye.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -39,5 +44,11 @@ public class SysUserController {
         return new JsonResult("修改成功");
     }
 
+    @RequestMapping("/getUserList")
+    public PageInfo<SysUser> getUserList(@RequestParam Map<String,String> aoData){
+        aoData =JsonToMap.jsonToMap(aoData.get("aoData"));
+        PageInfo<SysUser> pageInfo = sysUserService.findObject(aoData);
+        return pageInfo;
+    }
 }
 

@@ -1,10 +1,76 @@
 /*引用theme.js*/
 $(document).ready(function() {
     getAuthoritylist();
-    getDepartmentlist();
     finduser();
-
+    //findusers();
 });
+
+/*function findusers() {
+    var table = $("#plist").dataTable({
+        language: {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "显示 _MENU_ 项结果",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        },
+        "info" : true,
+        "paging" : true,
+        "processing" : false,
+        "searching" : true,
+        colums: [
+            {data : 'id'},
+            {data : 'nickname'},
+            {data : 'name'},
+            {data : 'mobile'},
+            {data : 'email'},
+            {data : 'roleId'},
+            {data : 'id'},
+        ],
+        ColumnDefs = [{
+            "bSortable": false,
+            "aTargets": [0, 1, 3]
+        }, {
+            "sDefaultContent": '',
+            "aTargets": ['_all']
+        }, {
+            "aTargets": [6],
+            "mRender": function(data, type, row) {
+                return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser1(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-lockuser' role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + row.valid + "</span></a></div>";
+            }
+        }, {
+            "aTargets": [0],
+            "mRender": function(data, type, full) {
+
+                return "<span class='label label-number'>" + data + "</span>";
+            }
+        }
+        ],
+        serverSide : true,
+        ajax:{
+            type: "POST",
+            url: "sysUsers/getUserList",
+            dataType: "json",
+        }
+    })
+}*/
 
 function finduser() {
     /*定义列id和名称*/
@@ -12,20 +78,20 @@ function finduser() {
             mDataProp: "id",
             sTitle: "ID"
         }, {
-            mDataProp: "login_name",
+            mDataProp: "nickname",
             sTitle: "登录账号"
         }, {
             mDataProp: "name",
             sTitle: "真实姓名"
         }, {
-            mDataProp: "departmentname",
-            sTitle: "部门"
-        }, {
-            mDataProp: "tel",
+            mDataProp: "mobile",
             sTitle: "手机号码"
         }, {
-            mDataProp: "autName",
-            sTitle: "权限类型"
+            mDataProp: "email",
+            sTitle: "email"
+        },{
+            mDataProp: "roleId",
+            sTitle: "用户身份"
         }, {
             mDataProp: "id",
             sTitle: "操作"
@@ -43,7 +109,7 @@ function finduser() {
         }, {
             "aTargets": [6],
             "mRender": function(data, type, row) {
-                return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser1(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-lockuser' role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + row.statusstr + "</span></a></div>";
+                return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser1(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-lockuser' role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + row.valid + "</span></a></div>";
             }
         }, {
             "aTargets": [0],
@@ -56,7 +122,7 @@ function finduser() {
 
     ];
 
-    var new_filter_url = "/UserController/getuserlist"; //表#plist数据获取url
+    var new_filter_url = "sysUsers/getUserList"; //表#plist数据获取url
 
     var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
 
@@ -67,6 +133,7 @@ function finduser() {
 
 
 }
+
 //var oSettings = oTable.fnSettings();
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();
@@ -554,18 +621,18 @@ $("select#department").change(function() {
 
 function getAuthoritylist() {
 
-    var url = "/AuthorityController/getAuthnamelist";
+    var url = "sysRoles/getRolelist";
     var astr = "<option></option>";
     url = encodeURI(url);
 
     $.ajax({
         url: url,
-        success: function(responseText) {
-            var auths = responseText.info;
+        success: function(result) {
+            var roles = result.data();
 
             for (var i = 0; i < auths.length; i++) {
 
-                astr += "<option>" + auths[i].autName + "</option>"
+                astr += "<option>" + roles[i].name + "</option>"
 
 
             }
@@ -587,7 +654,7 @@ function getAuthoritylist() {
 
 
 
-function getDepartmentlist() {
+/*function getDepartmentlist() {
 
     var url = "/DepartmentController/getallDepartments";
     var astr = "<option></option>";
@@ -613,7 +680,7 @@ function getDepartmentlist() {
         }
 
     });
-}
+}*/
 
 
 

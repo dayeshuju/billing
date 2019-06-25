@@ -3,6 +3,8 @@ package com.daye.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.daye.sys.entity.SysRole;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色 服务类
@@ -13,4 +15,5 @@ import com.daye.sys.entity.SysRole;
  */
 public interface SysRoleService extends IService<SysRole> {
 
+    List<SysRole> getObject();
 }
