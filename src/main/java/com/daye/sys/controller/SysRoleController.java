@@ -30,5 +30,6 @@ public class SysRoleController {
         List<SysRole> sysRoleList = sysRoleService.getObject();
         return new JsonResult(sysRoleList);
     }
+
 }
 

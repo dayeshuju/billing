@@ -5219,6 +5219,59 @@ input[type="submit"].btn.btn-mini {
     background-clip: padding-box;
 }
 
+/*YGY 2017.12.12 add*/
+.modal-add {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    z-index: 1050;
+    width: 80%;
+    margin-left: -40%;
+    height: 60%;
+    background-color: #ffffff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    *border: 1px solid #999;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    outline: none;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+}
+/*YGY 2017.12.12 add END*/
+
+
+/*JPP 2017.12.12 add*/
+.modal-top {
+    position: fixed;
+    top: 10%;
+    left: 35%;
+    z-index: 2050;
+    width: 30%;
+
+    height: 30%;
+    background-color: #ffffff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    *border: 1px solid #999;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    outline: none;
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+}
+/*YGY 2017.12.12 add END*/
+
 .modal.fade {
     top: -25%;
     -webkit-transition: opacity 0.3s linear, top 0.3s ease-out;

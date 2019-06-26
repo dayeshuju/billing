@@ -4,7 +4,6 @@ package com.daye.sys.controller;
 import com.daye.common.util.JsonToMap;
 import com.daye.common.util.ShiroUtils;
 import com.daye.common.vo.JsonResult;
-import com.daye.common.vo.PageInfo;
 import com.daye.sys.entity.SysUser;
 import com.daye.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +44,10 @@ public class SysUserController {
     }
 
     @RequestMapping("/getUserList")
-    public PageInfo<SysUser> getUserList(@RequestParam Map<String,String> aoData){
+    public Map<String,Object> getUserList(@RequestParam Map<String,String> aoData){
         aoData =JsonToMap.jsonToMap(aoData.get("aoData"));
-        PageInfo<SysUser> pageInfo = sysUserService.findObject(aoData);
-        return pageInfo;
+        Map<String,Object> map = sysUserService.findObject(aoData);
+        return map;
     }
 }
 

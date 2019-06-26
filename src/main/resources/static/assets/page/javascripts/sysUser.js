@@ -2,75 +2,7 @@
 $(document).ready(function() {
     getAuthoritylist();
     finduser();
-    //findusers();
 });
-
-/*function findusers() {
-    var table = $("#plist").dataTable({
-        language: {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "显示 _MENU_ 项结果",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-            "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
-            }
-        },
-        "info" : true,
-        "paging" : true,
-        "processing" : false,
-        "searching" : true,
-        colums: [
-            {data : 'id'},
-            {data : 'nickname'},
-            {data : 'name'},
-            {data : 'mobile'},
-            {data : 'email'},
-            {data : 'roleId'},
-            {data : 'id'},
-        ],
-        ColumnDefs = [{
-            "bSortable": false,
-            "aTargets": [0, 1, 3]
-        }, {
-            "sDefaultContent": '',
-            "aTargets": ['_all']
-        }, {
-            "aTargets": [6],
-            "mRender": function(data, type, row) {
-                return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser1(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-lockuser' role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + row.valid + "</span></a></div>";
-            }
-        }, {
-            "aTargets": [0],
-            "mRender": function(data, type, full) {
-
-                return "<span class='label label-number'>" + data + "</span>";
-            }
-        }
-        ],
-        serverSide : true,
-        ajax:{
-            type: "POST",
-            url: "sysUsers/getUserList",
-            dataType: "json",
-        }
-    })
-}*/
 
 function finduser() {
     /*定义列id和名称*/
@@ -90,7 +22,7 @@ function finduser() {
             mDataProp: "email",
             sTitle: "email"
         },{
-            mDataProp: "roleId",
+            mDataProp: "note",
             sTitle: "用户身份"
         }, {
             mDataProp: "id",
@@ -102,14 +34,14 @@ function finduser() {
     /*给操作列设置填充 */
     var aoColumnDefs = [{
             "bSortable": false,
-            "aTargets": [0, 1, 3]
+            "aTargets": [0, 1, 2, 3, 4, 5, 6,]
         }, {
             "sDefaultContent": '',
             "aTargets": ['_all']
         }, {
             "aTargets": [6],
             "mRender": function(data, type, row) {
-                return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser1(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-lockuser' role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + row.valid + "</span></a></div>";
+                return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser1(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-lockuser' role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid==1 ? "锁定" : "解锁") + "</span></a></div>";
             }
         }, {
             "aTargets": [0],
@@ -130,8 +62,6 @@ function finduser() {
     var oSettings = oTable.fnSettings();
     oSettings.sAjaxSource = new_filter_url;
     oTable.fnDraw();
-
-
 }
 
 //var oSettings = oTable.fnSettings();
@@ -628,9 +558,9 @@ function getAuthoritylist() {
     $.ajax({
         url: url,
         success: function(result) {
-            var roles = result.data();
+            var roles = result.data;
 
-            for (var i = 0; i < auths.length; i++) {
+            for (var i = 0; i < roles.length; i++) {
 
                 astr += "<option>" + roles[i].name + "</option>"
 

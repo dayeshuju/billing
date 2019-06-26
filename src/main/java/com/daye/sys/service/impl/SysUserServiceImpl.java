@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
 import com.daye.common.exception.ServiceException;
 import com.daye.common.util.ShiroUtils;
-import com.daye.common.vo.PageInfo;
 import com.daye.sys.entity.SysUser;
 import com.daye.sys.mapper.SysUserMapper;
 import com.daye.sys.service.SysUserService;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -54,16 +54,33 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @RequiredLog(value = 0, operation = "获得所有用户信息")
-    public PageInfo<SysUser> findObject(Map<String,String> aoData) {
-        Integer count = sysUserMapper.findCount();
-        PageInfo<SysUser> pageInfo = new PageInfo<>();
-        pageInfo.setITotalDisplayRecords(count);
-        pageInfo.setITotalRecords(count);
-        Object drawStr = aoData.get("sEcho");
-        Integer draw = (Integer) drawStr;
-        pageInfo.setDraw(draw);
-        List<SysUser> sysUserList = sysUserMapper.findObject(aoData);
-        pageInfo.setAaData(sysUserList);
-        return pageInfo;
+    public Map<String,Object> findObject(Map<String,String> aoData) {
+
+        SysUser user = new SysUser();
+        if(!StringUtils.isEmpty(aoData.get("sSearch_0").trim())){
+            Integer id = Integer.valueOf(aoData.get("sSearch_0"));
+            user.setId(id);
+        }
+        if(!StringUtils.isEmpty(aoData.get("sSearch_1").trim())) user.setNickname(aoData.get("sSearch_1"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_2").trim())) user.setName(aoData.get("sSearch_2"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_3").trim())) user.setMobile(aoData.get("sSearch_3"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) user.setEmail(aoData.get("sSearch_4"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())) user.setNote(aoData.get("sSearch_5"));
+
+        String sSearch = aoData.get("sSearch");
+        Object iDisplayStartObj = aoData.get("iDisplayStart");
+        Integer iDisplayStart = (Integer) iDisplayStartObj;
+        Object iDisplayLengthsObj = aoData.get("iDisplayLength");
+        Integer iDisplayLength = (Integer) iDisplayLengthsObj;
+        Object sEchoStr = aoData.get("sEcho");
+        Integer sEcho = (Integer) sEchoStr;
+        Integer count = sysUserMapper.findCount(user,sSearch);
+        List<SysUser> sysUserList = sysUserMapper.findObject(user,iDisplayStart,iDisplayLength,sSearch);
+        Map<String,Object> map = new HashMap<>();
+        map.put("iTotalDisplayRecords",count);
+        map.put("iTotalRecords",count);
+        map.put("sEcho",sEcho);
+        map.put("aaData",sysUserList);
+        return map;
     }
 }

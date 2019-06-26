@@ -2,10 +2,9 @@ package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.SysUser;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -21,8 +20,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     Integer findRoleIdById(Integer id);
 
-    List<SysUser> findObject(Map<String,String> aoData);
+    List<SysUser> findObject(@Param("user") SysUser user,@Param("iDisplayStart") Integer iDisplayStart,@Param("iDisplayLength") Integer iDisplayLength,@Param("sSearch") String sSearch);
 
-    @Select({"SELECT count(1) FROM sysUsers"})
-    Integer findCount();
+    Integer findCount(@Param("user") SysUser user,@Param("sSearch") String sSearch);
 }

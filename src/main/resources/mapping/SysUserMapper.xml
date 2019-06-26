@@ -13,43 +13,48 @@
     <select id="findRoleIdById" resultType="java.lang.Integer">
         select roleId from sysUsers where id=#{id}
     </select>
+    <sql id="findObject">
+        '1'='1'
+        <if test="sSearch != null and sSearch != ''">
+            and a.id like concat("%",#{sSearch},"%")
+            or a.nickname like concat("%",#{sSearch},"%")
+            or a.name like concat("%",#{sSearch},"%")
+            or a.mobile like concat("%",#{sSearch},"%")
+            or a.email like concat("%",#{sSearch},"%")
+            or a.roleId in (select c.id from sysRoles c where c.name like concat("%",#{sSearch},"%"))
+        </if>
+        <if test="user.id != null">
+            and a.id like concat("%",#{user.id},"%")
+        </if>
+        <if test="user.nickname != null and user.nickname != ''">
+            and a.nickname like concat("%",#{user.nickname},"%")
+        </if>
+        <if test="user.name != null and user.name != ''">
+            and a.name like concat("%",#{user.name},"%")
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            and a.mobile like concat("%",#{user.mobile},"%")
+        </if>
+        <if test="user.email != null and user.email != ''">
+            and a.email like concat("%",#{user.email},"%")
+        </if>
+        <if test="user.note != null and user.note != ''">
+            and a.roleId in (select c.id from sysRoles c where c.name like concat("%",#{user.note},"%"))
+        </if>
+        order by a.createdTime desc
+    </sql>
     <select id="findObject" resultType="com.daye.sys.entity.SysUser">
-        select id,nickname,name,mobile,email,roleId,valid from sysUsers
+        select a.id,a.nickname,a.name,a.mobile,a.email,a.roleId,a.valid,(select r.name from sysRoles r where r.id=a.roleId) note from sysUsers a
         <where>
-            '1'='1'
-            <choose>
-                <when test="sSearch != null and sSearch != ''">
-                    or id like concat("%",#{sSearch},"%")
-                    or nickname like concat("%",#{sSearch},"%")
-                    or name like concat("%",#{sSearch},"%")
-                    or mobile like concat("%",#{sSearch},"%")
-                    or email like concat("%",#{sSearch},"%")
-                </when>
-                <otherwise>
-                    <if test="sSearch_0 != null and sSearch_0 != ''">
-                        and id like concat("%",#{sSearch_0},"%")
-                    </if>
-                    <if test="sSearch_1 != null and sSearch_1 != ''">
-                        and nickname like concat("%",#{sSearch_1},"%")
-                    </if>
-                    <if test="sSearch_2 != null and sSearch_2 != ''">
-                        and name like concat("%",#{sSearch_2},"%")
-                    </if>
-                    <if test="sSearch_3 != null and sSearch_3 != ''">
-                        and mobile like concat("%",#{sSearch_3},"%")
-                    </if>
-                    <if test="sSearch_4 != null and sSearch_4 != ''">
-                        and email like concat("%",#{sSearch_4},"%")
-                    </if>
-                    <if test="sSearch_5 != null and sSearch_5 != ''">
-                        and roleId like concat("%",#{sSearch_5},"%")
-                    </if>
-                </otherwise>
-            </choose>
-            order by createdTime desc
+            <include refid="findObject"></include>
             limit #{iDisplayStart},#{iDisplayLength}
         </where>
     </select>
-
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(1) from sysUsers a
+        <where>
+            <include refid="findObject"></include>
+        </where>
+    </select>
 
 </mapper>

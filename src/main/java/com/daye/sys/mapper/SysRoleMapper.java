@@ -16,4 +16,5 @@ import java.util.List;
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     List<SysRole> findObject();
+
 }

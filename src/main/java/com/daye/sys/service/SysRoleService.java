@@ -16,4 +16,5 @@ import java.util.List;
 public interface SysRoleService extends IService<SysRole> {
 
     List<SysRole> getObject();
+
 }

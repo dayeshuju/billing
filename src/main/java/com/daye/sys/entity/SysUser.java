@@ -63,6 +63,10 @@ public class SysUser implements Serializable {
     @TableField("modifiedTime")
     private Date modifiedTime;
 
+    /**
+     * 备注
+     */
+    private String note;
 
     public Integer getId() {
         return id;
@@ -148,6 +152,13 @@ public class SysUser implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
+    public String getNote(){
+        return note;
+    }
+
+    public void setNote(String note){
+        this.note = note;
+    }
     @Override
     public String toString() {
         return "SysUsers{" +
@@ -162,6 +173,7 @@ public class SysUser implements Serializable {
         ", valid=" + valid +
         ", createdTime=" + createdTime +
         ", modifiedTime=" + modifiedTime +
+        ", note=" + note +
         "}";
     }
 }

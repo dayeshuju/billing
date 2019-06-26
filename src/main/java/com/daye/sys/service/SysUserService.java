@@ -1,7 +1,6 @@
 package com.daye.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.daye.common.vo.PageInfo;
 import com.daye.sys.entity.SysUser;
 
 import java.util.Map;
@@ -18,5 +17,5 @@ public interface SysUserService extends IService<SysUser> {
 
     boolean updateObject(String oldpwd, String newpwd);
 
-    PageInfo<SysUser> findObject(Map<String,String> aoData);
+    Map<String,Object> findObject(Map<String,String> aoData);
 }
