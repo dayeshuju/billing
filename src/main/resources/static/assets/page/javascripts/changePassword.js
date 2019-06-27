@@ -70,21 +70,6 @@ function updatepwd() {
             });
         }
     })
-    /*$.post(url, params, function(result) {
-        if (data.result == "success") {
-             
-            alertstr = "密码修改成功！";
-            layer.msg(alertstr, {
-                icon: 1
-            });
-        } else {
-            
-            alertstr = "原密码错误！";
-            layer.msg(alertstr, {
-                icon: 2
-            });
-        }
-    });*/
 }
 /*输入为空，标红提示*/
 function verify(obj, tipinput, tipinfo, tipinfo2) {

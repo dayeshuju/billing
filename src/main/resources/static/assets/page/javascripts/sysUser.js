@@ -44,7 +44,7 @@ function finduser() {
     }, {
         "aTargets": [7],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href="+(row.valid == 1 ? "#modal-lockuser" : "#modal-unslockuser")+" role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid == 1 ? "锁定" : "解锁") + "</span></a></div>";
+            return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href=" + (row.valid == 1 ? "#modal-lockuser" : "#modal-unslockuser") + " role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid == 1 ? "锁定" : "解锁") + "</span></a></div>";
         }
     }, {
         "aTargets": [0],
@@ -98,13 +98,13 @@ function resetPassword() {
     }
     var url = "sysUsers/resetPassword";
 
-    $.post(url,params,function (result) {
+    $.post(url, params, function (result) {
         $('#modal-resetpassword').modal('hide');
-        if(result.state == 1){
+        if (result.state == 1) {
             layer.msg(result.message, {
                 icon: 1
             });
-        }else if(result.state == 0){
+        } else if (result.state == 0) {
             layer.msg(result.message, {
                 icon: 2
             });
@@ -113,29 +113,31 @@ function resetPassword() {
 }
 
 function lockuser() {
-    var id= $("#id").val();
+    var id = $("#id").val();
     var url = "sysUsers/resetStatus";
     var params = {
         id: id
     }
-    $.post(url,params,function (result) {
-        if(result.state == 1){
-            if(result.data.valid == 1){
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
+            if (result.data.valid == 1) {
                 $('#modal-unlockuser').modal('hide');
-                $("#clock"+id).html("锁定");
-                $("#aclock"+id).attr("href","#modal-lockuser");
+                $("#clock" + id).html("锁定");
+                $("#aclock" + id).attr("href", "#modal-lockuser");
                 layer.msg(result.data.message, {
                     icon: 1
                 });
-            }else if(result.data.valid == 0){
+            } else if (result.data.valid == 0) {
                 $('#modal-lockuser').modal('hide');
-                $("#clock"+id).html("解锁");
-                $("#aclock"+id).attr("href","#modal-unlockuser");
+                $("#clock" + id).html("解锁");
+                $("#aclock" + id).attr("href", "#modal-unlockuser");
                 layer.msg(result.data.message, {
                     icon: 1
                 });
             }
-        }else if(result.state == 0){
+        } else if (result.state == 0) {
+            $('#modal-lockuser').modal('hide');
+            $('#modal-unlockuser').modal('hide');
             layer.msg(result.message, {
                 icon: 2
             });
@@ -147,14 +149,14 @@ function lockuser() {
 $('#deleterow').click(function () {
 
     var id = $("#id").val();
-    var params={
+    var params = {
         id: id
     }
     var url = "sysUsers/deleteUser";
 
-    $.post(url,params,function (result) {
+    $.post(url, params, function (result) {
         $('#modal-deleteuser').modal('hide');
-        if(result.state == 1){
+        if (result.state == 1) {
 
             start = oTable.fnSettings()._iDisplayStart;
             total = oTable.fnSettings().fnRecordsDisplay();
@@ -169,7 +171,7 @@ $('#deleterow').click(function () {
             layer.msg(result.message, {
                 icon: 1
             });
-        }else if (result.state == 0){
+        } else if (result.state == 0) {
             layer.msg(result.message, {
                 icon: 2
             });
@@ -188,7 +190,7 @@ function adduser() {
     var email = $("#email").val();
     var roleId = $("#roleId").val();
 
-    if(Number(id)==2){
+    if (Number(id) == 2) {
         roleId = 1;
     }
 
@@ -209,16 +211,17 @@ function adduser() {
         url = "sysUsers/addUser";
     }
 
-    $.post(url,params,function (result) {
-        if(result.state == 1){
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
             $('#modal-adduser').modal('hide');
             initform();
             oTable.fnDraw(false);//重新加载当前页
             layer.msg(result.message, {
                 icon: 1
             });
-        };
-        if(result.state == 0){
+        }
+        ;
+        if (result.state == 0) {
             layer.msg(result.message, {
                 icon: 2
             });
@@ -234,8 +237,8 @@ function getuser(id) {
     var params = {
         id: id
     };
-    $.post(url,params,function (result) {
-        if(result.state == 1){
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
             $("#dnickname").val(result.data.nickname);
             $("#dname").val(result.data.name);
             $("#dmobile").val(result.data.mobile);
@@ -270,8 +273,8 @@ function modifyuser(id) {
     var params = {
         id: id
     };
-    $.post(url,params,function (result) {
-        if(result.state == 1){
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
             $("#nickname").val(result.data.nickname);
             $("#name").val(result.data.name);
             $("#mobile").val(result.data.mobile);
@@ -281,136 +284,6 @@ function modifyuser(id) {
         }
     })
 }
-
-
-function updateauthority() {
-    var userid = document.getElementById("uid").value;
-
-    var aaf = getCheckboxvalue("aaf");
-    var abf = getCheckboxvalue("abf");
-
-    var faf = getCheckboxvalue("faf");
-    var faf = getCheckboxvalue("fbf");
-
-
-    var url = "/AuthorityController/updateAuthority?userid=" + userid;
-
-    $.post(url, {
-        aafunction: aaf,
-        abfunction: abf,
-
-        fafunction: faf,
-        fafunction: fbf
-
-
-    }, function (data) {
-        if (data.result == "success") {
-
-            $("#modal-setpermissions").modal("hide");
-
-            layer.msg('保存成功！', {
-                icon: 1
-            });
-
-
-        } else {
-            layer.msg('保存失败！', {
-                icon: 2
-            });
-
-        }
-    });
-
-
-}
-
-function getCheckboxvalue(suferfix) {
-
-    var fvalue = document.getElementsByName(suferfix);
-    var sb = [];
-    for (var i = 00; i < fvalue.length; i++) {
-        var epfix = i + 1;
-        var eid = suferfix + epfix;
-        if (document.getElementById(eid).checked) {
-            sb.push('1');
-        } else {
-
-            sb.push('2');
-        }
-
-
-    }
-
-
-    return sb.join("");
-
-
-}
-
-function setauth(userid) {
-    /*var userid = document.getElementById("uid").value;*/
-    var url = "/AuthorityController/getAuthority?userid=" + userid;
-
-    url = encodeURI(url);
-
-    $.ajax({
-        url: url,
-        success: function (responseText) {
-            var jinfo = responseText.info;
-            var str = JSON.stringify(jinfo);
-
-
-            document.getElementById("aaf").value = jinfo.aafunction;
-            document.getElementById("abf").value = jinfo.abfunction;
-
-            document.getElementById("faf").value = jinfo.fafunction;
-            document.getElementById("fbf").value = jinfo.fafunction;
-
-
-            setCheckbox("faf");
-            setCheckbox("fbf");
-
-
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-        }
-
-    });
-
-
-}
-
-
-function setCheckbox(suferfix) {
-
-    var fvalue = document.getElementById(suferfix).value;
-
-    var items = fvalue.split("");
-    for (var i = 0; i < fvalue.length; i++) {
-        var epfix = i + 1;
-        var eid = suferfix + epfix;
-
-        if (items[i] == '1') {
-
-            document.getElementById(eid).checked = true;
-        } else {
-
-            document.getElementById(eid).checked = false;
-
-        }
-    }
-}
-
-
-$("select#department").change(function () {
-
-
-    getdutylist($("#department").val());
-
-
-});
-
 
 function getAuthoritylist() {
 
@@ -442,50 +315,3 @@ function getAuthoritylist() {
 
 
 }
-
-
-/*function getDepartmentlist() {
-
-    var url = "/DepartmentController/getallDepartments";
-    var astr = "<option></option>";
-    url = encodeURI(url);
-
-    $.ajax({
-        url: url,
-        success: function(responseText) {
-            var departments = responseText.info;
-
-            for (var i = 0; i < departments.length; i++) {
-
-                astr += "<option value=" + departments[i].id + ">" + departments[i].text + "</option>"
-
-            }
-
-            document.getElementById("department").innerHTML = astr;
-            document.getElementById("ddepartment").innerHTML = astr;
-
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-
-        }
-
-    });
-}*/
-
-
-/*function autNamechange(obj) {
-
-    var autName = obj.value;
-    if (autName == "员工") {
-
-        document.getElementById("department").disabled = "";
-
-    } else {
-
-        document.getElementById("department").disabled = "disabled";
-        document.getElementById("department").value = "";
-
-    }
-
-
-}*/

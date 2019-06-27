@@ -17,4 +17,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     List<SysRole> findObject();
 
+    Integer findCount(SysRole role, String sSearch);
+
+    List<SysRole> findRoles(SysRole role, Integer iDisplayStart, Integer iDisplayLength, String sSearch);
 }

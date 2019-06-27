@@ -7,8 +7,11 @@ import com.daye.sys.mapper.SysRoleMapper;
 import com.daye.sys.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,5 +32,31 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public List<SysRole> getObject() {
         List<SysRole> sysRoleList = sysRoleMapper.findObject();
         return sysRoleList;
+    }
+
+    @Override
+    @RequiredLog(operation = "获得所有权限类型")
+    public Map<String, Object> getAuthoritylist(Map<String, String> aoData) {
+        SysRole role = new SysRole();
+        if(!StringUtils.isEmpty(aoData.get("sSearch_0").trim())){
+            Integer id = Integer.valueOf(aoData.get("sSearch_0"));
+            role.setId(id);
+        }
+        if(!StringUtils.isEmpty(aoData.get("sSearch_1").trim())) role.setName(aoData.get("sSearch_1"));
+        String sSearch = aoData.get("sSearch");
+        Object iDisplayStartObj = aoData.get("iDisplayStart");
+        Integer iDisplayStart = (Integer) iDisplayStartObj;
+        Object iDisplayLengthsObj = aoData.get("iDisplayLength");
+        Integer iDisplayLength = (Integer) iDisplayLengthsObj;
+        Object sEchoStr = aoData.get("sEcho");
+        Integer sEcho = (Integer) sEchoStr;
+        Integer count = sysRoleMapper.findCount(role,sSearch);
+        List<SysRole> sysRoleList = sysRoleMapper.findRoles(role,iDisplayStart,iDisplayLength,sSearch);
+        Map<String,Object> map = new HashMap<>();
+        map.put("iTotalDisplayRecords",count);
+        map.put("iTotalRecords",count);
+        map.put("sEcho",sEcho);
+        map.put("aaData",sysRoleList);
+        return map;
     }
 }

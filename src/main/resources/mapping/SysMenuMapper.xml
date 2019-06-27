@@ -10,5 +10,11 @@
             #{menuId}
         </foreach>
     </select>
+    <select id="findZtreeMenuNodes" resultType="com.daye.common.vo.Node">
+        select id,name,parentId from sysMenus
+        <where>
+            id != 2
+        </where>
+    </select>
 
 </mapper>

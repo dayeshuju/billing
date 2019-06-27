@@ -1,6 +1,7 @@
 package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.daye.common.vo.Node;
 import com.daye.sys.entity.SysMenu;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -21,4 +22,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     @Select({"SELECT * FROM sysMenus"})
     List<SysMenu> findObject();
+
+    List<Node> findZtreeMenuNodes();
 }

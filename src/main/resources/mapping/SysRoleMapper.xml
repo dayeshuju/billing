@@ -7,5 +7,32 @@
     <select id="findObject" resultType="com.daye.sys.entity.SysRole">
         select * from sysRoles where id>1
     </select>
+    <sql id="findRoles">
+        a.id>1
+        <if test="sSearch != null and sSearch != ''">
+            and a.id like concat("%",#{sSearch},"%")
+            or a.name like concat("%",#{sSearch},"%")
+        </if>
+        <if test="role.id != null">
+            and a.id like concat("%",#{role.id},"%")
+        </if>
+        <if test="role.name != null and role.name != ''">
+            and a.name like concat("%",#{role.name},"%")
+        </if>
+        order by a.id
+    </sql>
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(1) from sysRoles a
+        <where>
+            <include refid="findRoles"></include>
+        </where>
+    </select>
+    <select id="findRoles" resultType="com.daye.sys.entity.SysRole">
+        select a.id,a.name from sysRoles a
+        <where>
+            <include refid="findRoles"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
 
 </mapper>

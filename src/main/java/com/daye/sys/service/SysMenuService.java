@@ -1,6 +1,7 @@
 package com.daye.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysMenu;
 
 /**
@@ -13,4 +14,7 @@ import com.daye.sys.entity.SysMenu;
  */
 public interface SysMenuService extends IService<SysMenu> {
 
+    JsonResult loadIntexMenus();
+
+    JsonResult findZtreeMenuNodes();
 }

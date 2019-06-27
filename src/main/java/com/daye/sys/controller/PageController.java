@@ -1,7 +1,7 @@
 package com.daye.sys.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -9,13 +9,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
     @RequestMapping("doLoginUI")
-    public String login() {
+    public String doLoginUI() {
         return "login";
     }
 
-    @RequestMapping("{pageName}")
-    public String index(@PathVariable String pageName) {
-        return pageName;
+    @RequestMapping("index")
+    public String loadIndexUI() { return "index";}
+
+    @RequestMapping("changePassword")
+    public String loadChangePasswordUI() {
+        return "changePassword";
+    }
+
+    @RequestMapping("sysUser")
+    @RequiresPermissions("sys:user")
+    public String loadSysUserUI() {
+        return "sysUser";
+    }
+
+    @RequestMapping("sysPermission")
+    @RequiresPermissions("sys:permission")
+    public String loadSysPermissionUI(){
+        return "sysPermission";
     }
 
 }

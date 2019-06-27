@@ -1,0 +1,338 @@
+<script src='assets/page/javascripts/sysPermission.js' type='text/javascript'></script>
+<script src='assets/stylesheets/ztree/jquery.ztree.all.min.js' type='text/javascript'></script>
+<!--style>
+.table-hover tbody tr:hover > td,
+.table-hover tbody tr:hover > th {
+    background-color: #00acec;
+}
+</style-->
+<input type="text" name="autName" id="autName" style="display: none"/>
+<div class='container-fluid'>
+    <div class='row-fluid' id='content-wrapper' style="display: block;">
+        <!--modal-addauthority-->
+        <div class="modal-add hide fade in" id="modal-addauthority" role="dialog" tabindex="-1" aria-hidden="false"
+             style="display:none;">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">×</button>
+                <h3 style="color: white;">
+                    <div class="icon-edit"></div>
+                    添加权限类型
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form class="form" style="margin-bottom: 0;">
+                    <div class="text-center">
+                        <h2>权限类型</h2>
+                        <br/>
+                    </div>
+                    <div class="box-content" style="display: inline;">
+                        <table class="kv-table">
+                            <tbody>
+                            <tr>
+                                <td class="kv-label" style="width: 50px">权限类型名称
+                                    <font color="red">*</font>
+                                </td>
+                                <td class="kv-content">
+                                    <input class="span11" id="add_autName" type="text" style="width: 100%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="kv-label" style="width: 50px">
+                                    权限类型描述
+                                </td>
+                                <td class="kv-content">
+                                    <input class="span11" id="add_autNote" type="text"  style="width: 100%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="kv-label" style="width: 50px">授权
+                                    <font color="red">*</font>
+                                </td>
+                                <td>
+                                    <div>
+                                        <ul id="menuTree" class="ztree"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取 消</button>
+                <button class="btn btn-primary" onclick="addauthority()"><i class="icon-save"></i> 保 存</button>
+            </div>
+        </div>
+        <!--modal-addauthority end-->
+        <!--modal-deleteauthority begin-->
+        <div class="modal hide fade in" id="modal-deleteauthority" role="dialog" tabindex="-1" aria-hidden="false"
+             style="display: none;">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">×</button>
+                <h3 style="color: white;">
+                    <div class="icon-minus-sign"></div>
+                    删除权限
+                </h3>
+            </div>
+            <div class="modal-body">
+                <h4 style="color: red;">
+                    <div class="icon-exclamation-sign"></div>
+                    注意：权限删除后不能恢复，请谨慎操作！
+                </h4>
+                <p>请确认是否继续删除。</p>
+                <p>非系统管理员请勿进行删除操作！</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">取消</button>
+                <button class="btn btn-primary" id="deleterow">确认删除</button>
+            </div>
+        </div>
+        <!--modal-deleteauthority end-->
+        <!--modal-setpermissions-->
+        <div class="modal-add hide fade in" id="modal-setpermissions" role="dialog" tabindex="-1" aria-hidden="false"
+             style="display:none;">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">×</button>
+                <h3 style="color: white;">
+                    <div class="icon-edit"></div>
+                    设置权限
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form class="form" style="margin-bottom: 0;">
+                    <div class="box-content" style="display: inline;">
+                        <!--add tab -->
+                        <div class="row-fluid">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#tab1">
+                                            <i class="icon-user text-blue"></i> 1.个人中心
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a data-toggle="tab" href="#tab2">
+                                            <i class="icon-th-large text-blue"></i> 2.项目中心
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a data-toggle="tab" href="#tab6">
+                                            <i class="icon-wrench text-blue"></i> 3.系统管理
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab1">
+                                        <div class="box-content box-no-padding">
+                                            <div class="responsive-table">
+                                                <div class="scrollable-area">
+                                                    <table class="table table-bordered table-hover table-striped"
+                                                           style="margin-bottom:0;">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="span2">标题</th>
+                                                            <th class="span10">功能项</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td id="aaf">统计图表</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="aaf1" type="checkbox" value="option1"
+                                                                               name="aaf" checked="true"
+                                                                               disabled="true">
+                                                                        统计图表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="abf">个人设置</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="abf1" type="checkbox" value="option1"
+                                                                               name="abf" checked="true"
+                                                                               disabled="true">
+                                                                        修改密码
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab2">
+                                        <div class="box-content box-no-padding">
+                                            <div class="responsive-table">
+                                                <div class="scrollable-area">
+                                                    <table class="table table-bordered table-hover table-striped"
+                                                           style="margin-bottom:0;">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="span2">标题</th>
+                                                            <th class="span10">功能项</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td id="baf">重点项目</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="baf1" type="checkbox" value="option1"
+                                                                               name="baf" checked="true"> 重点项目列表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="bbf">会议议定事项</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="bbf1" type="checkbox" value="option1"
+                                                                               name="bbf" checked="true"> 会议议定事项列表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="bcf">领导批示事项</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="bcf1" type="checkbox" value="option1"
+                                                                               name="bcf" checked="true"> 领导批示事项列表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab6">
+                                        <div class="box-content box-no-padding">
+                                            <div class="responsive-table">
+                                                <div class="scrollable-area">
+                                                    <table class="table table-bordered table-hover table-striped"
+                                                           style="margin-bottom:0;">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="span2">标题</th>
+                                                            <th class="span10">功能项</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td id="faf">系统管理</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="faf1" type="checkbox" value="option1"
+                                                                               name="faf"> 权限列表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="fbf">用户管理</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="fbf1" type="checkbox" value="option1"
+                                                                               name="fbf"> 用户列表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td id="fcf">部门管理</td>
+                                                            <td>
+                                                                <div class="controls">
+                                                                    <label class="checkbox inline">
+                                                                        <input id="fcf1" type="checkbox" value="option1"
+                                                                               name="fcf"> 部门列表
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
+                <button id="saveauthority" class="btn btn-primary" onclick="updateauthority()"><i class="icon-save"></i>
+                    保 存
+                </button>
+            </div>
+        </div>
+        <!--modal-setpermissions end-->
+        <!--权限列表部分 开始-->
+        <div class='row-fluid'>
+            <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
+                <div class='box-header blue-background'>
+                    <div class='title'>权限列表</div>
+                    <div class='pull-right'>
+                        <a class="btn btn-default" data-toggle="modal" href="#modal-addauthority" role="button"
+                           style="margin-bottom: 5px" onclick="doLoadSysMenus()"><i class="icon-plus"></i> 添加权限类型</a>
+                    </div>
+                </div>
+                <div class='box-content box-no-padding'>
+                    <div class='responsive-table'>
+                        <div class='scrollable-area'>
+                            <table class='data-table data-table-column-filter table table-bordered table-striped table-hover'
+                                   style='margin-bottom:0;' id="plist">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        id
+                                    </th>
+                                    <th>权限类型</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>权限类型</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
