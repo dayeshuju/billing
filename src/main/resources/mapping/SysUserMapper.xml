@@ -20,6 +20,7 @@
             or a.nickname like concat("%",#{sSearch},"%")
             or a.name like concat("%",#{sSearch},"%")
             or a.mobile like concat("%",#{sSearch},"%")
+            or a.officePhone like concat("%",#{sSearch},"%")
             or a.email like concat("%",#{sSearch},"%")
             or a.roleId in (select c.id from sysRoles c where c.name like concat("%",#{sSearch},"%"))
         </if>
@@ -35,6 +36,9 @@
         <if test="user.mobile != null and user.mobile != ''">
             and a.mobile like concat("%",#{user.mobile},"%")
         </if>
+        <if test="user.officePhone != null and user.officePhone != ''">
+            and a.officePhone like concat("%",#{user.officePhone},"%")
+        </if>
         <if test="user.email != null and user.email != ''">
             and a.email like concat("%",#{user.email},"%")
         </if>
@@ -44,7 +48,7 @@
         order by a.createdTime desc
     </sql>
     <select id="findObject" resultType="com.daye.sys.entity.SysUser">
-        select a.id,a.nickname,a.name,a.mobile,a.email,a.roleId,a.valid,(select r.name from sysRoles r where r.id=a.roleId) note from sysUsers a
+        select a.id,a.nickname,a.name,a.mobile,a.officePhone,a.email,a.roleId,a.valid,(select r.name from sysRoles r where r.id=a.roleId) note from sysUsers a
         <where>
             <include refid="findObject"></include>
             limit #{iDisplayStart},#{iDisplayLength}

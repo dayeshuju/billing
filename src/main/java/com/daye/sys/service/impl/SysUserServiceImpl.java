@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
 import com.daye.common.exception.ServiceException;
 import com.daye.common.util.ShiroUtils;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysUser;
 import com.daye.sys.mapper.SysUserMapper;
 import com.daye.sys.service.SysUserService;
@@ -64,8 +65,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if(!StringUtils.isEmpty(aoData.get("sSearch_1").trim())) user.setNickname(aoData.get("sSearch_1"));
         if(!StringUtils.isEmpty(aoData.get("sSearch_2").trim())) user.setName(aoData.get("sSearch_2"));
         if(!StringUtils.isEmpty(aoData.get("sSearch_3").trim())) user.setMobile(aoData.get("sSearch_3"));
-        if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) user.setEmail(aoData.get("sSearch_4"));
-        if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())) user.setNote(aoData.get("sSearch_5"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) user.setOfficePhone(aoData.get("sSearch_4"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())) user.setEmail(aoData.get("sSearch_5"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_6").trim())) user.setNote(aoData.get("sSearch_6"));
 
         String sSearch = aoData.get("sSearch");
         Object iDisplayStartObj = aoData.get("iDisplayStart");
@@ -82,5 +84,92 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         map.put("sEcho",sEcho);
         map.put("aaData",sysUserList);
         return map;
+    }
+
+    @Override
+    @RequiredLog(operation = "添加系统用户")
+    public JsonResult addUser(SysUser user) {
+        if(StringUtils.isEmpty(user.getNickname())) return new JsonResult(new Throwable("登录名不能为空"));
+        if(StringUtils.isEmpty(user.getName())) return new JsonResult(new Throwable("真实姓名不能为空"));
+        if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
+
+        SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname());
+        if(oldUser != null) return new JsonResult(new Throwable("系统用户已存在，请更改登录名"));
+        String salt = UUID.randomUUID().toString();
+        String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
+        user.setSalt(salt);
+        user.setPassword(password);
+
+        sysUserMapper.insert(user);
+        return new JsonResult("添加成功");
+    }
+
+    @Override
+    @RequiredLog(operation = "根据用户ID获取系统用户")
+    public JsonResult getUser(Integer id) {
+        if(id == null || id== 0) return new JsonResult(new Throwable("用户不存在"));
+        SysUser user = sysUserMapper.selectById(id);
+        user.setPassword("");
+        user.setSalt("");
+        return new JsonResult(user);
+    }
+
+    @Override
+    @RequiredLog(operation = "修改系统用户信息")
+    public JsonResult updateUser(SysUser user) {
+        if(StringUtils.isEmpty(user.getNickname())) return new JsonResult(new Throwable("登录名不能为空"));
+        if(StringUtils.isEmpty(user.getName())) return new JsonResult(new Throwable("真实姓名不能为空"));
+        if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
+        if(sysUserMapper.updateById(user)==1){
+            return new JsonResult("修改成功");
+        }
+        return new JsonResult(new Throwable("修改失败"));
+    }
+
+    @Override
+    @RequiredLog(operation = "删除系统用户")
+    public JsonResult deleteUser(Integer id) {
+        SysUser user = sysUserMapper.selectById(id);
+        if(user.getRoleId() == 1) return new JsonResult(new Throwable("禁止删除超级管理员"));
+        if(sysUserMapper.deleteById(id)==1){
+            return new JsonResult("删除成功");
+        }
+        return new JsonResult(new Throwable("删除失败"));
+    }
+
+    @Override
+    @RequiredLog(operation = "重置密码")
+    public JsonResult resetPassword(Integer id) {
+        SysUser user = sysUserMapper.selectById(id);
+        String salt = UUID.randomUUID().toString();
+        String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
+        user.setSalt(salt);
+        user.setPassword(password);
+        if(sysUserMapper.updateById(user)==1){
+            return new JsonResult("重置成功");
+        }
+        return new JsonResult(new Throwable("重置失败"));
+    }
+
+    @Override
+    @RequiredLog(operation = "更改用户锁定状态")
+    public JsonResult resetStatus(Integer id) {
+        SysUser user = sysUserMapper.selectById(id);
+        if(user.getRoleId() == 1) return new JsonResult(new Throwable("禁止锁定超级管理员"));
+        Map<String,Object> map = new HashMap<>();
+        String message = null;
+        if(user.getValid() == null || user.getValid() == 0){
+            user.setValid(1);
+            message = "解锁成功";
+            map.put("message",message);
+            map.put("valid",1);
+        }else{
+            user.setValid(0);
+            message = "锁定成功";
+            map.put("message",message);
+            map.put("valid",0);
+        }
+        if(sysUserMapper.updateById(user)==1) return new JsonResult(map);
+        return new JsonResult(new Throwable("操作失败"));
     }
 }

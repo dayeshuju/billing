@@ -1,6 +1,7 @@
 package com.daye.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysUser;
 
 import java.util.Map;
@@ -18,4 +19,16 @@ public interface SysUserService extends IService<SysUser> {
     boolean updateObject(String oldpwd, String newpwd);
 
     Map<String,Object> findObject(Map<String,String> aoData);
+
+    JsonResult addUser(SysUser user);
+
+    JsonResult getUser(Integer id);
+
+    JsonResult updateUser(SysUser user);
+
+    JsonResult deleteUser(Integer id);
+
+    JsonResult resetPassword(Integer id);
+
+    JsonResult resetStatus(Integer id);
 }

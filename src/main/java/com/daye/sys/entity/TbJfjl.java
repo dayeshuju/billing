@@ -74,6 +74,10 @@ public class TbJfjl implements Serializable {
     @TableField("modifiedTime")
     private Date modifiedTime;
 
+    /**
+     * 备注
+     */
+    private String note;
 
     public Long getId() {
         return id;
@@ -163,6 +167,10 @@ public class TbJfjl implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
+    public  String getNote(){return note;}
+
+    public void setNote(String note) {this.note = note;}
+
     @Override
     public String toString() {
         return "TbJfjl{" +
@@ -177,6 +185,7 @@ public class TbJfjl implements Serializable {
         ", receiptStatus=" + receiptStatus +
         ", createdTime=" + createdTime +
         ", modifiedTime=" + modifiedTime +
+        ", note=" + note +
         "}";
     }
 }

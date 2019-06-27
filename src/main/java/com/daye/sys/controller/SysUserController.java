@@ -28,6 +28,36 @@ public class SysUserController {
     @Autowired
     SysUserService sysUserService;
 
+    @RequestMapping("/resetStatus")
+    public JsonResult resetStatus(Integer id){
+        return sysUserService.resetStatus(id);
+    }
+
+    @RequestMapping("/resetPassword")
+    public JsonResult resetPassword(Integer id){
+        return sysUserService.resetPassword(id);
+    }
+
+    @RequestMapping("/deleteUser")
+    public JsonResult deleteUser(Integer id){
+        return sysUserService.deleteUser(id);
+    }
+
+    @RequestMapping("/updateUser")
+    public JsonResult updateUser(SysUser user){
+        return sysUserService.updateUser(user);
+    }
+
+    @RequestMapping("/getUser")
+    public JsonResult getUser(Integer id){
+        return sysUserService.getUser(id);
+    }
+
+    @RequestMapping("/addUser")
+    public JsonResult addUser(SysUser user){
+        return sysUserService.addUser(user);
+    }
+
     @RequestMapping("/doLoadUser")
     public JsonResult doLoadUser(){
         SysUser sysUser = ShiroUtils.getPrincipal();

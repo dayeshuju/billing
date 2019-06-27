@@ -39,6 +39,7 @@ public class SysUser implements Serializable {
     /**
      * 角色
      */
+    @TableField("roleId")
     private Integer roleId;
     /**
      * 邮箱
@@ -48,6 +49,11 @@ public class SysUser implements Serializable {
      * 手机号
      */
     private String mobile;
+    /**
+     * 办工电话
+     */
+    @TableField("officePhone")
+    private String officePhone;
     /**
      * 状态  0：禁用   1：正常  默认值 ：1
      */
@@ -128,6 +134,10 @@ public class SysUser implements Serializable {
         this.mobile = mobile;
     }
 
+    public String getOfficePhone(){return officePhone;}
+
+    public  void setOfficePhone(String officePhone) {this.officePhone = officePhone;}
+
     public Integer getValid() {
         return valid;
     }
@@ -170,6 +180,7 @@ public class SysUser implements Serializable {
         ", role="+ roleId +
         ", email=" + email +
         ", mobile=" + mobile +
+        ", officePhone=" + officePhone +
         ", valid=" + valid +
         ", createdTime=" + createdTime +
         ", modifiedTime=" + modifiedTime +
