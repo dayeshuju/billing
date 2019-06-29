@@ -16,6 +16,7 @@ var setting = {
 }
 
 function doLoadSysMenus() {
+    initform();
     var url = "sysMenu/doFindZtreeMenuNodes"
     $.getJSON(url, function (result) {
         if (result.state == 1) {
@@ -189,17 +190,10 @@ function addauthority() {
 
 
 function initform() {
-    document.getElementById("autName").value = "";
-    document.getElementById("login_name").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("gender").value = "男";
-    document.getElementById("email").value = "";
-    document.getElementById("tel").value = "";
-    document.getElementById("officetel").value = "";
-    document.getElementById("islawyer").value = "是";
-    document.getElementById("lawnum").value = "";
-    document.getElementById("duty").value = "";
-    document.getElementById("education").value = "";
+    $("#autId").val("");
+    $("#add_autName").val("");
+    $("#add_autNote").val("");
+    $("#menuTree").html("");
 }
 
 function updateauthority() {
