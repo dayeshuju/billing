@@ -20,4 +20,6 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
 
     void insertRoleMenus(@Param("menuIds")  Integer[] menuIds,@Param("roleId") Integer roleId);
+
+    Integer deleteByRoleId(Integer roleId);
 }

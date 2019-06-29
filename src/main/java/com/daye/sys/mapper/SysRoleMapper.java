@@ -24,4 +24,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
 
     Integer findOneByName(String name);
+
+    SysRole findObjectByName(String name);
 }

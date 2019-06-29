@@ -94,7 +94,7 @@ $('#plist tbody tr').live('click', function () {
 
     var sTitle;
     var nTds = $('td', this);
-    var sday = $(nTds[1]).text(); //得到第1列的值------uid
+    var sday = $(nTds[0]).text(); //得到第1列的值------uid
 
     document.getElementById("autId").value = sday;
 
@@ -103,70 +103,62 @@ $('#plist tbody tr').live('click', function () {
 /*删除确认按钮onclick*/
 $('#deleterow').click(function () {
 
-    var autName = document.getElementById("autName").value;
+    var id = $("#autId").val();
 
-    $.ajax('/AuthorityController/deleteAuthority', {
-        dataType: 'json',
-        data: {
-            autName: autName
-        },
-        success: function (data) {
-
-
-            if (data.result == 'success') {
-                //  $.modal.alert('删除成功!');
-
-                $('#modal-deleteauthority').modal('hide')
-
-
-                start = oTable.fnSettings()._iDisplayStart;
-                total = oTable.fnSettings().fnRecordsDisplay();
-
-                if ((total - start) == 1) {
-                    if (start > 0) {
-                        oTable.fnPageChange('previous', true);
-                    }
+    var params = {
+        id: id
+    }
+    var url = "sysRoles/deleteAuth";
+    $.post(url,params,function (result) {
+        if(result.state == 1){
+            $('#modal-deleteauthority').modal('hide');
+            start = oTable.fnSettings()._iDisplayStart;
+            total = oTable.fnSettings().fnRecordsDisplay();
+            if ((total - start) == 1) {
+                if (start > 0) {
+                    oTable.fnPageChange('previous', true);
                 }
-
-                oTable.fnDraw();
-                layer.msg('删除成功！', {
-                    icon: 1
-                });
-            } else {
-                layer.msg('删除失败！', {
-                    icon: 2
-                });
             }
-        },
-        error: function () {
-            layer.msg('删除失败！', {
+
+            oTable.fnDraw();
+            layer.msg(result.message, {
+                icon: 1
+            });
+        }else if(result.state == 0){
+            $('#modal-deleteauthority').modal('hide');
+            layer.msg(result.message, {
                 icon: 2
             });
         }
     });
 
-
 });
 
 /*添加、修改保存按钮onclick*/
 function addauthority() {
-
+    var id = $("#autId").val();
     var autName = $("#add_autName").val();
     var add_autNote = $("#add_autNote").val();
 //获取选中节点的信息
     var menuIds=[];
-    console.log(zTree)
     var checkedNodes=
         zTree.getCheckedNodes(true);
     for(var i in checkedNodes){
         menuIds.push(checkedNodes[i].id);
     }
     var params={
-        name:autName,
-        note:add_autNote,
-        menuIds:menuIds.toString()
+        id: id,
+        name: autName,
+        note: add_autNote,
+        menuIds: menuIds.toString()
     }
-    var url = "sysRoles/addpername";
+    var url = "";
+
+    if(id>0){
+        url = "sysRoles/updateObject"
+    }else{
+        url = "sysRoles/addpername";
+    }
 
     $.post(url, params, function (result) {
         if (result.state == 1) {
@@ -176,9 +168,7 @@ function addauthority() {
             layer.msg(result.message, {
                 icon: 1
             });
-        }
-        ;
-        if (result.state == 0) {
+        }else if (result.state == 0) {
             layer.msg(result.message, {
                 icon: 2
             });
@@ -246,29 +236,6 @@ function updateauthority() {
 
 }
 
-function getCheckboxvalue(suferfix) {
-
-    var fvalue = document.getElementsByName(suferfix);
-    var sb = [];
-    for (var i = 00; i < fvalue.length; i++) {
-        var epfix = i + 1;
-        var eid = suferfix + epfix;
-        if (document.getElementById(eid).checked) {
-            sb.push('1');
-        } else {
-
-            sb.push('2');
-        }
-
-
-    }
-
-
-    return sb.join("");
-
-
-}
-
 function setauth(roleId) {
     initform();
     doLoadSysMenus();
@@ -328,33 +295,3 @@ function getrolemenus(roleId) {
 
 }
 
-
-function setCheckbox(suferfix) {
-
-    var fvalue = document.getElementById(suferfix).value;
-    var items = fvalue.split("");
-    for (var i = 0; i < fvalue.length; i++) {
-        var epfix = i + 1;
-        var eid = suferfix + epfix;
-
-        //alert(eid)
-
-        if (items[i] == '1') {
-
-            document.getElementById(eid).checked = true;
-        } else {
-
-            document.getElementById(eid).checked = false;
-
-        }
-    }
-}
-
-
-$("select#department").change(function () {
-
-
-    getdutylist($("#department").val());
-
-
-});

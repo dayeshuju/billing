@@ -37,6 +37,9 @@
     <select id="findOneByName" resultType="java.lang.Integer">
         select count(1) from sysRoles where name=#{name}
     </select>
+    <select id="findObjectByName" resultType="com.daye.sys.entity.SysRole">
+        select * from sysRoles where name=#{name}
+    </select>
 
 
 </mapper>

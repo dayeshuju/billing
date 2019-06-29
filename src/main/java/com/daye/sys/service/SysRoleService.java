@@ -27,4 +27,8 @@ public interface SysRoleService extends IService<SysRole> {
     JsonResult findOne(Integer id);
 
     JsonResult getrolemenus(Integer id);
+
+    JsonResult updateObject(SysRole sysRole,Integer... menuIds);
+
+    JsonResult deleteAuth(Integer id);
 }

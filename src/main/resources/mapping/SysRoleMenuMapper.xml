@@ -4,6 +4,10 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <delete id="deleteByRoleId">
+        delete from sysRoleMenus where roleId=#{roleId}
+    </delete>
+
     <select id="findMenuIdsByRoleId" resultType="int">
         select distinct menuId
         from sysRoleMenus
