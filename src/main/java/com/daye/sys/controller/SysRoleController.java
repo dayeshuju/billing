@@ -5,6 +5,7 @@ import com.daye.common.util.JsonToMap;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysRole;
 import com.daye.sys.service.SysRoleService;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +44,28 @@ public class SysRoleController {
         Map<String,Object> map = sysRoleService.getAuthoritylist(aoData);
         return map;
     }
+
+    @RequestMapping("/addpername")
+    @RequiresPermissions("sys:permission")
+    public JsonResult getpername(SysRole sysRole,Integer... menuIds ){
+
+        return sysRoleService.getpername(sysRole,menuIds);
+    }
+
+    @RequestMapping("/findOne")
+    @RequiresPermissions("sys:permission")
+    public JsonResult findOne(Integer id){
+
+        return sysRoleService.findOne(id);
+    }
+
+    @RequestMapping("/getrolemenus")
+    @RequiresPermissions("sys:permission")
+    public JsonResult getrolemenus(Integer id ){
+
+        return sysRoleService.getrolemenus(id);
+    }
+
+
 }
 

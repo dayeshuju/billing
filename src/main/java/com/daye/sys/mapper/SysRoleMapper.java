@@ -21,4 +21,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     Integer findCount(@Param("role") SysRole role, @Param("sSearch") String sSearch);
 
     List<SysRole> findRoles(@Param("role") SysRole role, @Param("iDisplayStart") Integer iDisplayStart,@Param("iDisplayLength") Integer iDisplayLength,@Param("sSearch") String sSearch);
+
+
+    Integer findOneByName(String name);
 }

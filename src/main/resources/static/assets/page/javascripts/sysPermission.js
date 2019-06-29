@@ -96,7 +96,7 @@ $('#plist tbody tr').live('click', function () {
     var nTds = $('td', this);
     var sday = $(nTds[1]).text(); //得到第1列的值------uid
 
-    document.getElementById("autName").value = sday;
+    document.getElementById("autId").value = sday;
 
 });
 
@@ -148,42 +148,42 @@ $('#deleterow').click(function () {
 
 });
 
-
 /*添加、修改保存按钮onclick*/
 function addauthority() {
 
-    var autName = document.getElementById("add_autName").value;
-    var url = "";
+    var autName = $("#add_autName").val();
+    var add_autNote = $("#add_autNote").val();
+//获取选中节点的信息
+    var menuIds=[];
+    console.log(zTree)
+    var checkedNodes=
+        zTree.getCheckedNodes(true);
+    for(var i in checkedNodes){
+        menuIds.push(checkedNodes[i].id);
+    }
+    var params={
+        name:autName,
+        note:add_autNote,
+        menuIds:menuIds.toString()
+    }
+    var url = "sysRoles/addpername";
 
-
-    url = "/AuthorityController/addAuthority?autName=" + autName;
-
-
-    url = encodeURI(url);
-
-    $.ajax({
-        url: url,
-        success: function (responseText) {
-
-            if (responseText.result == "success") {
-                $('#modal-addauthority').modal('hide')
-                document.getElementById("add_autName").value = "";
-
-                oTable.fnDraw();
-                layer.msg('保存成功！', {
-                    icon: 1
-                });
-            } else {
-                layer.msg("用户名重复", {
-                    icon: 2
-                });
-            }
-
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
+            $('#modal-addauthority').modal('hide');
+            initform();
+            oTable.fnDraw(false);//重新加载当前页
+            layer.msg(result.message, {
+                icon: 1
+            });
         }
-    });
+        ;
+        if (result.state == 0) {
+            layer.msg(result.message, {
+                icon: 2
+            });
+        }
+    })
 
 
 }
@@ -269,47 +269,62 @@ function getCheckboxvalue(suferfix) {
 
 }
 
-function setauth(autName) {
+function setauth(roleId) {
+    initform();
+    doLoadSysMenus();
 
-    var url = "/AuthorityController/getAuthority?autName=" + autName;
+    var url = "sysRoles/findOne";
+    var params={
+        id:roleId
+    }
 
-    url = encodeURI(url);
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
 
-    $.ajax({
-        url: url,
-        success: function (responseText) {
-            var jinfo = responseText.info;
-            var str = JSON.stringify(jinfo);
-
-            document.getElementById("aaf").value = jinfo.aafunction;
-            document.getElementById("abf").value = jinfo.abfunction;
-            setCheckbox("aaf");
-            setCheckbox("abf");
-
-
-            document.getElementById("baf").value = jinfo.bafunction;
-            document.getElementById("bbf").value = jinfo.bbfunction;
-            document.getElementById("bcf").value = jinfo.bcfunction;
-            setCheckbox("baf");
-            setCheckbox("bbf");
-            setCheckbox("bcf");
-
-
-            document.getElementById("faf").value = jinfo.fafunction;
-            document.getElementById("fbf").value = jinfo.fbfunction;
-            document.getElementById("fcf").value = jinfo.fcfunction;
-            setCheckbox("faf");
-            setCheckbox("fbf");
-            setCheckbox("fcf");
-
-
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
+            $("#add_autName").val(result.data.name);
+            $("#add_autNote").val(result.data.note);
+            getrolemenus(roleId);
         }
+        ;
+        if (result.state == 0) {
+            layer.msg(result.message, {
+                icon: 2
+            });
+        }
+    })
 
-    });
 
+}
+
+function getrolemenus(roleId) {
+
+    var url = "sysRoles/getrolemenus";
+    var params={
+        id:roleId
+    }
+
+    $.post(url, params, function (result) {
+        if (result.state == 1) {
+            //展开ztree树
+            zTree.expandAll(true);
+            //2.2获取角色对应的菜单id
+            var menuIds=result.data;
+            //2.3迭代所有菜单id
+            for(var i in menuIds){
+                //基于菜单id获取ztree中的node节点
+                var node=
+                    zTree.getNodeByParam("id",menuIds[i]);
+                //让节点选中
+                zTree.checkNode(node,true,false);
+            }
+        }
+        ;
+        if (result.state == 0) {
+            layer.msg(result.message, {
+                icon: 2
+            });
+        }
+    })
 
 }
 
