@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * <p>
@@ -45,6 +42,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             String newSalt = UUID.randomUUID().toString();
             user.setSalt(newSalt);
             SimpleHash newM5pwd = new SimpleHash("MD5",newpwd,newSalt);
+            user.setModifiedTime(new Date());
             user.setPassword(newM5pwd.toHex());
         }else {
             throw new ServiceException("旧密码错误");
@@ -89,17 +87,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @RequiredLog(operation = "添加系统用户")
     public JsonResult addUser(SysUser user) {
-        if(StringUtils.isEmpty(user.getNickname())) return new JsonResult(new Throwable("登录名不能为空"));
-        if(StringUtils.isEmpty(user.getName())) return new JsonResult(new Throwable("真实姓名不能为空"));
+        if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空"));
+        if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空"));
         if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
 
-        SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname());
+        SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname().trim());
         if(oldUser != null) return new JsonResult(new Throwable("系统用户已存在，请更改登录名"));
         String salt = UUID.randomUUID().toString();
         String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
         user.setSalt(salt);
         user.setPassword(password);
-
+        user.setName(user.getName().trim());
+        user.setNickname(user.getNickname().trim());
         sysUserMapper.insert(user);
         return new JsonResult("添加成功");
     }
@@ -117,9 +116,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @RequiredLog(operation = "修改系统用户信息")
     public JsonResult updateUser(SysUser user) {
-        if(StringUtils.isEmpty(user.getNickname())) return new JsonResult(new Throwable("登录名不能为空"));
-        if(StringUtils.isEmpty(user.getName())) return new JsonResult(new Throwable("真实姓名不能为空"));
+        if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空"));
+        if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空"));
         if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
+        SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname());
+        if(oldUser != null && user.getId() != oldUser.getId()) return new JsonResult(new Throwable("修改后的用户名已存在"));
+        user.setModifiedTime(new Date());
+        user.setName(user.getName().trim());
+        user.setNickname(user.getNickname().trim());
         if(sysUserMapper.updateById(user)==1){
             return new JsonResult("修改成功");
         }
@@ -145,6 +149,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
         user.setSalt(salt);
         user.setPassword(password);
+        user.setModifiedTime(new Date());
         if(sysUserMapper.updateById(user)==1){
             return new JsonResult("重置成功");
         }
@@ -169,6 +174,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             map.put("message",message);
             map.put("valid",0);
         }
+        user.setModifiedTime(new Date());
         if(sysUserMapper.updateById(user)==1) return new JsonResult(map);
         return new JsonResult(new Throwable("操作失败"));
     }

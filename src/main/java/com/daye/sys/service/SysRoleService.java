@@ -1,6 +1,7 @@
 package com.daye.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysRole;
 
 import java.util.List;
@@ -19,4 +20,15 @@ public interface SysRoleService extends IService<SysRole> {
     List<SysRole> getObject();
 
     Map<String, Object> getAuthoritylist(Map<String, String> aoData);
+
+
+    JsonResult getpername(SysRole sysRole, Integer[] menuIds);
+
+    JsonResult findOne(Integer id);
+
+    JsonResult getrolemenus(Integer id);
+
+    JsonResult updateObject(SysRole sysRole,Integer... menuIds);
+
+    JsonResult deleteAuth(Integer id);
 }

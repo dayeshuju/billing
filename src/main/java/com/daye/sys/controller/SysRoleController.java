@@ -43,5 +43,37 @@ public class SysRoleController {
         Map<String,Object> map = sysRoleService.getAuthoritylist(aoData);
         return map;
     }
+
+    @RequestMapping("/addpername")
+    @RequiresPermissions("sys:permission")
+    public JsonResult getpername(SysRole sysRole,Integer... menuIds ){
+
+        return sysRoleService.getpername(sysRole,menuIds);
+    }
+
+    @RequestMapping("/findOne")
+    @RequiresPermissions("sys:permission")
+    public JsonResult findOne(Integer id){
+
+        return sysRoleService.findOne(id);
+    }
+
+    @RequestMapping("/getrolemenus")
+    @RequiresPermissions("sys:permission")
+    public JsonResult getrolemenus(Integer id ){
+        return sysRoleService.getrolemenus(id);
+    }
+
+    @RequestMapping("/updateObject")
+    @RequiresPermissions("sys:permission")
+    public JsonResult updateObject(SysRole sysRole,Integer... menuIds){
+        return sysRoleService.updateObject(sysRole,menuIds);
+    }
+
+    @RequestMapping("/deleteAuth")
+    @RequiresPermissions("sys:permission")
+    public JsonResult deleteAuth(Integer id){
+        return sysRoleService.deleteAuth(id);
+    }
 }
 

@@ -4,10 +4,26 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <delete id="deleteByRoleId">
+        delete from sysRoleMenus where roleId=#{roleId}
+    </delete>
+
     <select id="findMenuIdsByRoleId" resultType="int">
         select distinct menuId
         from sysRoleMenus
         where roleId=#{roleId}
     </select>
 
+    <insert id="insertRoleMenus">
+
+        insert into sysRoleMenus
+        (roleid,menuid)
+        values
+        <foreach collection="menuIds"
+                 separator=","
+                 item="menuId">
+            (#{roleId},#{menuId})
+        </foreach>
+
+    </insert>
 </mapper>

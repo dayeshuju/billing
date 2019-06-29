@@ -2,11 +2,14 @@ package com.daye.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysRole;
 import com.daye.sys.mapper.SysRoleMapper;
+import com.daye.sys.mapper.SysRoleMenuMapper;
 import com.daye.sys.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -26,6 +29,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Autowired
     SysRoleMapper sysRoleMapper;
+    @Autowired
+    SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     @RequiredLog(operation = "获得所有角色信息")
@@ -58,5 +63,64 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         map.put("sEcho",sEcho);
         map.put("aaData",sysRoleList);
         return map;
+    }
+
+    @Override
+    @RequiredLog(operation = "添加权限类型")
+    @Transactional
+    public JsonResult getpername(SysRole sysRole, Integer[] menuIds) {
+        if(StringUtils.isEmpty(sysRole.getName().trim())){
+            return new JsonResult(new Throwable("权限名称不能为空"));
+        }
+        if(menuIds==null||menuIds.length==0){
+            return new JsonResult(new Throwable("请分配权限"));
+        }
+
+        Integer count= sysRoleMapper.findOneByName(sysRole.getName().trim());
+        if(count>0){
+            return new JsonResult(new Throwable("权限名称重复"));
+        }
+        sysRole.setName(sysRole.getName().trim());
+        sysRoleMapper.insert(sysRole);
+        sysRoleMenuMapper.insertRoleMenus(menuIds,sysRole.getId());
+        return new JsonResult("新增成功");
+    }
+
+    @Override
+    @RequiredLog(operation = "根据Id获得权限类型")
+    public JsonResult findOne(Integer id) {
+        SysRole sysRole= sysRoleMapper.selectById(id);
+        return new JsonResult(sysRole);
+    }
+
+    @Override
+    @RequiredLog(operation = "根据RoleId获得菜单Id")
+    public JsonResult getrolemenus(Integer id) {
+       List<Integer> list= sysRoleMenuMapper.findMenuIdsByRoleId(id);
+        return new JsonResult(list);
+    }
+
+    @Override
+    @RequiredLog(operation = "修改权限类型")
+    @Transactional
+    public JsonResult updateObject(SysRole sysRole, Integer... menuIds) {
+        if(StringUtils.isEmpty(sysRole.getName().trim())) return new JsonResult(new Throwable("权限类型名称不能为空"));
+        if(menuIds == null || menuIds.length == 0) return new JsonResult(new Throwable("请分配权限"));
+        SysRole oldRole = sysRoleMapper.findObjectByName(sysRole.getName().trim());
+        if(oldRole != null && oldRole.getId() != sysRole.getId()) return new JsonResult(new Throwable("修改后的权限名称已存在"));
+        sysRole.setName(sysRole.getName().trim());
+        sysRoleMapper.updateById(sysRole);
+        sysRoleMenuMapper.deleteByRoleId(sysRole.getId());
+        sysRoleMenuMapper.insertRoleMenus(menuIds,sysRole.getId());
+        return new JsonResult("修改成功");
+    }
+
+    @Override
+    @RequiredLog(operation = "根据id删除权限")
+    @Transactional
+    public JsonResult deleteAuth(Integer id) {
+        if(sysRoleMapper.deleteById(id)==0) return new JsonResult(new Throwable("删除失败！！！"));
+        if(sysRoleMenuMapper.deleteByRoleId(id)==0) return new JsonResult(new Throwable("删除失败！！！"));
+        return new JsonResult("删除成功");
     }
 }
