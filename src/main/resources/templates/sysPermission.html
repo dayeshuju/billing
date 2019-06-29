@@ -16,7 +16,7 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    添加权限类型
+                    添加/修改权限类型
                 </h3>
             </div>
             <div class="modal-body">
@@ -94,65 +94,6 @@
             </div>
         </div>
         <!--modal-deleteauthority end-->
-        <!--modal-setpermissions-->
-        <div class="modal-add hide fade in" id="modal-setpermissions" role="dialog" tabindex="-1" aria-hidden="false"
-             style="display:none;">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal" type="button">×</button>
-                <h3 style="color: white;">
-                    <div class="icon-edit"></div>
-                    设置权限
-                </h3>
-            </div>
-            <div class="modal-body">
-                <form class="form" style="margin-bottom: 0;">
-                    <div class="box-content" style="display: inline;">
-                        <table class="kv-table">
-                            <tbody>
-                            <tr>
-                                <td class="kv-label" style="width: 50px">权限类型名称
-                                    <font color="red">*</font>
-                                </td>
-                                <td class="kv-content">
-                                    <input class="span11" id="edit_autName" type="text" style="width: 100%">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label" style="width: 50px">
-                                    权限类型描述
-                                </td>
-                                <td class="kv-content">
-                                    <input class="span11" id="edit_autNote" type="text"  style="width: 100%">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label" style="width: 50px">授权
-                                    <font color="red">*</font>
-                                </td>
-                                <td>
-                                    <div>
-                                        <ul id="dmenuTree" class="ztree"></ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    <p class="help-block"></p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
-                <button id="saveauthority" class="btn btn-primary" onclick="updateauthority()"><i class="icon-save"></i>
-                    保 存
-                </button>
-            </div>
-        </div>
-        <!--modal-setpermissions end-->
         <!--权限列表部分 开始-->
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
