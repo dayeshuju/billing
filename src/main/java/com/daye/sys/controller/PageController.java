@@ -33,4 +33,9 @@ public class PageController {
         return "sysPermission";
     }
 
+    @RequestMapping("tbYhlx")
+    @RequiresPermissions("sys:tbyhlx")
+    public String loadTbYhlxUI(){
+        return "tbYhlx";
+    }
 }
