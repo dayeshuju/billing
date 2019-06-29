@@ -4,5 +4,35 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-
+    <sql id="findObject">
+        '1'='1'
+        <if test="sSearch != null and sSearch != ''">
+            and a.id like concat("%",#{sSearch},"%")
+            or a.userType like concat("%",#{sSearch},"%")
+            or a.tate like concat("%",#{sSearch},"%")
+        </if>
+        <if test="yhlx.id!=null">
+            and a.id like concat("%",#{yhlx.id},"%")
+        </if>
+        <if test="yhlx.userType!=null and yhlx.userType!=''">
+            and a.id like concat("%",#{yhlx.userType},"%")
+        </if>
+        <if test="yhlx.tate!=null">
+            and a.id like concat("%",#{yhlx.tate},"%")
+        </if>
+        order by a.createdTime desc
+    </sql>
+    <select id="findObject" resultType="com.daye.sys.entity.TbYhlx">
+        select a.id, a.userType, a.tate from tbYhlx a
+        <where>
+            <include refid="findObject"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(1) from tbYhlx a
+        <where>
+            <include refid="findObject"></include>
+        </where>
+    </select>
 </mapper>

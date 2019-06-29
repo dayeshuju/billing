@@ -3,6 +3,8 @@ package com.daye.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.daye.sys.entity.TbYhlx;
 
+import java.util.Map;
+
 /**
  * <p>
  * 用户类型 服务类
@@ -13,4 +15,6 @@ import com.daye.sys.entity.TbYhlx;
  */
 public interface TbYhlxService extends IService<TbYhlx> {
 
+    //2019-06-29 刘博 添加查询用户类型数据方法
+    Map<String,Object> findObject(Map<String, String> aoData);
 }

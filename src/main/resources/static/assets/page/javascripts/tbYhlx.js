@@ -10,23 +10,11 @@ function finduser() {
         mDataProp: "id",
         sTitle: "ID"
     }, {
-        mDataProp: "nickname",
-        sTitle: "登录账号"
+        mDataProp: "userType",
+        sTitle: "用户类型"
     }, {
-        mDataProp: "name",
-        sTitle: "真实姓名"
-    }, {
-        mDataProp: "mobile",
-        sTitle: "手机号码"
-    }, {
-        mDataProp: "officePhone",
-        sTitle: "办工电话"
-    }, {
-        mDataProp: "email",
-        sTitle: "email"
-    }, {
-        mDataProp: "note",
-        sTitle: "权限类型"
+        mDataProp: "tate",
+        sTitle: "电费费率"
     }, {
         mDataProp: "id",
         sTitle: "操作"
@@ -37,14 +25,14 @@ function finduser() {
     /*给操作列设置填充 */
     var aoColumnDefs = [{
         "bSortable": false,
-        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7]
+        "aTargets": [0, 1, 2, 3]
     }, {
         "sDefaultContent": '',
         "aTargets": ['_all']
     }, {
-        "aTargets": [7],
+        "aTargets": [3],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-userdetail' role='button' onclick='getuser(" + data + ")'><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href=" + (row.valid == 1 ? "#modal-lockuser" : "#modal-unslockuser") + " role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid == 1 ? "锁定" : "解锁") + "</span></a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a></div>";
         }
     }, {
         "aTargets": [0],
@@ -57,7 +45,7 @@ function finduser() {
 
     ];
 
-    var new_filter_url = "sysUsers/getUserList"; //表#plist数据获取url
+    var new_filter_url = "tbYhlx/getYhlxList"; //表#plist数据获取url
 
     var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
 

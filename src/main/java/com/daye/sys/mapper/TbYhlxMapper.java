@@ -2,6 +2,9 @@ package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.TbYhlx;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,10 @@ import com.daye.sys.entity.TbYhlx;
  */
 public interface TbYhlxMapper extends BaseMapper<TbYhlx> {
 
+    Integer findCount(@Param("yhlx") TbYhlx yhlx, @Param("sSearch") String sSearch);
+
+    List<TbYhlx> findObject(@Param("yhlx") TbYhlx yhlx,
+                            @Param("iDisplayStart") Integer iDisplayStart,
+                            @Param("iDisplayLength") Integer iDisplayLength,
+                            @Param("sSearch") String sSearch);
 }
