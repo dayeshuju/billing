@@ -107,180 +107,36 @@
             <div class="modal-body">
                 <form class="form" style="margin-bottom: 0;">
                     <div class="box-content" style="display: inline;">
-                        <!--add tab -->
-                        <div class="row-fluid">
-                            <div class="tabbable">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a data-toggle="tab" href="#tab1">
-                                            <i class="icon-user text-blue"></i> 1.个人中心
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a data-toggle="tab" href="#tab2">
-                                            <i class="icon-th-large text-blue"></i> 2.项目中心
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a data-toggle="tab" href="#tab6">
-                                            <i class="icon-wrench text-blue"></i> 3.系统管理
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab1">
-                                        <div class="box-content box-no-padding">
-                                            <div class="responsive-table">
-                                                <div class="scrollable-area">
-                                                    <table class="table table-bordered table-hover table-striped"
-                                                           style="margin-bottom:0;">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="span2">标题</th>
-                                                            <th class="span10">功能项</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td id="aaf">统计图表</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="aaf1" type="checkbox" value="option1"
-                                                                               name="aaf" checked="true"
-                                                                               disabled="true">
-                                                                        统计图表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td id="abf">个人设置</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="abf1" type="checkbox" value="option1"
-                                                                               name="abf" checked="true"
-                                                                               disabled="true">
-                                                                        修改密码
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <table class="kv-table">
+                            <tbody>
+                            <tr>
+                                <td class="kv-label" style="width: 50px">权限类型名称
+                                    <font color="red">*</font>
+                                </td>
+                                <td class="kv-content">
+                                    <input class="span11" id="edit_autName" type="text" style="width: 100%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="kv-label" style="width: 50px">
+                                    权限类型描述
+                                </td>
+                                <td class="kv-content">
+                                    <input class="span11" id="edit_autNote" type="text"  style="width: 100%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="kv-label" style="width: 50px">授权
+                                    <font color="red">*</font>
+                                </td>
+                                <td>
+                                    <div>
+                                        <ul id="menuTree" class="ztree"></ul>
                                     </div>
-                                    <div class="tab-pane" id="tab2">
-                                        <div class="box-content box-no-padding">
-                                            <div class="responsive-table">
-                                                <div class="scrollable-area">
-                                                    <table class="table table-bordered table-hover table-striped"
-                                                           style="margin-bottom:0;">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="span2">标题</th>
-                                                            <th class="span10">功能项</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td id="baf">重点项目</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="baf1" type="checkbox" value="option1"
-                                                                               name="baf" checked="true"> 重点项目列表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td id="bbf">会议议定事项</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="bbf1" type="checkbox" value="option1"
-                                                                               name="bbf" checked="true"> 会议议定事项列表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td id="bcf">领导批示事项</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="bcf1" type="checkbox" value="option1"
-                                                                               name="bcf" checked="true"> 领导批示事项列表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab6">
-                                        <div class="box-content box-no-padding">
-                                            <div class="responsive-table">
-                                                <div class="scrollable-area">
-                                                    <table class="table table-bordered table-hover table-striped"
-                                                           style="margin-bottom:0;">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="span2">标题</th>
-                                                            <th class="span10">功能项</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td id="faf">系统管理</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="faf1" type="checkbox" value="option1"
-                                                                               name="faf"> 权限列表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td id="fbf">用户管理</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="fbf1" type="checkbox" value="option1"
-                                                                               name="fbf"> 用户列表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td id="fcf">部门管理</td>
-                                                            <td>
-                                                                <div class="controls">
-                                                                    <label class="checkbox inline">
-                                                                        <input id="fcf1" type="checkbox" value="option1"
-                                                                               name="fcf"> 部门列表
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </form>
             </div>

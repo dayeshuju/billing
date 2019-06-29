@@ -55,7 +55,7 @@ $(document).ready(function () {
         "aTargets": [2],
         "mRender": function (data, type, row) {
 
-            return " <div class='text-left'> <a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-setpermissions' role='button' style='background-color:#00BB00' onclick='setauth(\"" + row.id + "\")'><i class='icon-wrench'></i> 权限设置</a>  <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteauthority' role='button'><i class='icon-remove'></i> 删除</a></div>";
+            return " <div class='text-left'> <a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-addauthority' role='button' style='background-color:#00BB00' onclick='setauth(\"" + row.id + "\")'><i class='icon-wrench'></i> 权限设置</a>  <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteauthority' role='button'><i class='icon-remove'></i> 删除</a></div>";
         }
     }, {
         "aTargets": [0],
