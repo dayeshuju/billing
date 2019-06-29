@@ -2,6 +2,7 @@ package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     List<SysRole> findObject();
 
-    Integer findCount(SysRole role, String sSearch);
+    Integer findCount(@Param("role") SysRole role, @Param("sSearch") String sSearch);
 
-    List<SysRole> findRoles(SysRole role, Integer iDisplayStart, Integer iDisplayLength, String sSearch);
+    List<SysRole> findRoles(@Param("role") SysRole role, @Param("iDisplayStart") Integer iDisplayStart,@Param("iDisplayLength") Integer iDisplayLength,@Param("sSearch") String sSearch);
 }
