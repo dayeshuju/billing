@@ -59,4 +59,11 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
         map.put("aaData",cbjlList);
         return map;
     }
+
+    @Override
+    @RequiredLog(operation = "根据meterId获取历史数据")
+    public Map<String, Object> getHistoryCbjlList(Integer meterId) {
+
+        return null;
+    }
 }

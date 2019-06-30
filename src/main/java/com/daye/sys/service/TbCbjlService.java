@@ -16,4 +16,6 @@ import java.util.Map;
 public interface TbCbjlService extends IService<TbCbjl> {
 
     Map<String, Object> findObject(Map<String, String> aoData);
+
+    Map<String, Object> getHistoryCbjlList(Integer meterId);
 }

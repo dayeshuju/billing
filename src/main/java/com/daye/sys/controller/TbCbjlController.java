@@ -26,6 +26,13 @@ public class TbCbjlController {
     @Autowired
     TbCbjlService tbCbjlService;
 
+    @RequestMapping("getHistoryCbjlList")
+    @RequiresPermissions("sys:tbcbjl")
+    public Map<String,Object> getHistoryCbjlList(Integer meterId,@RequestParam Map<String,String> aoData){
+        Map<String,Object> map = tbCbjlService.getHistoryCbjlList(meterId);
+        return map;
+    }
+
     @RequestMapping("getCbjlList")
     @RequiresPermissions("sys:tbcbjl")
     public Map<String,Object> getCbjlList(@RequestParam Map<String,String> aoData){

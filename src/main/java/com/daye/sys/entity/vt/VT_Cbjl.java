@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class VT_Cbjl implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Long sort;
     private Integer id;
     private String name;
     private String idCode;

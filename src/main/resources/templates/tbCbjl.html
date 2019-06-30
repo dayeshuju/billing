@@ -4,8 +4,8 @@
 
 <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper' style="display: block;">
-        <!--modal-adduser-->
-        <div class="modal-add hide fade in" id="modal-adduser" role="dialog" tabindex="-1" aria-hidden="false"
+        <!--modal-historycbjl-->
+        <div class="modal-add hide fade in" id="modal-historycbjl" role="dialog" tabindex="-1" aria-hidden="false"
              style="display:none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -66,6 +66,22 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class='scrollable-area'>
+                        <table class='data-table data-table-column-filter table table-bordered table-striped table-hover'
+                               style='margin-bottom:0;' id="historyPlist">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>身份证号</th>
+                                <th>表号</th>
+                                <th>抄表时间</th>
+                                <th>表示数</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </form>
                 <div class="control-group">
                     <div class="controls">
@@ -80,19 +96,19 @@
         </div>
         <!--modal-adduser end-->
         <!--modal-deleteUser begin-->
-        <div class="modal hide fade in" id="modal-deleteuser" role="dialog" tabindex="-1" aria-hidden="false"
+        <div class="modal hide fade in" id="modal-deletecbjl" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-minus-sign"></div>
-                    删除用户
+                    删除抄表记录
                 </h3>
             </div>
             <div class="modal-body">
                 <h4 style="color: red;">
                     <div class="icon-exclamation-sign"></div>
-                    注意：用户删除后不能恢复，请谨慎操作！
+                    注意：抄表记录删除后不能恢复，请谨慎操作！
                 </h4>
                 <p>请确认是否继续删除。</p>
                 <p>非系统管理员请勿进行删除操作！</p>
@@ -109,7 +125,7 @@
                 <div class='box-header blue-background'>
                     <div class='title'>用户列表</div>
                     <div class='pull-right'>
-                        <a id="adduser" class="btn btn-default" data-toggle="modal" href="#modal-adduser" role="button"
+                        <a id="adduser" class="btn btn-default" data-toggle="modal" href="#modal-addcbjl" role="button"
                            style="margin-bottom:5px" onclick="plAddCbjl()"><i class="icon-plus"></i> 批量添加抄表记录</a>
                     </div>
                 </div>

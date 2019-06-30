@@ -38,7 +38,7 @@
         </where>
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Cbjl">
-        select a.id,c.name,c.idCode,a.meterId,date_format(a.regisTime,'%Y-%m-%d') regisTime,a.meterNum from tbCbjl a,tbJlsb b,tbYdyh c
+        select (@i:=@i+1) sort,a.id,c.name,c.idCode,a.meterId,date_format(a.regisTime,'%Y-%m-%d') regisTime,a.meterNum from tbCbjl a,tbJlsb b,tbYdyh c,(SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObject"></include>
             limit #{iDisplayStart},#{iDisplayLength}
