@@ -1,5 +1,6 @@
 package com.daye.config;
 
+import com.daye.common.filter.LoginFormFilter;
 import com.daye.sys.service.realm.ShiroUserRealm;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +56,10 @@ public class ShiroConfig {
         map.put("/**","authc");
         map.put("/assets/**","anon");
         map.put("/doLogin","anon");
-
+        Map<String,Filter> filters = new HashMap<String,Filter>();
+        Filter loginFilter = new LoginFormFilter();
+        filters.put("authc", loginFilter); //此处使用自定义的拦截器,autho默认使用FormAuthenticationFilter拦截器
+        shiroFilterFactoryBean.setFilters(filters);
         shiroFilterFactoryBean.setLoginUrl("/doLoginUI");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;

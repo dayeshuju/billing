@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,6 +110,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole oldRole = sysRoleMapper.findObjectByName(sysRole.getName().trim());
         if(oldRole != null && oldRole.getId() != sysRole.getId()) return new JsonResult(new Throwable("修改后的权限名称已存在"));
         sysRole.setName(sysRole.getName().trim());
+        sysRole.setModifiedTime(new Date());
         sysRoleMapper.updateById(sysRole);
         sysRoleMenuMapper.deleteByRoleId(sysRole.getId());
         sysRoleMenuMapper.insertRoleMenus(menuIds,sysRole.getId());

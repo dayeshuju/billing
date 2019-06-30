@@ -152,7 +152,7 @@
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="tbSyt">
-                            <a href='form_styles.html'>
+                            <a href='#'>
                                 <i class='icon-caret-right'></i>
                                 <span>收银台</span>
                             </a>
@@ -167,25 +167,25 @@
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="tbJfjl">
-                            <a href='sysUser.html'>
+                            <a href='#'>
                                 <i class='icon-caret-right'></i>
                                 <span>缴费记录管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbYdyh">
-                            <a href='form_components.html'>
+                            <a href='#'>
                                 <i class='icon-caret-right'></i>
                                 <span>用电用户管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbCbjl">
-                            <a href='validations.html'>
+                            <a href='#'>
                                 <i class='icon-caret-right'></i>
                                 <span>抄表记录管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbJlsb">
-                            <a href='wizard.html'>
+                            <a href='#'>
                                 <i class='icon-caret-right'></i>
                                 <span>计量设备管理</span>
                             </a>
@@ -390,6 +390,23 @@
             $("#mainContent").load(url);
         })
     }
+
+    $.ajaxSetup({
+        type: "POST",
+        complete: function(jqXHR, textStatus){
+            switch (jqXHR.status){
+                case(401):
+                    layer.msg("登录超时，请重新登录！", {
+                        time: 1000,
+                        icon: 2
+                    });
+                    setTimeout(function () {
+                        window.location.href="doLoginUI";
+                    },1050);
+                    break;
+            }
+        }
+    })
 </script>
 </body>
 </html>

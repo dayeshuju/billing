@@ -16,13 +16,13 @@
     <sql id="findObject">
         '1'='1'
         <if test="sSearch != null and sSearch != ''">
-            and a.id like concat("%",#{sSearch},"%")
+            and (a.id like concat("%",#{sSearch},"%")
             or a.nickname like concat("%",#{sSearch},"%")
             or a.name like concat("%",#{sSearch},"%")
             or a.mobile like concat("%",#{sSearch},"%")
             or a.officePhone like concat("%",#{sSearch},"%")
             or a.email like concat("%",#{sSearch},"%")
-            or a.roleId in (select c.id from sysRoles c where c.name like concat("%",#{sSearch},"%"))
+            or a.roleId in (select c.id from sysRoles c where c.name like concat("%",#{sSearch},"%")))
         </if>
         <if test="user.id != null">
             and a.id like concat("%",#{user.id},"%")

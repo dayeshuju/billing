@@ -3,6 +3,8 @@ package com.daye.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.daye.sys.entity.TbCbjl;
 
+import java.util.Map;
+
 /**
  * <p>
  * 抄表记录 服务类
@@ -13,4 +15,5 @@ import com.daye.sys.entity.TbCbjl;
  */
 public interface TbCbjlService extends IService<TbCbjl> {
 
+    Map<String, Object> findObject(Map<String, String> aoData);
 }

@@ -134,7 +134,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @RequiredLog(operation = "删除系统用户")
     public JsonResult deleteUser(Integer id) {
         SysUser user = sysUserMapper.selectById(id);
-        if(user.getRoleId() == 1) return new JsonResult(new Throwable("禁止删除超级管理员"));
+        if(user != null && user.getRoleId() == 1) return new JsonResult(new Throwable("禁止删除超级管理员"));
         if(sysUserMapper.deleteById(id)==1){
             return new JsonResult("删除成功");
         }

@@ -4,5 +4,45 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <sql id="findObject">
+        a.id in (select max(d.id) from tbCbjl d group by d.meterId)
+        and a.meterId = b.meterId
+        and b.ydyhId = c.id
+        <if test="sSearch != null and sSearch != ''">
+            and (c.name like concat("%",#{sSearch},"%")
+            or c.idCode like concat("%",#{sSearch},"%")
+            or a.meterId like concat("%",#{sSearch},"%")
+            or date_format(a.regisTime,'%Y-%m-%d') like concat('%',#{sSearch},'%')
+            or a.meterNum like concat("%",#{sSearch},"%"))
+        </if>
+        <if test="vt_cbjl.name != null and vt_cbjl.name != ''">
+            and c.name like concat("%",#{vt_cbjl.name},"%")
+        </if>
+        <if test="vt_cbjl.idCode != null and vt_cbjl.idCode != ''">
+            and c.idCode like concat("%",#{vt_cbjl.idCode},"%")
+        </if>
+        <if test="vt_cbjl.meterId != null and vt_cbjl.meterId != ''">
+            and a.meterId like concat("%",#{vt_cbjl.meterId},"%")
+        </if>
+        <if test="vt_cbjl.regisTime != null and vt_cbjl.regisTime != ''">
+            and date_format(a.regisTime,'%Y-%m-%d') like concat('%',#{vt_cbjl.regisTime},'%')
+        </if>
+        <if test="vt_cbjl.meterNum != null and vt_cbjl.meterNum != ''">
+            and a.meterNum like concat("%",#{vt_cbjl.meterNum},"%")
+        </if>
+    </sql>
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(1) from tbCbjl a,tbJlsb b,tbYdyh c
+        <where>
+            <include refid="findObject"></include>
+        </where>
+    </select>
+    <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Cbjl">
+        select a.id,c.name,c.idCode,a.meterId,date_format(a.regisTime,'%Y-%m-%d') regisTime,a.meterNum from tbCbjl a,tbJlsb b,tbYdyh c
+        <where>
+            <include refid="findObject"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
 
 </mapper>

@@ -190,10 +190,6 @@ function adduser() {
     var email = $("#email").val();
     var roleId = $("#roleId").val();
 
-    if (Number(id) == 2) {
-        roleId = 1;
-    }
-
     var params = {
         id: id,
         nickname: nickname,
@@ -238,12 +234,6 @@ function initform() {
     $("#officePhone").val("");
     $("#email").val("");
     $("#roleId").val(0);
-    $("#dnickname").val("");
-    $("#dname").val("");
-    $("#dmobile").val("");
-    $("#dofficePhone").val("");
-    $("#demail").val("");
-    $("#droleId").val(0);
 }
 
 /*修改用户弹出层*/
@@ -262,6 +252,9 @@ function modifyuser(id) {
             $("#officePhone").val(result.data.officePhone);
             $("#email").val(result.data.email);
             $("#roleId").val(result.data.roleId);
+            if(Number(id) == 2){
+                $("#roleId").attr("disabled","disabled");
+            }
         }
     })
 }
@@ -285,7 +278,6 @@ function getAuthoritylist() {
             }
 
             document.getElementById("roleId").innerHTML = astr;
-            document.getElementById("droleId").innerHTML = astr;
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -38,4 +38,35 @@ public class PageController {
     public String loadTbYhlxUI(){
         return "tbYhlx";
     }
+
+    @RequestMapping("tbJfjl")
+    @RequiresPermissions("sys:tbjfjl")
+    public  String loadTbJfjlUI(){
+        return "tbJfjl";
+    }
+
+    @RequestMapping("tbYdyh")
+    @RequiresPermissions("sys:tbydyh")
+    public String loadTbYdyhUI(){
+        return "tbYdyh";
+    }
+
+    @RequestMapping("tbCbjl")
+    @RequiresPermissions("sys:tbcbjl")
+    public String loadTbCbjlUI(){
+        return "tbCbjl";
+    }
+
+    @RequestMapping("tbJlsb")
+    @RequiresPermissions("sys:tbjlsb")
+    public String loadTbJlsbUI(){
+        return "tbJlsb";
+    }
+
+    @RequestMapping("tbSyt")
+    @RequiresPermissions("sys:tbsyt")
+    public String loadTbSytUI(){
+        return "tbSyt";
+    }
+
 }

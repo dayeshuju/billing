@@ -4,5 +4,61 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <select id="getYhlxlist" resultType="com.daye.sys.entity.TbYhlx">
+        select * from tbYhlx
+    </select>
+    <sql id="findObject">
+        a.valid=1
+        <if test="sSearch != null and sSearch != ''">
+            and (a.id like concat("%",#{sSearch},"%")
+            or a.name like concat("%",#{sSearch},"%")
+            or a.idCode like concat("%",#{sSearch},"%")
+            or a.address like concat("%",#{sSearch},"%")
+            or a.phoneNum like concat("%",#{sSearch},"%")
+            or a.userTypeId in (select c.id from tbYhlx c where c.userType like concat("%",#{sSearch},"%")))
+        </if>
+        <if test="ydyh.id != null">
+            and a.id like concat("%",#{ydyh.id},"%")
+        </if>
+        <if test="ydyh.name != null and ydyh.name != ''">
+            and a.name like concat("%",#{ydyh.name},"%")
+        </if>
+        <if test="ydyh.idCode != null and ydyh.idCode != ''">
+            and a.idCode like concat("%",#{ydyh.idCode},"%")
+        </if>
+        <if test="ydyh.address != null and ydyh.address != ''">
+            and a.address like concat("%",#{ydyh.address},"%")
+        </if>
+        <if test="ydyh.phoneNum != null and ydyh.phoneNum != ''">
+            and a.phoneNum like concat("%",#{ydyh.phoneNum},"%")
+        </if>
+        <if test="ydyh.note != null and ydyh.note != ''">
+            and a.userTypeId in (select c.id from tbYhlx c where c.userType like concat("%",#{ydyh.note},"%"))
+        </if>
+        order by a.createdTime desc
+    </sql>
+    <select id="findCount" resultType="java.lang.Integer">
+        select count(1) from tbYdyh a
+        <where>
+            <include refid="findObject"></include>
+        </where>
+    </select>
+    <select id="getYdyhList" resultType="com.daye.sys.entity.TbYdyh">
+        select a.id,a.name,a.idCode,a.address,a.phoneNum,(select r.userType from tbYhlx r where r.id = a.userTypeId) note from tbYdyh a
+        <where>
+            <include refid="findObject"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
+    <select id="getYdyhByIdCode" resultType="com.daye.sys.entity.TbYdyh">
+        select * from tbYdyh where idCode=#{idCode}
+    </select>
+    <select id="getQfjl" resultType="java.lang.Integer">
+        select count(1) from tbJfjl
+        <where>
+            ydyhId = #{id}
+            and (payStatus=0 or payStatus=1)
+        </where>
+    </select>
 
 </mapper>

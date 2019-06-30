@@ -1,7 +1,10 @@
 package com.daye.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbYdyh;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +16,15 @@ import com.daye.sys.entity.TbYdyh;
  */
 public interface TbYdyhService extends IService<TbYdyh> {
 
+    JsonResult getYhlxlist();
+
+    Map<String, Object> getYdyhList(Map<String, String> aoData);
+
+    JsonResult getYdyh(Long id);
+
+    JsonResult updateYdyh(TbYdyh ydyh);
+
+    JsonResult addYdyh(TbYdyh ydyh);
+
+    JsonResult deleteYdyh(Integer id);
 }
