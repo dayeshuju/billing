@@ -45,5 +45,26 @@
             limit #{iDisplayStart},#{iDisplayLength}
         </where>
     </select>
+    <sql id="findObjectById">
+        a.meterId=#{meterId}
+        and a.meterId = b.meterId
+        and b.ydyhId = c.id
+        <if test="startTime != null and startTime != ''">
+            and a.regisTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and DATE_ADD(STR_TO_DATE(#{endTime},'%Y-%m-%d'),interval 1 day)
+        </if>
+    </sql>
+    <select id="findCountByid" resultType="java.lang.Integer">
+        select count(1) from tbCbjl a,tbJlsb b,tbYdyh c
+        <where>
+            <include refid="findObjectById"></include>
+        </where>
+    </select>
+    <select id="findObjectById" resultType="com.daye.sys.entity.vt.VT_Cbjl">
+        select (@i:=@i+1) sort,a.id,c.name,c.idCode,a.meterId,date_format(a.regisTime,'%Y-%m-%d') regisTime,a.meterNum from tbCbjl a,tbJlsb b,tbYdyh c,(SELECT @i:=#{iDisplayStart}) t
+        <where>
+            <include refid="findObjectById"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
 
 </mapper>

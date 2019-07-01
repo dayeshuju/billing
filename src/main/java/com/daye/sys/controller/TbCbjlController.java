@@ -2,6 +2,7 @@ package com.daye.sys.controller;
 
 
 import com.daye.common.util.JsonToMap;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.service.TbCbjlService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,17 @@ public class TbCbjlController {
     @Autowired
     TbCbjlService tbCbjlService;
 
+    @RequestMapping("deleteCbjl")
+    @RequiresPermissions("sys:tbcbjl")
+    public JsonResult deleteCbjl(Integer id){
+        return tbCbjlService.deleteCbjl(id);
+    }
+
     @RequestMapping("getHistoryCbjlList")
     @RequiresPermissions("sys:tbcbjl")
-    public Map<String,Object> getHistoryCbjlList(Integer meterId,@RequestParam Map<String,String> aoData){
-        Map<String,Object> map = tbCbjlService.getHistoryCbjlList(meterId);
+    public Map<String,Object> getHistoryCbjlList(String startTime,String endTime,String meterId,@RequestParam Map<String,String> aoData){
+        aoData = JsonToMap.jsonToMap(aoData.get("aoData"));
+        Map<String,Object> map = tbCbjlService.getHistoryCbjlList(startTime,endTime,meterId,aoData);
         return map;
     }
 
