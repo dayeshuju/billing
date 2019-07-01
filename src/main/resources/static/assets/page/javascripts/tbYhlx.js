@@ -1,10 +1,9 @@
 /*引用theme.js*/
 $(document).ready(function () {
-    getAuthoritylist();
-    finduser();
+    findyhlx();
 });
 
-function finduser() {
+function findyhlx() {
     /*定义列id和名称*/
     var aoColumns = [{
         mDataProp: "id",
@@ -32,7 +31,7 @@ function finduser() {
     }, {
         "aTargets": [3],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-addYhlx' role='button' style='background-color:#00BB00' onclick=modifyyhlx(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteyhlx' role='button'><i class='icon-remove'></i>删除</a></div>";
         }
     }, {
         "aTargets": [0],
@@ -78,60 +77,7 @@ $('#plist tbody tr').live('click', function () {
 
 });
 
-//重置密码
-function resetPassword() {
-    var id = $("#id").val();
-    var params = {
-        id: id
-    }
-    var url = "sysUsers/resetPassword";
 
-    $.post(url, params, function (result) {
-        $('#modal-resetpassword').modal('hide');
-        if (result.state == 1) {
-            layer.msg(result.message, {
-                icon: 1
-            });
-        } else if (result.state == 0) {
-            layer.msg(result.message, {
-                icon: 2
-            });
-        }
-    })
-}
-
-function lockuser() {
-    var id = $("#id").val();
-    var url = "sysUsers/resetStatus";
-    var params = {
-        id: id
-    }
-    $.post(url, params, function (result) {
-        if (result.state == 1) {
-            if (result.data.valid == 1) {
-                $('#modal-unlockuser').modal('hide');
-                $("#clock" + id).html("锁定");
-                $("#aclock" + id).attr("href", "#modal-lockuser");
-                layer.msg(result.data.message, {
-                    icon: 1
-                });
-            } else if (result.data.valid == 0) {
-                $('#modal-lockuser').modal('hide');
-                $("#clock" + id).html("解锁");
-                $("#aclock" + id).attr("href", "#modal-unlockuser");
-                layer.msg(result.data.message, {
-                    icon: 1
-                });
-            }
-        } else if (result.state == 0) {
-            $('#modal-lockuser').modal('hide');
-            $('#modal-unlockuser').modal('hide');
-            layer.msg(result.message, {
-                icon: 2
-            });
-        }
-    });
-}
 
 /*删除确认按钮onclick*/
 $('#deleterow').click(function () {
@@ -140,10 +86,10 @@ $('#deleterow').click(function () {
     var params = {
         id: id
     }
-    var url = "sysUsers/deleteUser";
+    var url = "tbYhlx/deleteYhlx";
 
     $.post(url, params, function (result) {
-        $('#modal-deleteuser').modal('hide');
+        $('#modal-deleteyhlx').modal('hide');
         if (result.state == 1) {
 
             start = oTable.fnSettings()._iDisplayStart;
@@ -169,39 +115,27 @@ $('#deleterow').click(function () {
 
 
 /*添加、修改保存按钮onclick*/
-function adduser() {
+function addYhlx() {
     var id = $("#id").val();
-    var nickname = $("#nickname").val();
-    var name = $("#name").val();
-    var mobile = $("#mobile").val();
-    var officePhone = $("#officePhone").val();
-    var email = $("#email").val();
-    var roleId = $("#roleId").val();
-
-    if (Number(id) == 2) {
-        roleId = 1;
-    }
+    var userType = $("#userType").val();
+    var tate = $("#tate").val();
 
     var params = {
         id: id,
-        nickname: nickname,
-        name: name,
-        mobile: mobile,
-        officePhone: officePhone,
-        email: email,
-        roleId: roleId
+        userType: userType,
+        tate: tate,
     }
 
     var url = "";
     if (Number(id) > 0) {
-        url = "sysUsers/updateUser";
+        url = "tbYhlx/updateYhlx";
     } else {
-        url = "sysUsers/addUser";
+        url = "tbYhlx/addYhlx";
     }
 
     $.post(url, params, function (result) {
         if (result.state == 1) {
-            $('#modal-adduser').modal('hide');
+            $('#modal-addYhlx').modal('hide');
             initform();
             oTable.fnDraw(false);//重新加载当前页
             layer.msg(result.message, {
@@ -218,88 +152,26 @@ function adduser() {
 
 }
 
-/*用户详情弹出层*/
-function getuser(id) {
-    initform();
-    var url = "sysUsers/getUser";
-    var params = {
-        id: id
-    };
-    $.post(url, params, function (result) {
-        if (result.state == 1) {
-            $("#dnickname").val(result.data.nickname);
-            $("#dname").val(result.data.name);
-            $("#dmobile").val(result.data.mobile);
-            $("#dofficePhone").val(result.data.officePhone);
-            $("#demail").val(result.data.email);
-            $("#droleId").val(result.data.roleId);
-        }
-    })
-}
 
 function initform() {
     $("#id").val("0");
-    $("#nickname").val("");
-    $("#name").val("");
-    $("#mobile").val("");
-    $("#officePhone").val("");
-    $("#email").val("");
-    $("#roleId").val(0);
-    $("#dnickname").val("");
-    $("#dname").val("");
-    $("#dmobile").val("");
-    $("#dofficePhone").val("");
-    $("#demail").val("");
-    $("#droleId").val(0);
+    $("#userType").val("");
+    $("#tate").val("");
 }
 
 /*修改用户弹出层*/
-function modifyuser(id) {
+function modifyyhlx(id) {
     initform();
     $("#id").val(id);
-    var url = "sysUsers/getUser";
+    var url = "tbYhlx/getYhlx";
     var params = {
         id: id
     };
     $.post(url, params, function (result) {
         if (result.state == 1) {
-            $("#nickname").val(result.data.nickname);
-            $("#name").val(result.data.name);
-            $("#mobile").val(result.data.mobile);
-            $("#officePhone").val(result.data.officePhone);
-            $("#email").val(result.data.email);
-            $("#roleId").val(result.data.roleId);
+            $("#userType").val(result.data.userType);
+            $("#tate").val(result.data.tate);
         }
     })
 }
 
-function getAuthoritylist() {
-
-    var url = "sysRoles/getRolelist";
-    var astr = "<option></option>";
-    url = encodeURI(url);
-
-    $.ajax({
-        url: url,
-        success: function (result) {
-            var roles = result.data;
-
-            for (var i = 0; i < roles.length; i++) {
-
-                astr += "<option value='" + roles[i].id + "'>" + roles[i].name + "</option>"
-
-
-            }
-
-            document.getElementById("roleId").innerHTML = astr;
-            document.getElementById("droleId").innerHTML = astr;
-
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-        }
-
-    });
-
-
-}

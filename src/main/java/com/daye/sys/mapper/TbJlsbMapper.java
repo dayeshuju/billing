@@ -2,6 +2,11 @@ package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.TbJlsb;
+import com.daye.sys.entity.TbYdyh;
+import com.daye.sys.entity.vt.VT_Jlsb;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +18,16 @@ import com.daye.sys.entity.TbJlsb;
  */
 public interface TbJlsbMapper extends BaseMapper<TbJlsb> {
 
+    TbYdyh findYdyhByIdCode(String idCode);
+
+    TbJlsb findJlsbByDoubleParams(@Param("meterId") String meterId, @Param("meterBoxId") String meterBoxId);
+
+    Integer findCount(@Param("jlsb") VT_Jlsb jlsb, @Param("sSearch") String sSearch);
+
+    List<VT_Jlsb> findObject(@Param("jlsb") VT_Jlsb jlsb,
+                             @Param("iDisplayStart") Integer iDisplayStart,
+                             @Param("iDisplayLength") Integer iDisplayLength,
+                             @Param("sSearch") String sSearch);
+
+    VT_Jlsb selectJlsbWithIdCodeById(Long id);
 }

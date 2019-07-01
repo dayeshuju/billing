@@ -4,63 +4,39 @@
 
 <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper' style="display: block;">
-        <!--modal-adduser-->
-        <div class="modal-add hide fade in" id="modal-adduser" role="dialog" tabindex="-1" aria-hidden="false"
+        <!--modal-addyhlx-->
+        <div class="modal-add hide fade in" id="modal-addYhlx" role="dialog" tabindex="-1" aria-hidden="false"
              style="display:none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    添加/修改用户
+                    添加/修改用户类型
                 </h3>
             </div>
             <div class="modal-body">
                 <form class="form" style="margin-bottom: 0;">
                     <div class="text-center">
-                        <h2>用户信息</h2>
+                        <h2>用户类型信息</h2>
                         <br/>
                     </div>
                     <div class="box-content" style="display: inline;">
                         <table class="kv-table">
                             <tbody>
                             <tr>
-                                <td class="kv-label">登录名
+                                <td class="kv-label">用户类型
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
-                                    <input class="span11" id="nickname" type="text" autocomplete="off">
+                                    <input class="span11" id="userType" type="text" autocomplete="off">
                                     <font id="login_name_alert" color="red" style="display: none;">必填</font>
                                 </td>
-                                <td class="kv-label">真实姓名
+                                <td class="kv-label">电费费率
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
-                                    <input class="span11" id="name" placeholder="" type="text" autocomplete="off">
+                                    <input class="span11" id="tate" placeholder="" type="text" autocomplete="off">
                                     <font id="name_alert" color="red" style="display: none;">必填</font>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">手机号码</td>
-                                <td class="kv-content">
-                                    <input class="span11" id="mobile" placeholder="" type="text" autocomplete="off">
-                                </td>
-                                <td class="kv-label">办公电话</td>
-                                <td class="kv-content">
-                                    <input class="span11" id="officePhone" placeholder="" type="text" autocomplete="off">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">邮箱</td>
-                                <td class="kv-content">
-                                    <input class="span11" id="email" placeholder="" type="text" autocomplete="off">
-                                </td>
-                                <td class="kv-label">权限类型
-                                    <font color="red">*</font>
-                                </td>
-                                <td class="kv-content">
-                                    <select class="span11" id="roleId">
-                                    </select>
-                                    <font id="autName_alert" color="red" style="display: none;">必填</font>
                                 </td>
                             </tr>
                             <tr>
@@ -77,17 +53,41 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
-                <button class="btn btn-primary" onclick="adduser()"><i class="icon-save"></i> 保 存</button>
+                <button class="btn btn-primary" onclick="addYhlx()"><i class="icon-save"></i> 保 存</button>
             </div>
         </div>
-        <!--modal-adduser end-->
+        <!--modal-addyhlx end-->
+        <!--modal-deleteyhlx begin-->
+        <div class="modal hide fade in" id="modal-deleteyhlx" role="dialog" tabindex="-1" aria-hidden="false"
+             style="display: none;">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">×</button>
+                <h3 style="color: white;">
+                    <div class="icon-minus-sign"></div>
+                    删除用户类型
+                </h3>
+            </div>
+            <div class="modal-body">
+                <h4 style="color: red;">
+                    <div class="icon-exclamation-sign"></div>
+                    注意：用户类型删除后不能恢复，请谨慎操作！
+                </h4>
+                <p>请确认是否继续删除。</p>
+                <p>非系统管理员请勿进行删除操作！</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">取消</button>
+                <button class="btn btn-primary" id="deleterow">确认删除</button>
+            </div>
+        </div>
+        <!--modal-deleteyhlx end-->
         <!--用户列表部分 开始-->
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
                     <div class='title'>用户类型列表</div>
                     <div class='pull-right'>
-                        <a id="adduser" class="btn btn-default" data-toggle="modal" href="#modal-adduser" role="button"
+                        <a id="addYhlx" class="btn btn-default" data-toggle="modal" href="#modal-addYhlx" role="button"
                            style="margin-bottom:5px" onclick="initform()"><i class="icon-plus"></i> 添加新用户类型</a>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>用户类型</th>
-                                    <th>费率</th>
+                                    <th>电费费率</th>
                                     <th>操作</th>
                                 </tr>
                                 </tfoot>

@@ -22,4 +22,6 @@ public interface TbYhlxMapper extends BaseMapper<TbYhlx> {
                             @Param("iDisplayStart") Integer iDisplayStart,
                             @Param("iDisplayLength") Integer iDisplayLength,
                             @Param("sSearch") String sSearch);
+
+    TbYhlx findYhlxByUserType(String userType);
 }

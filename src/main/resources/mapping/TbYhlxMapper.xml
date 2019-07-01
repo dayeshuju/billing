@@ -15,13 +15,16 @@
             and a.id like concat("%",#{yhlx.id},"%")
         </if>
         <if test="yhlx.userType!=null and yhlx.userType!=''">
-            and a.id like concat("%",#{yhlx.userType},"%")
+            and a.userType like concat("%",#{yhlx.userType},"%")
         </if>
         <if test="yhlx.tate!=null">
-            and a.id like concat("%",#{yhlx.tate},"%")
+            and a.tate like concat("%",#{yhlx.tate},"%")
         </if>
         order by a.createdTime desc
     </sql>
+    <select id="findYhlxByUserType" resultType="com.daye.sys.entity.TbYhlx">
+        select * from tbYhlx where userType = #{userType}
+    </select>
     <select id="findObject" resultType="com.daye.sys.entity.TbYhlx">
         select a.id, a.userType, a.tate from tbYhlx a
         <where>

@@ -2,6 +2,8 @@ package com.daye.sys.controller;
 
 
 import com.daye.common.util.JsonToMap;
+import com.daye.common.vo.JsonResult;
+import com.daye.sys.entity.TbYhlx;
 import com.daye.sys.service.TbYhlxService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,22 @@ import java.util.Map;
 public class TbYhlxController {
     @Autowired
     TbYhlxService tbYhlxService;
+
+    @RequestMapping("/getYhlx")
+    @RequiresPermissions("sys:tbyhlx")
+    public JsonResult getYhlx(Long id){return tbYhlxService.getYhlx(id);}
+
+    @RequestMapping("/addYhlx")
+    @RequiresPermissions("sys:tbyhlx")
+    public JsonResult addYhlx(TbYhlx yhlx){return tbYhlxService.addYhlx(yhlx);}
+
+    @RequestMapping("/updateYhlx")
+    @RequiresPermissions("sys:tbyhlx")
+    public JsonResult updateYhlx(TbYhlx yhlx){return tbYhlxService.updateYhlx(yhlx);}
+
+    @RequestMapping("/deleteYhlx")
+    @RequiresPermissions("sys:tbyhlx")
+    public JsonResult deleteYhlx(Long id){return tbYhlxService.deleteYhlx(id);}
 
     @RequestMapping("/getYhlxList")
     @RequiresPermissions("sys:tbyhlx")

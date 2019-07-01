@@ -5,4 +5,67 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 
+    <sql id="findObject">
+        '1'='1'
+        <if test="sSearch != null and sSearch != ''">
+            and a.id like concat("%",#{sSearch},"%")
+            or a.meterId like concat("%",#{sSearch},"%")
+            or a.meterBoxId like concat("%",#{sSearch},"%")
+            or a.ydyhId like concat("%",#{sSearch},"%")
+            or b.`name` like concat("%",#{sSearch},"%")
+            or b.idCode like concat("%",#{sSearch},"%")
+        </if>
+        <if test="jlsb.id!=null">
+            and a.id like concat("%",#{jlsb.id},"%")
+        </if>
+        <if test="jlsb.meterId!=null and jlsb.meterId!=''">
+            and a.meterId like concat("%",#{jlsb.meterId},"%")
+        </if>
+        <if test="jlsb.meterBoxId!=null and jlsb.meterBoxId!=''">
+            and a.meterBoxId like concat("%",#{jlsb.meterBoxId},"%")
+        </if>
+        <if test="jlsb.name!=null and jlsb.name!=''">
+            and b.`name` like concat("%",#{jlsb.name},"%")
+        </if>
+        <if test="jlsb.idCode!=null and jlsb.idCode!=''">
+            and b.idCode like concat("%",#{jlsb.idCode},"%")
+        </if>
+        <if test="jlsb.ydyhId!=null">
+            and a.ydyhId like concat("%",#{jlsb.ydyhId},"%")
+        </if>
+        order by a.createdTime desc
+    </sql>
+
+    <select id="findYdyhByIdCode" resultType="com.daye.sys.entity.TbYdyh">
+        select * from tbYdyh where idCode = #{idCode}
+    </select>
+
+    <select id="findJlsbByDoubleParams" resultType="com.daye.sys.entity.TbJlsb">
+        select * from tbJlsb where meterId = #{meterId} and meterBoxId = #{meterBoxId}
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM
+        (SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode
+        from tbJlsb a LEFT JOIN tbYdyh b ON a.ydyhId = b.id
+        <where>
+            <include refid="findObject"></include>
+        </where>
+        ) c
+    </select>
+
+    <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jlsb">
+        SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode
+        from tbJlsb a LEFT JOIN tbYdyh b ON a.ydyhId = b.id
+        <where>
+            <include refid="findObject"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
+
+    <select id="selectJlsbWithIdCodeById" resultType="com.daye.sys.entity.vt.VT_Jlsb">
+        SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode
+        from tbJlsb a LEFT JOIN tbYdyh b ON a.ydyhId = b.id
+        where a.id=#{id}
+    </select>
 </mapper>
