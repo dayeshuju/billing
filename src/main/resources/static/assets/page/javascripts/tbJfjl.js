@@ -1,9 +1,9 @@
 /*引用theme.js*/
 $(document).ready(function () {
-    findCbjl();
+    findJfjl();
 });
 
-function findCbjl() {
+function findJfjl() {
     /*定义列id和名称*/
     var aoColumns = [{
         mDataProp: "sort",
@@ -13,16 +13,16 @@ function findCbjl() {
         sTitle: "姓名"
     }, {
         mDataProp: "idCode",
-        sTitle: "身份证号"
+        sTitle: "户号"
     }, {
         mDataProp: "meterId",
         sTitle: "表号"
     }, {
-        mDataProp: "regisTime",
-        sTitle: "抄表时间"
+        mDataProp: "lastPayTime",
+        sTitle: "上次缴费时间"
     }, {
-        mDataProp: "meterNum",
-        sTitle: "表示数"
+        mDataProp: "arrears",
+        sTitle: "欠费金额"
     }, {
         mDataProp: "id",
         sTitle: "操作"
@@ -40,12 +40,12 @@ function findCbjl() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historycbjl' role='button' style='background-color:#00BB00' onclick=getHistoryCbjl(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletecbjl' role='button' onclick=saveCbjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=getOneJfjl(\" + row.meterId + \")><i class='icon-search'></i>查看</a><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=getHistoryJfjl(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletejfjl' role='button' onclick=saveJfjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
         }
     }
     ];
 
-    var new_filter_url = "tbCbjl/getCbjlList"; //表#plist数据获取url
+    var new_filter_url = "tbJfjl/getJfjlList"; //表#plist数据获取url
 
     var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
 
@@ -59,7 +59,7 @@ function findCbjl() {
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();
 
-function getHistoryCbjl(meterId) {
+function getHistoryJfjl(meterId) {
     /*定义列id和名称*/
     var aoColumns = [{
         mDataProp: "sort",
@@ -69,16 +69,16 @@ function getHistoryCbjl(meterId) {
         sTitle: "姓名"
     }, {
         mDataProp: "idCode",
-        sTitle: "身份证号"
+        sTitle: "户号"
     }, {
         mDataProp: "meterId",
         sTitle: "表号"
     }, {
-        mDataProp: "regisTime",
-        sTitle: "抄表时间"
+        mDataProp: "lastPayTime",
+        sTitle: "上次缴费时间"
     }, {
-        mDataProp: "meterNum",
-        sTitle: "表示数"
+        mDataProp: "arrears",
+        sTitle: "欠费金额"
     }, {
         mDataProp: "id",
         sTitle: "操作"
@@ -96,12 +96,12 @@ function getHistoryCbjl(meterId) {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historycbjl' role='button' style='background-color:#00BB00' onclick=getHistoryCbjl(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletecbjl' role='button' onclick=saveCbjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=getHistoryJfjl(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletejfjl' role='button' onclick=saveJfjlId(" + row.id + ")><i class='icon-remove'></i>删除</a></div>";
         }
     }
     ];
 
-    var new_filter_url = "tbCbjl/getHistoryCbjlList?meterId"+meterId; //表#plist数据获取url
+    var new_filter_url = "tbJfjl/getHistoryCbjlList?meterId"+meterId; //表#plist数据获取url
 
     var oTable = setDataTable_ajax_5($("#historyPlist"), new_filter_url, aoColumns, aoColumnDefs, false);
 
@@ -111,7 +111,7 @@ function getHistoryCbjl(meterId) {
     oTable.fnDraw();
 }
 
-function saveCbjlId(id){
+function saveJfjlId(id){
     $("#id").val(id);
 }
 
@@ -119,13 +119,14 @@ function saveCbjlId(id){
 $('#deleterow').click(function () {
 
     var id = $("#id").val();
+
     var params = {
         id: id
     }
-    var url = "sysUsers/deleteUser";
+    var url = "tbJfjl/deleteJfjl";
 
     $.post(url, params, function (result) {
-        $('#modal-deleteuser').modal('hide');
+        $('#modal-deletejfjl').modal('hide');
         if (result.state == 1) {
 
             start = oTable.fnSettings()._iDisplayStart;
