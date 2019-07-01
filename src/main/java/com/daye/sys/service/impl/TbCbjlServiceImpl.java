@@ -2,6 +2,7 @@ package com.daye.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbCbjl;
 import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.mapper.TbCbjlMapper;
@@ -62,8 +63,28 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
 
     @Override
     @RequiredLog(operation = "根据meterId获取历史数据")
-    public Map<String, Object> getHistoryCbjlList(Integer meterId) {
+    public Map<String, Object> getHistoryCbjlList(String startTime,String endTime,String meterId, Map<String,String> aoData) {
+        Object iDisplayStartObj = aoData.get("iDisplayStart");
+        Integer iDisplayStart = (Integer) iDisplayStartObj;
+        Object iDisplayLengthsObj = aoData.get("iDisplayLength");
+        Integer iDisplayLength = (Integer) iDisplayLengthsObj;
+        Object sEchoStr = aoData.get("sEcho");
+        Integer sEcho = (Integer) sEchoStr;
 
-        return null;
+        Integer count =tbCbjlMapper.findCountByid(meterId,startTime,endTime);
+        List<VT_Cbjl> cbjlList = tbCbjlMapper.findObjectById(meterId,startTime,endTime,iDisplayStart,iDisplayLength);
+        Map<String,Object> map = new HashMap<>();
+        map.put("iTotalDisplayRecords",count);
+        map.put("iTotalRecords",count);
+        map.put("sEcho",sEcho);
+        map.put("aaData",cbjlList);
+        return map;
+    }
+
+    @Override
+    @RequiredLog(operation = "根据id删除抄表记录")
+    public JsonResult deleteCbjl(Integer id) {
+        if(tbCbjlMapper.deleteById(id) == 1) return new JsonResult("删除成功");
+        return new JsonResult(new Throwable("删除失败"));
     }
 }

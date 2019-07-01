@@ -1,6 +1,7 @@
 package com.daye.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbCbjl;
 
 import java.util.Map;
@@ -17,5 +18,7 @@ public interface TbCbjlService extends IService<TbCbjl> {
 
     Map<String, Object> findObject(Map<String, String> aoData);
 
-    Map<String, Object> getHistoryCbjlList(Integer meterId);
+    Map<String, Object> getHistoryCbjlList(String startTime,String endTime,String meterId, Map<String,String> aoData);
+
+    JsonResult deleteCbjl(Integer id);
 }

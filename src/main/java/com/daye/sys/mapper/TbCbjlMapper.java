@@ -20,4 +20,16 @@ public interface TbCbjlMapper extends BaseMapper<TbCbjl> {
     Integer findCount(@Param("vt_cbjl") VT_Cbjl vt_cbjl,@Param("sSearch") String sSearch);
 
     List<VT_Cbjl> findObject(@Param("vt_cbjl") VT_Cbjl vt_cbjl, @Param("iDisplayStart") Integer iDisplayStart, @Param("iDisplayLength") Integer iDisplayLength, @Param("sSearch") String sSearch);
+
+    Integer findCountByid(
+            @Param("meterId") String meterId,
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime);
+
+    List<VT_Cbjl> findObjectById(
+            @Param("meterId") String meterId,
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime,
+            @Param("iDisplayStart") Integer iDisplayStart,
+            @Param("iDisplayLength") Integer iDisplayLength);
 }
