@@ -30,6 +30,7 @@
         <if test="vt_cbjl.meterNum != null and vt_cbjl.meterNum != ''">
             and a.meterNum like concat("%",#{vt_cbjl.meterNum},"%")
         </if>
+        order by a.createdTime desc
     </sql>
     <select id="findCount" resultType="java.lang.Integer">
         select count(1) from tbCbjl a,tbJlsb b,tbYdyh c
