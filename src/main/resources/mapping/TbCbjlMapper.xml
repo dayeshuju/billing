@@ -32,6 +32,13 @@
         </if>
         order by a.createdTime desc
     </sql>
+    <insert id="insertCbjls">
+        insert into tbCbjl (meterId,regisTime,meterNum)
+        values 
+        <foreach collection="cbjlList" separator="," item="cbjl">
+            (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum})
+        </foreach>
+    </insert>
     <select id="findCount" resultType="java.lang.Integer">
         select count(1) from tbCbjl a,tbJlsb b,tbYdyh c
         <where>

@@ -24,7 +24,15 @@ spring:
     type: ehcache
     ehcache:
       config: ehcache.xml
-
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  http:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
 
 mybatis-plus:
   type-aliases-package: com.daye.sys.entity

@@ -245,3 +245,60 @@ function initform(starttime,endtime) {
         "                            </thead>\n" +
         "                        </table>");
 }
+
+var refreshid="";
+
+function doUploadFile(){
+    clearInterval(refreshid);
+    $("#uploadId").html("");
+    createUploadFileItem();
+    refreshid = setInterval(upload,500);
+}
+
+function upload(){
+    if($("#file").val() == ""){
+        return;
+    }
+    clearInterval(refreshid);
+    var files=$("#file")[0].files;
+    var fileName = files[0].name;
+    var index = fileName.lastIndexOf(".");
+    var suffix = fileName.substr(index+1);
+    if(suffix != "csv"){
+        layer.msg("您上传了错误的文件", {
+            icon: 2
+        });
+        return;
+    }
+    $("#ff").ajaxSubmit({
+        type: "POST",
+        url: "tbCbjl/doUpload",
+        success: function(result){
+            if(result.state == 1){
+                layer.msg(result.message,{
+                    icon: 1
+                });
+                oTable.fnDraw();
+            }else if(result.state == 0){
+                layer.msg(result.message,{
+                    icon: 2
+                })
+            }
+        }
+    });
+}
+
+/**创建文件上传dom元素*/
+function createUploadFileItem(){
+    var inputObj=$("<input></input>");
+    inputObj.attr('id','file');
+    inputObj.attr('type','file');
+    inputObj.attr('name','file');
+    inputObj.attr("multiple","multiple");
+    var formObj=$("<form id='ff' enctype='multipart/form-data' method='post'></form>")
+    formObj.append(inputObj);
+    formObj.attr("style",'visibility:hidden');
+    $("#uploadId").append(formObj);
+    inputObj.value;
+    inputObj.click();
+}

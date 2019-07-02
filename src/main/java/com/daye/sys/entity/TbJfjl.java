@@ -37,7 +37,7 @@ public class TbJfjl implements Serializable {
      * 本期电量
      */
     @TableField("periodElecNum")
-    private Long periodElecNum;
+    private Double periodElecNum;
     /**
      * 应缴电费
      */
@@ -103,11 +103,11 @@ public class TbJfjl implements Serializable {
         this.ydyhId = ydyhId;
     }
 
-    public Long getPeriodElecNum() {
+    public Double getPeriodElecNum() {
         return periodElecNum;
     }
 
-    public void setPeriodElecNum(Long periodElecNum) {
+    public void setPeriodElecNum(Double periodElecNum) {
         this.periodElecNum = periodElecNum;
     }
 

@@ -28,7 +28,8 @@ function findJfjl() {
     /*定义列id和名称*/
     var aoColumns = [{
         mDataProp: "sort",
-        sTile: "序号"
+        sTile: "序号",
+        sWidth: "50px"
     }, {
         mDataProp: "name",
         sTitle: "姓名"

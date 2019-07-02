@@ -14,5 +14,5 @@ public class VT_Cbjl implements Serializable {
     private String idCode;
     private String meterId;
     private String regisTime;
-    private Long meterNum;
+    private Double meterNum;
 }

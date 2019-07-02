@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -26,6 +27,12 @@ public class TbCbjlController {
 
     @Autowired
     TbCbjlService tbCbjlService;
+
+    @RequestMapping("/doUpload")
+    @RequiresPermissions("sys:tbcbjl")
+    public JsonResult doUpload(@RequestParam MultipartFile file){
+        return tbCbjlService.uploadCbjl(file);
+    }
 
     @RequestMapping("deleteCbjl")
     @RequiresPermissions("sys:tbcbjl")

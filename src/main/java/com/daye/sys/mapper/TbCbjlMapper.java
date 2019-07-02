@@ -32,4 +32,6 @@ public interface TbCbjlMapper extends BaseMapper<TbCbjl> {
             @Param("endTime") String endTime,
             @Param("iDisplayStart") Integer iDisplayStart,
             @Param("iDisplayLength") Integer iDisplayLength);
+
+    Integer insertCbjls(@Param("cbjlList") List<TbCbjl> cbjlList);
 }

@@ -2,6 +2,7 @@ package com.daye.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
+import com.daye.common.util.FileUtils;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbCbjl;
 import com.daye.sys.entity.vt.VT_Cbjl;
@@ -9,11 +10,17 @@ import com.daye.sys.mapper.TbCbjlMapper;
 import com.daye.sys.service.TbCbjlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -39,7 +46,7 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
         if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) vt_cbjl.setRegisTime(aoData.get("sSearch_4"));
         if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())){
             String meterNumStr = aoData.get("sSearch_5");
-            Long meterNum = Long.valueOf(meterNumStr);
+            Double meterNum = Double.valueOf(meterNumStr);
             vt_cbjl.setMeterNum(meterNum);
         }
 
@@ -86,5 +93,32 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
     public JsonResult deleteCbjl(Integer id) {
         if(tbCbjlMapper.deleteById(id) == 1) return new JsonResult("删除成功");
         return new JsonResult(new Throwable("删除失败"));
+    }
+
+    @Override
+    @RequiredLog(value = 0,operation = "批量导入抄表记录")
+    public JsonResult uploadCbjl(MultipartFile file) {
+        String path = null;
+        try {
+            path = ResourceUtils.getURL("classpath:").getPath();
+        } catch (FileNotFoundException e) {
+            return new JsonResult(new Throwable("获取项目根目录错误"));
+        }
+        path = path+"cbjl/";
+        String uuid = UUID.randomUUID().toString();
+        File dir = new File(path);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        File cbjlFile = new File(path+uuid+file.getOriginalFilename());
+        try {
+            file.transferTo(cbjlFile);
+        } catch (IOException e) {
+            return new JsonResult(new Throwable("文件上传错误"));
+        }
+        List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
+        Integer insertCount = tbCbjlMapper.insertCbjls(cbjlList);
+        if(insertCount != null && insertCount>0) return new JsonResult("导入成功");
+        return new JsonResult(new Throwable("导入失败"));
     }
 }

@@ -37,7 +37,7 @@ public class TbCbjl implements Serializable {
      * 电表示数
      */
     @TableField("meterNum")
-    private Long meterNum;
+    private Double meterNum;
     /**
      * 创建时间
      */
@@ -74,11 +74,11 @@ public class TbCbjl implements Serializable {
         this.regisTime = regisTime;
     }
 
-    public Long getMeterNum() {
+    public Double getMeterNum() {
         return meterNum;
     }
 
-    public void setMeterNum(Long meterNum) {
+    public void setMeterNum(Double meterNum) {
         this.meterNum = meterNum;
     }
 
