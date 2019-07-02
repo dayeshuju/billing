@@ -20,7 +20,7 @@ public interface TbJlsbMapper extends BaseMapper<TbJlsb> {
 
     TbYdyh findYdyhByIdCode(String idCode);
 
-    TbJlsb findJlsbByDoubleParams(@Param("meterId") String meterId, @Param("meterBoxId") String meterBoxId);
+    TbJlsb findJlsbByMeterId(String meterId);
 
     Integer findCount(@Param("jlsb") VT_Jlsb jlsb, @Param("sSearch") String sSearch);
 

@@ -3,15 +3,12 @@ package com.daye.sys.controller;
 
 import com.daye.common.util.JsonToMap;
 import com.daye.common.vo.JsonResult;
-import com.daye.sys.entity.TbJlsb;
-import com.daye.sys.entity.TbJlsb;
 import com.daye.sys.entity.vt.VT_Jlsb;
 import com.daye.sys.service.TbJlsbService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
