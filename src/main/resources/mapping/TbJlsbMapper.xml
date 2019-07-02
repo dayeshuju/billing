@@ -40,13 +40,13 @@
         select * from tbYdyh where idCode = #{idCode}
     </select>
 
-    <select id="findJlsbByDoubleParams" resultType="com.daye.sys.entity.TbJlsb">
-        select * from tbJlsb where meterId = #{meterId} and meterBoxId = #{meterBoxId}
+    <select id="findJlsbByMeterId" resultType="com.daye.sys.entity.TbJlsb">
+        select * from tbJlsb where meterId = #{meterId}
     </select>
 
     <select id="findCount" resultType="java.lang.Integer">
         SELECT count(1) FROM
-        (SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode
+        (SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode, a.createdTime
         from tbJlsb a LEFT JOIN tbYdyh b ON a.ydyhId = b.id
         <where>
             <include refid="findObject"></include>
@@ -55,7 +55,7 @@
     </select>
 
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jlsb">
-        SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode
+        SELECT a.id, a.meterId, a.meterBoxId, a.ydyhId, b.`name`, b.idCode, a.createdTime
         from tbJlsb a LEFT JOIN tbYdyh b ON a.ydyhId = b.id
         <where>
             <include refid="findObject"></include>
