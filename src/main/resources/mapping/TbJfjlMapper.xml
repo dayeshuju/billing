@@ -6,15 +6,13 @@
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="findObject">
         c.id in (select max(d.id) from tbJfjl d group by d.meterId)
-        and a.regisTime in(select max(m.regisTime) from tbCbjl m group by m.meterId)
-        and c.meterId = a.meterId
         and c.ydyhId = b.id
         <if test="sSearch != null and sSearch != ''">
             and (b.name like concat("%",#{sSearch},"%")
             or b.idCode like concat("%",#{sSearch},"%")
-            or a.meterId like concat("%",#{sSearch},"%")
+            or c.meterId like concat("%",#{sSearch},"%")
             or date_format(c.payTime,'%Y-%m-%d') like concat('%',#{sSearch},'%')
-            or c.amountDue-c.actualAmount like concat("%",#{sSearch},"%"))
+            or c.payStatus like concat("%",#{sSearch},"%"))
         </if>
         <if test="vt_jfjl.name != null and vt_jfjl.name != ''">
             and c.name like concat("%",#{vt_jfjl.name},"%")
@@ -25,28 +23,60 @@
         <if test="vt_jfjl.meterId != null and vt_jfjl.meterId != ''">
             and c.meterId like concat("%",#{vt_jfjl.meterId},"%")
         </if>
-        <if test="vt_jfjl.lastPayTime != null and vt_jfjl.lastPayTime != ''">
-            and date_format(c.payTime,'%Y-%m-%d') like concat('%',#{vt_jfjl.lastPayTime},'%')
+        <if test="vt_jfjl.payTime != null and vt_jfjl.payTime != ''">
+            and date_format(c.payTime,'%Y-%m-%d') like concat('%',#{vt_jfjl.payTime},'%')
         </if>
-        <if test="vt_jfjl.arrears != null and vt_jfjl.arrears != ''">
-            and c.amountDue-c.actualAmount like concat("%",#{vt_jfjl.arrears},"%")
+        <if test="vt_jfjl.payStatus != null and vt_jfjl.payStatus != ''">
+            and c.payStatus like concat("%",#{vt_jfjl.payStatu},"%")
         </if>
     </sql>
 
 
     <select id="findCount" resultType="java.lang.Integer">
-        select count(1) from tbCbjl a,tbYdyh b,tbJfjl c
+        select count(1) from tbYdyh b,tbJfjl c
         <where>
             <include refid="findObject"></include>
         </where>
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
-        select (@i:=@i+1) sort,c.id,b.name,b.idCode,a.meterId,date_format(c.payTime,'%Y-%m-%d') lastPayTime,c.amountDue-c.actualAmount arrears from tbCbjl a,tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
+        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,date_format(c.payTime,'%Y-%m-%d') payTime ,
+         case c.payStatus when 0 then '未缴费' when 1 then  '欠费' when 2 then '已缴费' else '未知' end as payStatus from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObject"></include>
             limit #{iDisplayStart},#{iDisplayLength}
         </where>
     </select>
 
+    <sql id="findObjectById">
+        c.meterId=#{meterId}
+        and c.ydyhId = b.id
+        <if test="startTime != null and startTime != ''">
+            and c.payTime  BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and DATE_ADD(STR_TO_DATE(#{endTime},'%Y-%m-%d'),interval 1 day)
+        </if>
+    </sql>
+    <select id="findCountByid" resultType="java.lang.Integer">
+        select count(1) from tbYdyh b,tbJfjl c
+        <where>
+            <include refid="findObjectById"></include>
+        </where>
+    </select>
+    <select id="findObjectById" resultType="com.daye.sys.entity.vt.VT_Jfjl">
+        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,date_format(c.payTime,'%Y-%m-%d') payTime,
+        case c.payStatus when 0 then '未缴费' when 1 then  '欠费' when 2 then '已缴费' else '未知' end as payStatus from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
+        <where>
+            <include refid="findObjectById"></include>
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
+
+    <select id="getJfjl" resultType="com.daye.sys.entity.vt.VT_Jfjl">
+        select c.meterId ,c.periodElecNum  ,c.amountDue ,c.actualAmount ,c.payStatus payStatu ,date_format(c.payTime,'%Y-%m-%d') payTime
+         ,c.receiptStatus  ,date_format(c.createdTime,'%Y-%m-%d') createdTime  ,date_format(c.modifiedTime,'%Y-%m-%d') modifiedTime ,c.note  ,b.`name` ,b.idCode ,
+        b.address , b.phoneNum  ,d.tate  ,b.valid ,date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime, b.note userNote
+        from tbYdyh b,tbJfjl c ,tbYhlx  d where
+         c.id=#{id}
+         and c.ydyhId = b.id and b.userTypeId=d.id
+
+    </select>
 
 </mapper>

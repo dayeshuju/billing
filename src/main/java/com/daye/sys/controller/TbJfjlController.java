@@ -36,10 +36,23 @@ public class TbJfjlController {
         return map;
     }
 
+    @RequestMapping("getHistoryJfjlList")
+    @RequiresPermissions("sys:tbJfjl")
+    public Map<String,Object> getHistoryJfjlList(String startTime,String endTime,String meterId,@RequestParam Map<String,String> aoData){
+        aoData = JsonToMap.jsonToMap(aoData.get("aoData"));
+        Map<String,Object> map = tbJfjlService.getHistoryJfjlList(startTime,endTime,meterId,aoData);
+        return map;
+    }
     @RequestMapping("deleteJfjl")
     @RequiresPermissions("sys:tbJfjl")
     public JsonResult deleteJfjl(Integer id ){
         return tbJfjlService.deleteById(id);
+    }
+
+    @RequestMapping("getJfjl")
+    @RequiresPermissions("sys:tbJfjl")
+    public JsonResult getJfjl(Long id ){
+        return tbJfjlService.getJfjl(id);
     }
 
 }

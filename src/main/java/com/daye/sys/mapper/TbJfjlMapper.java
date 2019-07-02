@@ -22,4 +22,17 @@ public interface TbJfjlMapper extends BaseMapper<TbJfjl> {
 
     List<VT_Jfjl> findObject(VT_Jfjl vt_jfjl, Integer iDisplayStart, Integer iDisplayLength, String sSearch);
 
+    Integer findCountByid(
+            @Param("meterId") String meterId,
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime);
+
+    List<VT_Cbjl> findObjectById(
+            @Param("meterId") String meterId,
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime,
+            @Param("iDisplayStart") Integer iDisplayStart,
+            @Param("iDisplayLength") Integer iDisplayLength);
+
+    VT_Jfjl getJfjl(@Param("id") Long id);
 }

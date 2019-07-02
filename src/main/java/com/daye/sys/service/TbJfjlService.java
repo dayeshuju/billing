@@ -19,4 +19,8 @@ public interface TbJfjlService extends IService<TbJfjl> {
     Map<String, Object> findObject(Map<String, String> aoData);
 
     JsonResult deleteById(Integer id);
+
+    Map<String, Object> getHistoryJfjlList(String startTime, String endTime, String meterId, Map<String, String> aoData);
+
+    JsonResult getJfjl(Long id);
 }

@@ -8,10 +8,12 @@ import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.entity.vt.VT_Jfjl;
 import com.daye.sys.mapper.TbJfjlMapper;
 import com.daye.sys.service.TbJfjlService;
+import javafx.scene.input.DataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +42,7 @@ TbJfjlMapper tbJfjlMapper;
         //表号
         if(!StringUtils.isEmpty(aoData.get("sSearch_3").trim())) vt_jfjl.setMeterId(aoData.get("sSearch_3"));
         //上次缴费时间
-        if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) vt_jfjl.setLastPayTime(aoData.get("sSearch_4"));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) vt_jfjl.setPayTime(aoData.get("sSearch_4"));
         //欠费金额
         if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())){
             String arrearsStr = aoData.get("sSearch_5");
@@ -70,7 +72,41 @@ TbJfjlMapper tbJfjlMapper;
     @Override
     @RequiredLog(operation = "根据主键id删除数据")
     public JsonResult deleteById(Integer id) {
+        //删除的时候，欠费的，未缴费的不可以删
+        TbJfjl jfjl=tbJfjlMapper.selectById(id);
+        if(jfjl.getPayStatus()==0||jfjl.getPayStatus()==1){
+         return  new JsonResult(new Throwable("欠费的，未缴费的记录不可以删除！！！"));
+        }
         if (tbJfjlMapper.deleteById(id)==0) return  new JsonResult(new Throwable("删除失败！！！"));
         return new JsonResult("删除成功！！！");
+    }
+
+    @Override
+    @RequiredLog(operation = "根据电表号获取该电表的历史数据")
+    public Map<String, Object> getHistoryJfjlList(String startTime, String endTime, String meterId, Map<String, String> aoData) {
+
+        Object iDisplayStartObj = aoData.get("iDisplayStart");
+        Integer iDisplayStart = (Integer) iDisplayStartObj;
+        Object iDisplayLengthsObj = aoData.get("iDisplayLength");
+        Integer iDisplayLength = (Integer) iDisplayLengthsObj;
+        Object sEchoStr = aoData.get("sEcho");
+        Integer sEcho = (Integer) sEchoStr;
+
+        Integer count =tbJfjlMapper.findCountByid(meterId,startTime,endTime);
+        List<VT_Cbjl> cbjlList = tbJfjlMapper.findObjectById(meterId,startTime,endTime,iDisplayStart,iDisplayLength);
+        Map<String,Object> map = new HashMap<>();
+        map.put("iTotalDisplayRecords",count);
+        map.put("iTotalRecords",count);
+        map.put("sEcho",sEcho);
+        map.put("aaData",cbjlList);
+        return map;
+
+    }
+
+    @Override
+    @RequiredLog(operation = "根据id号获取该详细的数据")
+    public JsonResult getJfjl(Long id) {
+        VT_Jfjl vt_jfjl= tbJfjlMapper.getJfjl(id);
+        return new JsonResult(vt_jfjl);
     }
 }
