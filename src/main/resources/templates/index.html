@@ -101,7 +101,7 @@
         <div class='navbar-inner' style="height: 100px;">
             <div class='container-fluid'>
                 <a class='toggle-nav btn pull-left' href='#' style="margin-top: 30px;margin-left: 20px;font-size:25px;">
-                    <i class='icon-reorder'></i>
+                    <i class='icon-reorder' onclick="pull_left()"></i>
                 </a>
                 <a class='brand' href='index' style="margin-top: 30px;margin-left: 20px;font-size:30px;">
                     <span class='hidden-phone'>赤几巴塔配网计费系统</span>
@@ -419,6 +419,14 @@
             }
         }
     })
+    function pull_left() {
+        var xj = $("#mainContent").css("margin-left");
+        if(xj == "46px"){
+            $("#mainContent").css("margin-left","251px");
+        }else{
+            $("#mainContent").css("margin-left","46px");
+        }
+    }
 </script>
 </body>
 </html>
