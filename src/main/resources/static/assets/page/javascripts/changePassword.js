@@ -61,6 +61,7 @@ function updatepwd() {
                 layer.msg(alertstr,{
                     icon: 1
                 });
+                window.location.href = "logout";
             }
         },
         error: function (result) {
