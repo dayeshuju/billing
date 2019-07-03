@@ -10,6 +10,7 @@ import com.daye.sys.mapper.TbCbjlMapper;
 import com.daye.sys.service.TbCbjlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -96,6 +97,7 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
     }
 
     @Override
+    @Transactional
     @RequiredLog(value = 0,operation = "批量导入抄表记录")
     public JsonResult uploadCbjl(MultipartFile file) {
         String path = null;
@@ -117,8 +119,26 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
             return new JsonResult(new Throwable("文件上传错误"));
         }
         List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
+        if(cbjlList != null && cbjlList.size()>0){
+            for(int i=cbjlList.size()-1;i>=0;i--){
+                if(tbCbjlMapper.selectByEntity(cbjlList.get(i))){
+                    cbjlList.remove(i);
+                }
+            }
+        }else{
+            return new JsonResult(new Throwable("文件为空"));
+        }
+        if(cbjlList.size()==0) return new JsonResult(new Throwable("请勿重复导入文件"));
         Integer insertCount = tbCbjlMapper.insertCbjls(cbjlList);
-        if(insertCount != null && insertCount>0) return new JsonResult("导入成功");
+        if(insertCount != null && insertCount>0){
+            Map<String,Long> map = new HashMap<>();
+            map.put("insertCount",Long.valueOf(insertCount));
+            map.put("insId",cbjlList.get(0).getId());
+            tbCbjlMapper.insertJfjls(map);
+            Long insertJfjlCount =map.get("result");
+            if(insertJfjlCount != null && insertJfjlCount>0) return new JsonResult("导入成功");
+            return new JsonResult(new Throwable("电费计算失败"));
+        }
         return new JsonResult(new Throwable("导入失败"));
     }
 }

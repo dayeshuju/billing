@@ -32,13 +32,18 @@
         </if>
         order by a.createdTime desc
     </sql>
-    <insert id="insertCbjls">
+    <insert id="insertCbjls" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into tbCbjl (meterId,regisTime,meterNum)
         values 
         <foreach collection="cbjlList" separator="," item="cbjl">
             (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum})
         </foreach>
     </insert>
+    <select id="insertJfjls" parameterType="java.util.Map" statementType="CALLABLE" useCache="false">
+        {
+        call insertJfjlFromCbjl(#{insertCount,mode=IN,jdbcType=BIGINT},#{insId,mode=IN,jdbcType=BIGINT},#{result,mode=OUT,jdbcType=BIGINT})
+        }
+    </select>
     <select id="findCount" resultType="java.lang.Integer">
         select count(1) from tbCbjl a,tbJlsb b,tbYdyh c
         <where>
@@ -72,6 +77,14 @@
             <include refid="findObjectById"></include>
             limit #{iDisplayStart},#{iDisplayLength}
         </where>
+    </select>
+    <select id="selectByEntity" resultType="java.lang.Boolean">
+        select exists (select id from tbCbjl
+        <where>
+            meterId=#{meterId}
+            and regisTime=#{regisTime}
+            and meterNum=#{meterNum}
+        </where>)
     </select>
 
 </mapper>

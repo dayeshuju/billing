@@ -411,7 +411,11 @@
                     },1050);
                     break;
                 case(500):
-
+                    var message = eval("("+jqXHR.responseText+")").message;
+                    layer.msg(message,{
+                        icon: 2
+                    });
+                    break;
             }
         }
     })

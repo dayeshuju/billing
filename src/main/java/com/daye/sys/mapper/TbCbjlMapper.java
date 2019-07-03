@@ -6,6 +6,7 @@ import com.daye.sys.entity.vt.VT_Cbjl;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -34,4 +35,9 @@ public interface TbCbjlMapper extends BaseMapper<TbCbjl> {
             @Param("iDisplayLength") Integer iDisplayLength);
 
     Integer insertCbjls(@Param("cbjlList") List<TbCbjl> cbjlList);
+
+    boolean selectByEntity(TbCbjl tbCbjl);
+
+
+    void insertJfjls(Map<String, Long> map);
 }

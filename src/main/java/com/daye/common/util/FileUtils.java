@@ -26,6 +26,7 @@ public class FileUtils {
                 cbjlList.add(cbjl);
             }
         } catch (Exception e) {
+            if(cbjlFile.exists()) cbjlFile.delete();
             throw new ServiceException("抄表记录读取错误");
         }
         return cbjlList;
