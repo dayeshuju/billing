@@ -44,7 +44,8 @@ public class ExcelUtil {
                 for (int k = 0; k < title.size(); k++) {
                     HSSFCell cell = contentRow.createCell(k);
                     switch (k) {
-                        case 0:
+                        // 用的时候把这一块释放开，改成自己的
+                        /*case 0:
                             if (list.get(j).getAddress() != null) {// 每一列的名称
                                 cell.setCellValue(list.get(j).getAddress());
                             }
@@ -60,27 +61,27 @@ public class ExcelUtil {
                             }
                             break;
                         case 3:
-                            if (list.get(j).getNet() != null) {//
+                            if (list.get(j).getNet() != null) {
                                 cell.setCellValue(list.get(j).getNet());
                             }
                             break;
                         case 4:
-                            if (list.get(j).getState() != null) {//
+                            if (list.get(j).getState() != null) {
                                 cell.setCellValue(list.get(j).getState());
                             }
                             break;
                         case 5:
-                            if (list.get(j).getUsetime() > 0) {//
+                            if (list.get(j).getUsetime() > 0) {
                                 cell.setCellValue(list.get(j).getUsetime());
                             }
                             break;
                         case 6:
-                            if (list.get(j).getTime() != null) {/
+                            if (list.get(j).getTime() != null) {
                                 cell.setCellValue(list.get(j).getTime());
                             }
                             break;
                         default:
-                            break;
+                            break;*/
                     }
                     cell.setCellStyle(cellStyle);
                 }
