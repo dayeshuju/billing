@@ -451,7 +451,9 @@ function exportJfjl(){
     var meterId = $("#meterId_export").val();
     var idCode = $("#idCode_export").val();
 
-    $.ajax({
+    var form = $("#downLoadJfjl");
+    form.submit();
+    /*$.ajax({
         url: "tbJfjl/exportJfjl", //这个就是请求地址对应sAjaxSource
         data: {
             "payStatus": payStatus,
@@ -478,5 +480,5 @@ function exportJfjl(){
                 icon: 2
             });
         }
-    });
+    });*/
 }

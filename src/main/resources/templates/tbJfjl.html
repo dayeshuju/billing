@@ -15,7 +15,7 @@
                 </h3>
             </div>
             <div class="modal-body">
-                <form class="form" style="margin-bottom: 0;">
+                <form id="downLoadJfjl" method="post" action="tbJfjl/exportJfjl" class="form" style="margin-bottom: 0;" >
                     <!--<div class="text-center">
                         <h2>用户信息</h2>
                         <br/>
@@ -26,24 +26,22 @@
                             <tr>
                                 <td class="kv-label">缴费状态</td>
                                 <td class="kv-content" colspan="3">
-                                    <select class="span11" id="payStatus_export" onchange="changeTimeType()">
+                                    <select class="span11" id="payStatus_export" name="payStatus" onchange="changeTimeType()">
                                         <option value="">请选择</option>
                                         <option value="0">未缴费</option>
                                         <option value="1">欠费</option>
                                         <option value="2">已缴费</option>
                                     </select>
-                                    <font id="login_name_alert" color="red" style="display: none;">必填</font>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="kv-label">表号</td>
                                 <td class="kv-content">
-                                <input class="span11" id="meterId_export" placeholder="" type="text" autocomplete="off">
+                                <input class="span11" id="meterId_export" name="meterId" placeholder="" type="text" autocomplete="off">
                                 </td>
                                 <td class="kv-label">身份证号</td>
                                 <td class="kv-content">
-                                    <input class="span11" id="idCode_export" placeholder="" type="text" autocomplete="off">
-                                    <font id="name_alert" color="red" style="display: none;">必填</font>
+                                    <input class="span11" id="idCode_export" name="idCode" placeholder="" type="text" autocomplete="off">
                                 </td>
                             </tr>
                             <tr>
@@ -51,13 +49,13 @@
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
-                                    <input class="span11" id="starttime_export" type="text" value="" readonly onclick="showDate(0)" autocomplete="off">
+                                    <input class="span11" id="starttime_export" name="startTime" type="text" value="" readonly onclick="showDate(0)" autocomplete="off">
                                 </td>
                                 <td class="kv-label timeTagEnd">创建结束时间：
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
-                                    <input class="span11" id="endtime_export" type="text" value="" readonly onclick="showDate(1)" autocomplete="off">
+                                    <input class="span11" id="endtime_export" type="text" name="endTime" value="" readonly onclick="showDate(1)" autocomplete="off">
                                 </td>
                             </tr>
                             <tr></tr>

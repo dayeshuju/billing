@@ -70,7 +70,7 @@
     </select>
 
     <select id="getJfjl" resultType="com.daye.sys.entity.vt.VT_Jfjl">
-        select c.meterId ,c.periodElecNum  ,c.amountDue ,c.actualAmount ,c.payStatus payStatu ,date_format(c.payTime,'%Y-%m-%d') payTime
+        select c.meterId ,c.periodElecNum  ,cast(c.amountDue as char(50)) amountDue ,cast(c.actualAmount as char(50)) actualAmount ,c.payStatus payStatu ,date_format(c.payTime,'%Y-%m-%d') payTime
          ,c.receiptStatus  ,date_format(c.createdTime,'%Y-%m-%d') createdTime  ,date_format(c.modifiedTime,'%Y-%m-%d') modifiedTime ,c.note  ,b.`name` ,b.idCode ,
         b.address , b.phoneNum  ,d.tate  ,b.valid ,date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime, b.note userNote
         from tbYdyh b,tbJfjl c ,tbYhlx  d where
@@ -83,8 +83,8 @@
         select (@i:=@i+1) sort,
                c.meterId ,
                c.periodElecNum ,
-               c.amountDue ,
-               c.actualAmount ,
+               cast(c.amountDue as char(50)) amountDue,
+               cast(c.actualAmount as char(50)) actualAmount,
                c.payStatus payStatu ,
                date_format(c.payTime,'%Y-%m-%d') payTime ,
                c.receiptStatus ,

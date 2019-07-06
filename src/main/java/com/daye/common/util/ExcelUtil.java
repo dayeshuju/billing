@@ -165,7 +165,8 @@ public class ExcelUtil {
             // 设置response参数，可以打开下载页面
             response.reset();
             response.setContentType("application/vnd.ms-excel;charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes("gb2312"), "iso-8859-1"));
+            //response.setContentType(MediaType.APPLICATION_OCTET_STREAM.toString());
+            response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes("GBK"), "ISO8859_1"));
             ServletOutputStream out = response.getOutputStream();
             BufferedInputStream bis = null;
             BufferedOutputStream bos = null;

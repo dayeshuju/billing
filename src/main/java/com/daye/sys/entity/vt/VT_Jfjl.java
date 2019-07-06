@@ -3,7 +3,6 @@ package com.daye.sys.entity.vt;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 public class VT_Jfjl implements Serializable {
@@ -30,9 +29,9 @@ public class VT_Jfjl implements Serializable {
     //用电量
     private Long periodElecNum;
     //应缴电费
-    private Double amountDue;
+    private String amountDue;
     //实缴电费
-    private Double actualAmount;
+    private String actualAmount;
     //是否打印
     private Integer receiptStatus;
     //创建时间
