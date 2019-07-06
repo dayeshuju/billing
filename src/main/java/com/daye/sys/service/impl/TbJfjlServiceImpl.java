@@ -2,18 +2,25 @@ package com.daye.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
+import com.daye.common.util.ExcelUtil;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbJfjl;
 import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.entity.vt.VT_Jfjl;
 import com.daye.sys.mapper.TbJfjlMapper;
 import com.daye.sys.service.TbJfjlService;
-import javafx.scene.input.DataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.text.SimpleDateFormat;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,4 +116,34 @@ TbJfjlMapper tbJfjlMapper;
         VT_Jfjl vt_jfjl= tbJfjlMapper.getJfjl(id);
         return new JsonResult(vt_jfjl);
     }
+
+    @Override
+    @RequiredLog(operation = "导出缴费记录",value=0)
+    public void exportJfjl(HttpServletRequest request, HttpServletResponse response, String payStatus, String meterId, String idCode, String startTime, String endTime) {
+        List<VT_Jfjl> jfjlList = tbJfjlMapper.selectByParameters(payStatus, meterId, idCode, startTime, endTime);
+        List<String> titles = new ArrayList<>();
+        titles.add("序号");
+        titles.add("表号");
+        titles.add("姓名");
+        titles.add("身份证号");
+        titles.add("用户地址");
+        titles.add("用户电话");
+        titles.add("缴费状态");
+        titles.add("用电量");
+        titles.add("电费费率");
+        titles.add("应缴电费");
+        titles.add("实缴电费");
+        titles.add("缴费记录创建时间");
+        titles.add("缴费记录操作时间");
+        titles.add("是否打印");
+        titles.add("缴费备注");
+        titles.add("用户状态");
+        titles.add("用户创建时间");
+        titles.add("操作时间");
+        titles.add("用户备注");
+        ExcelUtil.createExcel(request,response,jfjlList,startTime+"至"+endTime+"缴费记录",titles);
+        //return new JsonResult("导出成功！！！");
+    }
+
 }
+

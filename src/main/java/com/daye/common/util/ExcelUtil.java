@@ -45,43 +45,110 @@ public class ExcelUtil {
                     HSSFCell cell = contentRow.createCell(k);
                     switch (k) {
                         // 用的时候把这一块释放开，改成自己的
-                        /*case 0:
-                            if (list.get(j).getAddress() != null) {// 每一列的名称
-                                cell.setCellValue(list.get(j).getAddress());
+                        case 0:
+                            if (list.get(j).getSort() != null) {// 每一列的名称
+                                cell.setCellValue(list.get(j).getSort().toString());
                             }
                             break;
                         case 1:
-                            if (list.get(j).getShake() != null) {//每一列的名称
-                                cell.setCellValue(list.get(j).getShake());
+                            if (list.get(j).getMeterId() != null) {// 每一列的名称
+                                cell.setCellValue(list.get(j).getMeterId());
                             }
                             break;
                         case 2:
-                            if (list.get(j).getNetname() != null) {//每一列的名称
-                                cell.setCellValue(list.get(j).getNetname());
+                            if (list.get(j).getName() != null) {//每一列的名称
+                                cell.setCellValue(list.get(j).getName());
                             }
                             break;
                         case 3:
-                            if (list.get(j).getNet() != null) {
-                                cell.setCellValue(list.get(j).getNet());
+                            if (list.get(j).getIdCode() != null) {//每一列的名称
+                                cell.setCellValue(list.get(j).getIdCode());
                             }
                             break;
                         case 4:
-                            if (list.get(j).getState() != null) {
-                                cell.setCellValue(list.get(j).getState());
+                            if (list.get(j).getAddress() != null) {
+                                cell.setCellValue(list.get(j).getAddress());
                             }
                             break;
                         case 5:
-                            if (list.get(j).getUsetime() > 0) {
-                                cell.setCellValue(list.get(j).getUsetime());
+                            if (list.get(j).getPhoneNum() != null) {
+                                cell.setCellValue(list.get(j).getPhoneNum());
                             }
                             break;
                         case 6:
-                            if (list.get(j).getTime() != null) {
-                                cell.setCellValue(list.get(j).getTime());
+                            if (list.get(j).getPayStatu()!=null) {
+                                int sta = list.get(j).getPayStatu();
+                                if(sta==0) cell.setCellValue("未缴费");
+                                if(sta==1) cell.setCellValue("欠费");
+                                if(sta==2) cell.setCellValue("已缴费");
+                            }
+                            break;
+                        case 7:
+                            if (list.get(j).getPeriodElecNum() != null) {
+                                cell.setCellValue(list.get(j).getPeriodElecNum().toString());
+                            }
+                            break;
+                        case 8:
+                            if (list.get(j).getTate() != null) {
+                                cell.setCellValue(list.get(j).getTate().toString());
+                            }
+                            break;
+                        case 9:
+                            if (list.get(j).getAmountDue() != null) {
+                                cell.setCellValue(list.get(j).getAmountDue().toString());
+                            }
+                            break;
+                        case 10:
+                            if (list.get(j).getActualAmount() != null) {
+                                cell.setCellValue(list.get(j).getActualAmount().toString());
+                            }
+                            break;
+                        case 11:
+                            if (list.get(j).getCreatedTime() != null) {
+                                cell.setCellValue(list.get(j).getCreatedTime());
+                            }
+                            break;
+                        case 12:
+                            if (list.get(j).getModifiedTime() != null) {
+                                cell.setCellValue(list.get(j).getModifiedTime());
+                            }
+                            break;
+                        case 13:
+                            if (list.get(j).getReceiptStatus() != null) {
+                                int ptin = list.get(j).getPayStatu();
+                                if(ptin==0) cell.setCellValue("未打印");
+                                if(ptin==1) cell.setCellValue("打印");
+                            }
+                            break;
+                        case 14:
+                            if (list.get(j).getNote() != null) {
+                                cell.setCellValue(list.get(j).getNote());
+                            }
+                            break;
+                        case 15:
+                            if (list.get(j).getValid() != null) {
+                                int val = list.get(j).getValid();
+                                if(val==0) cell.setCellValue("禁用");
+                                if(val==1) cell.setCellValue("启用");
+                            }
+                            break;
+                        case 16:
+                            if (list.get(j).getCreatedUserTime() != null) {
+                                cell.setCellValue(list.get(j).getCreatedUserTime());
+                            }
+                            break;
+                        case 17:
+                            if (list.get(j).getModifiedUserTime() != null) {
+                                cell.setCellValue(list.get(j).getModifiedUserTime());
+                            }
+                            break;
+                        case 18:
+                            if (list.get(j).getUserNote() != null) {
+                                cell.setCellValue(list.get(j).getUserNote());
                             }
                             break;
                         default:
-                            break;*/
+                            break;
                     }
                     cell.setCellStyle(cellStyle);
                 }

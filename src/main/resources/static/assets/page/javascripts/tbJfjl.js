@@ -306,6 +306,7 @@ function lookJfjlMsg(id) {
     })
 }
 
+
 function getYhlxlist() {
 
     var url = "tbYdyh/getYhlxlist";
@@ -334,4 +335,148 @@ function getYhlxlist() {
     });
 
 
+}
+
+function clearExportConditions(){
+    $("#payStatus_export option:selected").removeAttrs("selected");
+    $("#meterId_export").val(null);
+    $("#idCode_export").val(null);
+    $("#starttime_export").val(null);
+    $("#endtime_export").val(null);
+    endtime_export.max = laydate.now();
+    endtime_export.min = '1900-01-01';
+    endtime_export.start = starttime_export.max;
+    starttime_export.max = laydate.now();
+    starttime_export.min = '1900-01-01';
+    starttime_export.start = starttime_export.max;
+}
+
+function changeTimeType(){
+    if($("#payStatus_export").val()=='2'){
+        $(".timeTagStart").html("缴费起始时间：<font color=\"red\">*</font>");
+        $(".timeTagEnd").html("缴费结束时间：<font color=\"red\">*</font>");
+    }else{
+        $(".timeTagStart").html("创建起始时间：<font color=\"red\">*</font>");
+        $(".timeTagEnd").html("创建结束时间：<font color=\"red\">*</font>");
+    }
+}
+
+Date.prototype.format = function(format)
+{
+    var o = {
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(),    //day
+        "h+" : this.getHours(),   //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+        (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)if(new RegExp("("+ k +")").test(format))
+        format = format.replace(RegExp.$1,
+            RegExp.$1.length==1 ? o[k] :
+                ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
+}
+
+var starttime_export = {
+    elem: '#starttime_export',
+    format: 'YYYY-MM-DD',
+    min: '1900-01-01', //设定最小日期为当前日期
+    max: laydate.now(), //最大日期
+    istime: false,
+    istoday: false,
+    choose: function(datas){console.log(datas);
+        var slectedDate = new Date(datas);
+        slectedDate.setFullYear(slectedDate.getFullYear()+1);
+        slectedDate.setDate(slectedDate.getDate()-1);
+        if(slectedDate.getTime()>Date.parse(laydate.now())){
+            endtime_export.max = laydate.now();
+        }else{
+            endtime_export.max = slectedDate.format("yyyy-MM-dd");
+        }
+        endtime_export.min = datas; //开始日选好后，重置结束日的最小日期
+        endtime_export.start = endtime_export.max //将结束日的初始值设定为开始日
+    }
+};
+var endtime_export = {
+    elem: '#endtime_export',
+    format: 'YYYY-MM-DD',
+    min: '1900-01-01',
+    max: laydate.now(),
+    istime: false,
+    istoday: false,
+    choose: function(datas){
+        var slectedEndDate = new Date(datas);
+        slectedEndDate.setFullYear(slectedEndDate.getFullYear()-1);
+        slectedEndDate.setDate(slectedEndDate.getDate()+1);
+        starttime_export.min = slectedEndDate.format("yyyy-MM-dd");console.log(slectedEndDate.format("yyyy-MM-dd"));
+        starttime_export.max = datas; //结束日选好后，重置开始日的最大日期
+        starttime_export.start = starttime_export.min //将结束日的初始值设定为开始日
+    }
+};
+
+function showDate(val){
+    if(val==0){
+        laydate(starttime_export);
+    }
+    if(val==1){
+        laydate(endtime_export);
+    }
+    $("#laydate_clear").click(function () {
+        $("#starttime_export").val(null);
+        $("#endtime_export").val(null);
+        endtime_export.max = laydate.now();
+        endtime_export.min = '1900-01-01';
+        endtime_export.start = starttime_export.max;
+        starttime_export.max = laydate.now();
+        starttime_export.min = '1900-01-01';
+        starttime_export.start = starttime_export.max;
+    })
+}
+
+function exportJfjl(){
+    var startTime = $("#starttime_export").val();
+    var endTime = $("#endtime_export").val();
+    if(startTime==''||endTime==''){
+        layer.msg('时间为必填项，不能为空！', {
+            icon: 2
+        });
+        return false;
+    }
+
+    var payStatus = $("#payStatus_export").val();
+    var meterId = $("#meterId_export").val();
+    var idCode = $("#idCode_export").val();
+
+    $.ajax({
+        url: "tbJfjl/exportJfjl", //这个就是请求地址对应sAjaxSource
+        data: {
+            "payStatus": payStatus,
+            "meterId": meterId,
+            "idCode":idCode,
+            "startTime":startTime,
+            "endTime": endTime
+        },
+        type: 'POST',
+        async: false,
+        success: function(result) {
+            if (result.state == 1) {
+                layer.msg(result.message, {
+                    icon: 1
+                });
+            }else if(result.state == 0){
+                layer.msg('导出缴费记录出错！', {
+                    icon: 2
+                });
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            layer.msg('导出缴费记录出错！', {
+                icon: 2
+            });
+        }
+    });
 }

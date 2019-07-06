@@ -20,7 +20,10 @@ public interface TbJfjlMapper extends BaseMapper<TbJfjl> {
 
     Integer findCount(@Param("vt_jfjl") VT_Jfjl vt_jfjl, @Param("sSearch") String sSearch);
 
-    List<VT_Jfjl> findObject(VT_Jfjl vt_jfjl, Integer iDisplayStart, Integer iDisplayLength, String sSearch);
+    List<VT_Jfjl> findObject(@Param("vt_jfjl") VT_Jfjl vt_jfjl,
+                             @Param("iDisplayStart") Integer iDisplayStart,
+                             @Param("iDisplayLength") Integer iDisplayLength,
+                             @Param("sSearch") String sSearch);
 
     Integer findCountByid(
             @Param("meterId") String meterId,
@@ -35,4 +38,10 @@ public interface TbJfjlMapper extends BaseMapper<TbJfjl> {
             @Param("iDisplayLength") Integer iDisplayLength);
 
     VT_Jfjl getJfjl(@Param("id") Long id);
+
+    List<VT_Jfjl> selectByParameters(@Param("payStatus") String payStatus,
+                                     @Param("meterId") String meterId,
+                                     @Param("idCode") String idCode,
+                                     @Param("startTime") String startTime,
+                                     @Param("endTime") String endTime);
 }

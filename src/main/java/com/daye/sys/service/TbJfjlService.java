@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbJfjl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -23,4 +25,6 @@ public interface TbJfjlService extends IService<TbJfjl> {
     Map<String, Object> getHistoryJfjlList(String startTime, String endTime, String meterId, Map<String, String> aoData);
 
     JsonResult getJfjl(Long id);
+
+    void exportJfjl(HttpServletRequest request, HttpServletResponse response, String payStatus, String meterId, String idCode, String startTime, String endTime);
 }

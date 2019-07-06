@@ -4,6 +4,79 @@
 <input type="text" name="meterId" id="meterId" style="display: none"/>
 <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper' style="display: block;">
+        <!--modal-adduser-->
+        <div class="modal-add hide fade in" id="modal-adduser" role="dialog" tabindex="-1" aria-hidden="false"
+             style="display:none;">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">×</button>
+                <h3 style="color: white;">
+                    <div class="icon-edit"></div>
+                    导出缴费记录
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form class="form" style="margin-bottom: 0;">
+                    <!--<div class="text-center">
+                        <h2>用户信息</h2>
+                        <br/>
+                    </div>-->
+                    <div class="box-content" style="display: inline;">
+                        <table class="kv-table">
+                            <tbody>
+                            <tr>
+                                <td class="kv-label">缴费状态</td>
+                                <td class="kv-content" colspan="3">
+                                    <select class="span11" id="payStatus_export" onchange="changeTimeType()">
+                                        <option value="">请选择</option>
+                                        <option value="0">未缴费</option>
+                                        <option value="1">欠费</option>
+                                        <option value="2">已缴费</option>
+                                    </select>
+                                    <font id="login_name_alert" color="red" style="display: none;">必填</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="kv-label">表号</td>
+                                <td class="kv-content">
+                                <input class="span11" id="meterId_export" placeholder="" type="text" autocomplete="off">
+                                </td>
+                                <td class="kv-label">身份证号</td>
+                                <td class="kv-content">
+                                    <input class="span11" id="idCode_export" placeholder="" type="text" autocomplete="off">
+                                    <font id="name_alert" color="red" style="display: none;">必填</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="kv-label timeTagStart">创建起始时间：
+                                    <font color="red">*</font>
+                                </td>
+                                <td class="kv-content">
+                                    <input class="span11" id="starttime_export" type="text" value="" readonly onclick="showDate(0)" autocomplete="off">
+                                </td>
+                                <td class="kv-label timeTagEnd">创建结束时间：
+                                    <font color="red">*</font>
+                                </td>
+                                <td class="kv-content">
+                                    <input class="span11" id="endtime_export" type="text" value="" readonly onclick="showDate(1)" autocomplete="off">
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="control-group">
+                    <div class="controls">
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
+                <button class="btn btn-primary" onclick="exportJfjl()"><i class="icon-external-link"></i> 导出</button>
+            </div>
+        </div>
+        <!--modal-adduser end-->
         <!--modeal-lookmsg-->
         <div class="modal-add hide fade in" id="modal-lookmsg" role="dialog" tabindex="-1" aria-hidden="false"
              style="display:none;height: 80%;">
@@ -222,6 +295,10 @@
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
                     <div class='title'>缴费记录列表</div>
+                    <div class='pull-right'>
+                        <a id="exportjfjl" class="btn btn-default" data-toggle="modal" href="#modal-adduser" role="button"
+                           style="margin-bottom:5px" onclick="clearExportConditions()"><i class="icon-external-link"></i>导出</a>
+                    </div>
                 </div>
                 <div class='box-content box-no-padding'>
                     <div class='responsive-table'>
