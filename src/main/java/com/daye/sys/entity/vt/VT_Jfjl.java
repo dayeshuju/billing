@@ -46,7 +46,7 @@ public class VT_Jfjl implements Serializable {
     //用户电话
     private String phoneNum;
     //电费费率
-    private Double tate;
+    private String tate;
     //用户状态(0:禁用,1:启用)
     private Integer valid;
     //用户创建时间

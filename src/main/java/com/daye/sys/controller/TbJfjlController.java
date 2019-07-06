@@ -45,6 +45,7 @@ public class TbJfjlController {
 
     @RequestMapping("getHistoryJfjlList")
     @RequiresPermissions("sys:tbJfjl")
+    @ResponseBody
     public Map<String,Object> getHistoryJfjlList(String startTime,String endTime,String meterId,@RequestParam Map<String,String> aoData){
         aoData = JsonToMap.jsonToMap(aoData.get("aoData"));
         Map<String,Object> map = tbJfjlService.getHistoryJfjlList(startTime,endTime,meterId,aoData);

@@ -37,7 +37,7 @@ public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> impleme
             yhlx.setId(id);
         }
         if(!StringUtils.isEmpty(aoData.get("sSearch_1").trim())) yhlx.setUserType(aoData.get("sSearch_1"));
-        if(!StringUtils.isEmpty(aoData.get("sSearch_2").trim())) yhlx.setTate(Double.valueOf(aoData.get("sSearch_2")));
+        if(!StringUtils.isEmpty(aoData.get("sSearch_2").trim())) yhlx.setTate(aoData.get("sSearch_2"));
 
         String sSearch = aoData.get("sSearch");
         Object iDisplayStartObj = aoData.get("iDisplayStart");
@@ -60,7 +60,7 @@ public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> impleme
     @RequiredLog(operation = "添加用户类型")
     public JsonResult addYhlx(TbYhlx yhlx) {
         if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("用户类型不能为空"));
-        if(yhlx.getTate()==null||Double.doubleToLongBits(yhlx.getTate())==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
+        if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
         TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
         if(oldYhlx != null) return new JsonResult(new Throwable("用户类型已存在，请更改用户类型名称"));
         yhlx.setUserType(yhlx.getUserType().trim());
@@ -80,7 +80,7 @@ public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> impleme
     @RequiredLog(operation = "修改用户类型信息")
     public JsonResult updateYhlx(TbYhlx yhlx) {
         if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("用户类型不能为空"));
-        if(yhlx.getTate()==null||Double.doubleToLongBits(yhlx.getTate())==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
+        if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
         TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
         if(oldYhlx != null&& oldYhlx.getId()!=yhlx.getId()) return new JsonResult(new Throwable("用户类型已存在，请更改用户类型名称"));
         yhlx.setUserType(yhlx.getUserType().trim());

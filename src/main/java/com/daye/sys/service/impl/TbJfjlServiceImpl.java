@@ -8,6 +8,7 @@ import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.entity.vt.VT_Jfjl;
 import com.daye.sys.mapper.TbJfjlMapper;
 import com.daye.sys.service.TbJfjlService;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -29,7 +30,7 @@ public class TbJfjlServiceImpl extends ServiceImpl<TbJfjlMapper, TbJfjl> impleme
 @Autowired
 TbJfjlMapper tbJfjlMapper;
     @Override
-    @RequiredLog(operation = "获取最近一期的缴费记录")
+    @RequiredLog(operation = "获取全部的缴费记录")
     public Map<String, Object> findObject(Map<String, String> aoData) {
 
         VT_Jfjl vt_jfjl = new VT_Jfjl();
@@ -43,9 +44,23 @@ TbJfjlMapper tbJfjlMapper;
         if(!StringUtils.isEmpty(aoData.get("sSearch_4").trim())) vt_jfjl.setPayTime(aoData.get("sSearch_4"));
         //欠费金额
         if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())){
-            String arrearsStr = aoData.get("sSearch_5");
-            Double arrears = Double.valueOf(arrearsStr);
-            vt_jfjl.setArrears(arrears);
+            String payStatus = aoData.get("sSearch_5").trim();
+            int i = 0;
+            if("未缴费".contains(payStatus)){
+                vt_jfjl.setPayStatu(0);
+                i++;
+            }
+            if("欠费".contains(payStatus)){
+                vt_jfjl.setPayStatu(1);
+                i++;
+            }
+            if("已缴费".contains(payStatus)){
+                vt_jfjl.setPayStatu(2);
+                i++;
+            }
+            if(i==3||i==2){
+                vt_jfjl.setPayStatu(null);
+            }
         }
 
         String sSearch = aoData.get("sSearch");
@@ -58,6 +73,19 @@ TbJfjlMapper tbJfjlMapper;
 
         Integer count =tbJfjlMapper.findCount(vt_jfjl,sSearch);
         List<VT_Jfjl> jfjlList = tbJfjlMapper.findObject(vt_jfjl,iDisplayStart,iDisplayLength,sSearch);
+        if (jfjlList != null && jfjlList.size()>0) {
+            for (VT_Jfjl jfjl : jfjlList) {
+                if(jfjl.getPayStatu()==0){
+                    jfjl.setPayStatus("未缴费");
+                }
+                if(jfjl.getPayStatu()==1){
+                    jfjl.setPayStatus("欠费");
+                }
+                if(jfjl.getPayStatu()==2){
+                    jfjl.setPayStatus("已缴费");
+                }
+            }
+        }
         Map<String,Object> map = new HashMap<>();
         map.put("iTotalDisplayRecords",count);
         map.put("iTotalRecords",count);
@@ -91,7 +119,20 @@ TbJfjlMapper tbJfjlMapper;
         Integer sEcho = (Integer) sEchoStr;
 
         Integer count =tbJfjlMapper.findCountByid(meterId,startTime,endTime);
-        List<VT_Cbjl> cbjlList = tbJfjlMapper.findObjectById(meterId,startTime,endTime,iDisplayStart,iDisplayLength);
+        List<VT_Jfjl> cbjlList = tbJfjlMapper.findObjectById(meterId,startTime,endTime,iDisplayStart,iDisplayLength);
+        if (cbjlList != null && cbjlList.size()>0) {
+            for (VT_Jfjl jfjl : cbjlList) {
+                if(jfjl.getPayStatu()==0){
+                    jfjl.setPayStatus("未缴费");
+                }
+                if(jfjl.getPayStatu()==1){
+                    jfjl.setPayStatus("欠费");
+                }
+                if(jfjl.getPayStatu()==2){
+                    jfjl.setPayStatus("已缴费");
+                }
+            }
+        }
         Map<String,Object> map = new HashMap<>();
         map.put("iTotalDisplayRecords",count);
         map.put("iTotalRecords",count);
@@ -105,6 +146,56 @@ TbJfjlMapper tbJfjlMapper;
     @RequiredLog(operation = "根据id号获取该详细的数据")
     public JsonResult getJfjl(Long id) {
         VT_Jfjl vt_jfjl= tbJfjlMapper.getJfjl(id);
+        if(vt_jfjl != null){
+            if(StringUtils.isEmpty(vt_jfjl.getName())){
+                vt_jfjl.setName("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getIdCode())){
+                vt_jfjl.setIdCode("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getMeterId())){
+                vt_jfjl.setMeterId("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getPayTime())){
+                vt_jfjl.setPayTime("");
+            }
+            if(vt_jfjl.getPeriodElecNum()==null){
+                vt_jfjl.setPeriodElecNum(0L);
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getAmountDue())){
+                vt_jfjl.setAmountDue("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getActualAmount())){
+                vt_jfjl.setActualAmount("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getCreatedTime())){
+                vt_jfjl.setCreatedTime("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getModifiedTime())){
+                vt_jfjl.setModifiedTime("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getNote())){
+                vt_jfjl.setNote("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getAddress())){
+                vt_jfjl.setAddress("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getPhoneNum())){
+                vt_jfjl.setPhoneNum("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getTate())){
+                vt_jfjl.setTate("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getCreatedUserTime())){
+                vt_jfjl.setCreatedUserTime("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getModifiedUserTime())){
+                vt_jfjl.setModifiedUserTime("");
+            }
+            if(StringUtils.isEmpty(vt_jfjl.getUserNote())){
+                vt_jfjl.setUserNote("");
+            }
+        }
         return new JsonResult(vt_jfjl);
     }
 

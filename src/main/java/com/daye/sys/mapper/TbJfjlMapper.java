@@ -2,7 +2,6 @@ package com.daye.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.daye.sys.entity.TbJfjl;
-import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.entity.vt.VT_Jfjl;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,7 +29,7 @@ public interface TbJfjlMapper extends BaseMapper<TbJfjl> {
             @Param("startTime") String startTime,
             @Param("endTime") String endTime);
 
-    List<VT_Cbjl> findObjectById(
+    List<VT_Jfjl> findObjectById(
             @Param("meterId") String meterId,
             @Param("startTime") String startTime,
             @Param("endTime") String endTime,

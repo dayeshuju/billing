@@ -38,7 +38,7 @@ public class ExcelUtil {
             // 创建内容行
             HSSFCellStyle cellStyle = workbook.createCellStyle();
             cellStyle.setWrapText(true);// 自动换行
-            cellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00"));
+            cellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("@"));
             for (int j = 0; j < list.size(); j++) {
                 HSSFRow contentRow = sheet.createRow(j + 1);
                 for (int k = 0; k < title.size(); k++) {
@@ -90,17 +90,17 @@ public class ExcelUtil {
                             break;
                         case 8:
                             if (list.get(j).getTate() != null) {
-                                cell.setCellValue(list.get(j).getTate().toString());
+                                cell.setCellValue(list.get(j).getTate());
                             }
                             break;
                         case 9:
                             if (list.get(j).getAmountDue() != null) {
-                                cell.setCellValue(list.get(j).getAmountDue().toString());
+                                cell.setCellValue(list.get(j).getAmountDue());
                             }
                             break;
                         case 10:
                             if (list.get(j).getActualAmount() != null) {
-                                cell.setCellValue(list.get(j).getActualAmount().toString());
+                                cell.setCellValue(list.get(j).getActualAmount());
                             }
                             break;
                         case 11:

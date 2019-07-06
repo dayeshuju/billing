@@ -9,7 +9,6 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 @SpringBootApplication
 @MapperScan("com.daye.sys.mapper")
-@ServletComponentScan(basePackages = "com.daye.common.listener.RequestConLis")
 public class BillingApplication {
 
     public static void main(String[] args) {

@@ -5,7 +5,6 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="findObject">
-        c.id in (select max(d.id) from tbJfjl d group by d.meterId)
         and c.ydyhId = b.id
         <if test="sSearch != null and sSearch != ''">
             and (b.name like concat("%",#{sSearch},"%")
@@ -15,10 +14,10 @@
             or c.payStatus like concat("%",#{sSearch},"%"))
         </if>
         <if test="vt_jfjl.name != null and vt_jfjl.name != ''">
-            and c.name like concat("%",#{vt_jfjl.name},"%")
+            and b.name like concat("%",#{vt_jfjl.name},"%")
         </if>
         <if test="vt_jfjl.idCode != null and vt_jfjl.idCode != ''">
-            and c.idCode like concat("%",#{vt_jfjl.idCode},"%")
+            and b.idCode like concat("%",#{vt_jfjl.idCode},"%")
         </if>
         <if test="vt_jfjl.meterId != null and vt_jfjl.meterId != ''">
             and c.meterId like concat("%",#{vt_jfjl.meterId},"%")
@@ -26,9 +25,10 @@
         <if test="vt_jfjl.payTime != null and vt_jfjl.payTime != ''">
             and date_format(c.payTime,'%Y-%m-%d') like concat('%',#{vt_jfjl.payTime},'%')
         </if>
-        <if test="vt_jfjl.payStatus != null and vt_jfjl.payStatus != ''">
-            and c.payStatus like concat("%",#{vt_jfjl.payStatu},"%")
+        <if test="vt_jfjl.payStatu != null">
+            and c.payStatus = #{vt_jfjl.payStatu}
         </if>
+        order by c.createdTime desc
     </sql>
 
 
@@ -40,7 +40,8 @@
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
         select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,date_format(c.payTime,'%Y-%m-%d') payTime ,
-         case c.payStatus when 0 then '未缴费' when 1 then  '欠费' when 2 then '已缴费' else '未知' end as payStatus from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
+                c.payStatus  payStatu , c.createdTime
+        from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObject"></include>
             limit #{iDisplayStart},#{iDisplayLength}
@@ -62,7 +63,8 @@
     </select>
     <select id="findObjectById" resultType="com.daye.sys.entity.vt.VT_Jfjl">
         select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,date_format(c.payTime,'%Y-%m-%d') payTime,
-        case c.payStatus when 0 then '未缴费' when 1 then  '欠费' when 2 then '已缴费' else '未知' end as payStatus from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
+                c.payStatus  payStatu
+        from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObjectById"></include>
             limit #{iDisplayStart},#{iDisplayLength}
@@ -72,7 +74,7 @@
     <select id="getJfjl" resultType="com.daye.sys.entity.vt.VT_Jfjl">
         select c.meterId ,c.periodElecNum  ,cast(c.amountDue as char(50)) amountDue ,cast(c.actualAmount as char(50)) actualAmount ,c.payStatus payStatu ,date_format(c.payTime,'%Y-%m-%d') payTime
          ,c.receiptStatus  ,date_format(c.createdTime,'%Y-%m-%d') createdTime  ,date_format(c.modifiedTime,'%Y-%m-%d') modifiedTime ,c.note  ,b.`name` ,b.idCode ,
-        b.address , b.phoneNum  ,d.tate  ,b.valid ,date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime, b.note userNote
+        b.address , b.phoneNum  ,cast(d.tate as char(20)) tate  ,b.valid ,date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime, b.note userNote
         from tbYdyh b,tbJfjl c ,tbYhlx  d where
          c.id=#{id}
          and c.ydyhId = b.id and b.userTypeId=d.id
@@ -95,7 +97,7 @@
                b.idCode ,
                b.address ,
                b.phoneNum ,
-               d.tate  ,
+               cast(d.tate as char(20))  tate,
                b.valid ,
                date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,
                date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime,

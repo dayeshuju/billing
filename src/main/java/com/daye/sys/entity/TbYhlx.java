@@ -31,7 +31,7 @@ public class TbYhlx implements Serializable {
     /**
      * 电费费率*10000
      */
-    private Double tate;
+    private String tate;
     /**
      * 创建时间
      */
@@ -60,11 +60,11 @@ public class TbYhlx implements Serializable {
         this.userType = userType;
     }
 
-    public Double getTate() {
+    public String getTate() {
         return tate;
     }
 
-    public void setTate(Double tate) {
+    public void setTate(String tate) {
         this.tate = tate;
     }
 
