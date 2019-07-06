@@ -79,4 +79,50 @@
 
     </select>
 
+    <select id="selectByParameters" resultType="com.daye.sys.entity.vt.VT_Jfjl">
+        select (@i:=@i+1) sort,
+               c.meterId ,
+               c.periodElecNum ,
+               c.amountDue ,
+               c.actualAmount ,
+               c.payStatus payStatu ,
+               date_format(c.payTime,'%Y-%m-%d') payTime ,
+               c.receiptStatus ,
+               date_format(c.createdTime,'%Y-%m-%d') createdTime ,
+               date_format(c.modifiedTime,'%Y-%m-%d') modifiedTime ,
+               c.note ,
+               b.`name`,
+               b.idCode ,
+               b.address ,
+               b.phoneNum ,
+               d.tate  ,
+               b.valid ,
+               date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,
+               date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime,
+               b.note userNote
+        from tbYdyh b,tbJfjl c ,tbYhlx d ,(SELECT @i:=0) t
+        <where>
+            c.ydyhId = b.id and b.userTypeId=d.id
+            <choose>
+                <when test="payStatus=='2'">
+                  and c.payTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(concat(#{endTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')
+                </when>
+                <otherwise>
+                  and c.createdTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(concat(#{endTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')
+                </otherwise>
+            </choose>
+            <if test="payStatus!=null and payStatus!=''">
+                and c.payStatus = cast(#{payStatus} AS UNSIGNED int)
+            </if>
+            <if test="meterId!=null and meterId!=''">
+                and c.meterId = #{meterId}
+            </if>
+            <if test="idCode!=null and idCode!=''">
+                and b.idCode = #{idCode}
+            </if>
+        </where>
+
+
+    </select>
+
 </mapper>
