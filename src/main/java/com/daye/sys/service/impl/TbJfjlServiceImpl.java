@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbJfjl;
-import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.entity.vt.VT_Jfjl;
 import com.daye.sys.mapper.TbJfjlMapper;
 import com.daye.sys.service.TbJfjlService;
-import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -160,7 +158,7 @@ TbJfjlMapper tbJfjlMapper;
                 vt_jfjl.setPayTime("");
             }
             if(vt_jfjl.getPeriodElecNum()==null){
-                vt_jfjl.setPeriodElecNum(0L);
+                vt_jfjl.setPeriodElecNum("");
             }
             if(StringUtils.isEmpty(vt_jfjl.getAmountDue())){
                 vt_jfjl.setAmountDue("");

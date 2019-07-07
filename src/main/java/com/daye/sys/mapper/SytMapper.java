@@ -20,4 +20,6 @@ public interface SytMapper {
                              @Param("iDisplayStart") Integer iDisplayStart,
                              @Param("iDisplayLength") Integer iDisplayLength,
                              @Param("sSearch") String sSearch);
+
+    VT_Jfjl getJfyhById(Integer id);
 }

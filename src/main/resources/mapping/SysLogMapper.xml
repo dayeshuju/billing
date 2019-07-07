@@ -4,5 +4,8 @@
 
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    <delete id="cleanUp2Y">
+        delete from sysLogs where date(createdTime) &lt; date(DATE_SUB(NOW(), INTERVAL 2 year))
+    </delete>
 
 </mapper>

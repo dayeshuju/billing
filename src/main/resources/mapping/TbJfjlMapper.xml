@@ -30,6 +30,9 @@
         </if>
         order by c.createdTime desc
     </sql>
+    <delete id="cleanUp2Y">
+        delete from tbJfjl where payStatus &lt;&gt; 0 and payStatus &lt;&gt; 1 and date(payTime) &lt; date(DATE_SUB(NOW(),	INTERVAL 2 year))
+    </delete>
 
 
     <select id="findCount" resultType="java.lang.Integer">
@@ -39,7 +42,7 @@
         </where>
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
-        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,date_format(c.payTime,'%Y-%m-%d') payTime ,
+        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,c.payTime,
                 c.payStatus  payStatu , c.createdTime
         from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
@@ -62,7 +65,7 @@
         </where>
     </select>
     <select id="findObjectById" resultType="com.daye.sys.entity.vt.VT_Jfjl">
-        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,date_format(c.payTime,'%Y-%m-%d') payTime,
+        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,c.payTime,
                 c.payStatus  payStatu
         from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>

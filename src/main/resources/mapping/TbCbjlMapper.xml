@@ -39,6 +39,9 @@
             (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum})
         </foreach>
     </insert>
+    <delete id="cleanUp2Y">
+        delete from tbCbjl where date(regisTime) &lt; date(date_sub(NOW(),	INTERVAL 2 year))
+    </delete>
     <select id="insertJfjls" parameterType="java.util.Map" statementType="CALLABLE" useCache="false">
         {
         call insertJfjlFromCbjl(#{insertCount,mode=IN,jdbcType=BIGINT},#{insId,mode=IN,jdbcType=BIGINT},#{result,mode=OUT,jdbcType=BIGINT})

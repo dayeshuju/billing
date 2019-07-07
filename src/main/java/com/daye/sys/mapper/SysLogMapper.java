@@ -12,4 +12,5 @@ import com.daye.sys.entity.SysLog;
  * @since 2019-06-18
  */
 public interface SysLogMapper extends BaseMapper<SysLog> {
+    void cleanUp2Y();
 }

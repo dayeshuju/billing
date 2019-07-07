@@ -43,4 +43,6 @@ public interface TbJfjlMapper extends BaseMapper<TbJfjl> {
                                      @Param("idCode") String idCode,
                                      @Param("startTime") String startTime,
                                      @Param("endTime") String endTime);
+
+    void cleanUp2Y();
 }

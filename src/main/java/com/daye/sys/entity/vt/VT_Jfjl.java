@@ -27,7 +27,7 @@ public class VT_Jfjl implements Serializable {
     //数字缴费状态
     private Integer payStatu;
     //用电量
-    private Long periodElecNum;
+    private String periodElecNum;
     //应缴电费
     private String amountDue;
     //实缴电费

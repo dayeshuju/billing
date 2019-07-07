@@ -42,6 +42,11 @@
             limit #{iDisplayStart},#{iDisplayLength}
         </where>
     </select>
-
-
+    <select id="getJfyhById" resultType="com.daye.sys.entity.vt.VT_Jfjl">
+        select a.name,a.idCode,a.address,b.meterId,cast(b.periodElecNum as char(50)) periodElecNum,cast(c.tate as char(50)) tate,
+        cast(b.amountDue as char(50)) amountDue from tbYdyh a,tbJfjl b,tbYhlx c
+        <where>
+            b.id=#{id} and a.id=b.ydyhId and a.userTypeId = c.id
+        </where>
+    </select>
 </mapper>

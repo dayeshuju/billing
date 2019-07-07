@@ -20,19 +20,9 @@
                         <table class="kv-table">
                             <tbody>
                             <tr>
-                                <td class="kv-label">缴费时间
-                                </td>
-                                <td class="kv-content" id="payTime">
-                                </td>
                                 <td class="kv-label">姓名
                                 </td>
                                 <td class="kv-content" id="name">
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td class="kv-label">表号</td>
-                                <td class="kv-content" id="meterNum">
                                 </td>
                                 <td class="kv-label">身份证号
                                 </td>
@@ -40,81 +30,40 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">缴费状态
-                                </td>
-                                <td class="kv-content"  id="payStatus">
+                                <td class="kv-label">表号</td>
+                                <td class="kv-content" id="meterNum">
                                 </td>
                                 <td class="kv-label">用户地址
                                 </td>
                                 <td class="kv-content" id="address">
                                 </td>
-
+                            </tr>
+                            <tr>
+                                <td class="kv-label">用电量
+                                </td>
+                                <td class="kv-content" id="periodElecNum">
+                                </td>
+                                <td class="kv-label">电费费率
+                                </td>
+                                <td class="kv-content" id="tate">
+                                </td>
                             </tr>
                             <tr>
                                 <td class="kv-label">应缴电费
                                 </td>
                                 <td class="kv-content" id="amountDue">
                                 </td>
-                                <td class="kv-label">用户电话
-                                </td>
-                                <td class="kv-content" id="phoneNum">
-                                </td>
-
-                            </tr>
-                            <tr>
                                 <td class="kv-label">实缴电费
                                 </td>
-                                <td class="kv-content" id="actualAmount">
-                                </td>
-                                <td class="kv-label">用电量
-                                </td>
-                                <td class="kv-content" colspan="3" id="periodElecNum">
+                                <td class="kv-content">
+                                    <input class="span13" id="actualAmount" placeholder="" type="text" autocomplete="off">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">电费费率
+                                <td class="kv-label">备注
                                 </td>
-                                <td class="kv-content" id="tate">
-                                </td>
-                                <td class="kv-label">是否打印
-                                </td>
-                                <td class="kv-content" id="receiptStatus">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">缴费记录创建时间
-                                </td>
-                                <td class="kv-content" id="createdTime">
-                                </td>
-                                <td class="kv-label">缴费记录操作时间
-                                </td>
-                                <td class="kv-content" id="modifiedTime">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">用户创建时间
-                                </td>
-                                <td class="kv-content" id="createdUserTime">
-                                </td>
-                                <td class="kv-label">操作时间
-                                </td>
-                                <td class="kv-content" id="modifiedUserTime">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">缴费备注
-                                </td>
-                                <td class="kv-content" id="note">
-                                </td>
-                                <td class="kv-label">用户备注
-                                </td>
-                                <td class="kv-content" id="userNote" >
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">用户状态
-                                </td>
-                                <td class="kv-content" id="valid" colspan="3">
+                                <td class="kv-content" colspan="3">
+                                    <input class="span13" id="note" placeholder="" type="text" autocomplete="off">
                                 </td>
                             </tr>
                             </tbody>
@@ -129,7 +78,7 @@
             </div>
             <div class="modal-footer">
                 <div style="text-align: center">
-                    <button class="btn btn-primary btn-large" id="deleterow">打印收据</button>
+                    <button class="btn btn-primary btn-large" id="printFactura" onclick="printFactura()">打印收据</button>
                 </div>
             </div>
         </div>

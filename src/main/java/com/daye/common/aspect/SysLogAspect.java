@@ -69,13 +69,18 @@ public class SysLogAspect {
 		//1.1获取ip地址
 		String ip= IPUtils.getIpAddr();
 		//1.2获取登录用户名
-		SysUser user = ShiroUtils.getPrincipal();
-		if(user != null) {
-			Integer userId=user.getId();
-			//1.3获取用户操作
-			//1.3.1获取目标方法对象(先获取目标类,再获取目标方法对象)
-			Class<?> targetCls=jp.getTarget().getClass();
-			
+		Class<?> targetCls=jp.getTarget().getClass();
+		//1.3获取用户操作
+		//1.3.1获取目标方法对象(先获取目标类,再获取目标方法对象)
+		Integer userId;
+		if(targetCls.getSimpleName().equals("DsrwServiceImpl")){
+			userId = 0;
+		}else{
+			SysUser user = ShiroUtils.getPrincipal();
+			userId=user.getId();
+		}
+		if(userId != null) {
+
 			Method targetMethod = getTargetMethod(targetCls,jp);
 			//1.3.2获取目标方法对象上的注解
 			RequiredLog rLog=
@@ -90,6 +95,7 @@ public class SysLogAspect {
 				params=new ObjectMapper().writeValueAsString(jp.getArgs());
 			}
 			//2.封装用户行为数据
+
 			SysLog log=new SysLog();
 			log.setIp(ip);
 			log.setUserId(userId);
