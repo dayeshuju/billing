@@ -6,20 +6,16 @@
     <div class='row-fluid' id='content-wrapper' style="display: block;">
         <!--modeal-lookmsg-->
         <div class="modal-add hide fade in" id="modal-lookmsg" role="dialog" tabindex="-1" aria-hidden="false"
-             style="display:none;height: 80%;">
+             style="display:none">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    查看缴费记录
+                    缴费详情
                 </h3>
             </div>
             <div class="modal-body">
                 <form class="form" style="margin-bottom: 0;">
-                    <div class="text-center">
-                        <h2>缴费记录详情</h2>
-                        <br/>
-                    </div>
                     <div class="box-content" style="display: inline;">
                         <table class="kv-table">
                             <tbody>
@@ -131,92 +127,13 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-        <!--modeal-lookmsg end-->
-        <!--modal-historyjfjl-->
-        <div class="modal-add hide fade in" id="modal-historyjfjl" role="dialog" tabindex="-1" aria-hidden="false"
-             style="display:none;">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal" type="button">×</button>
-                <h3 style="color: white;">
-                    <div class="icon-edit"></div>
-                    缴费历史数据
-                </h3>
-            </div>
-            <div class="modal-body">
-                <form class="form" style="margin-bottom: 0;">
-                    <div class="text-center">
-                        <br/>
-                    </div>
-                    <div class="box-content" style="display: inline;">
-                        <table class="kv-table">
-                            <tbody>
-                            <tr>
-                                <td class="kv-label" style="width: 15px;padding: 0px">
-                                    <div class="pull-right">查询条件：</div>
-                                </td>
-                                <td class="kv-content">
-                                    <span>开始时间：</span>
-                                    <input class="span5" id="starttime" type="text" value="" onClick="laydate({istime: false, format: 'YYYY-MM-DD'})" autocomplete="off">
-                                    <span>至</span>
-                                    <input class="span5" id="endtime" type="text" value="" onClick="laydate({istime: false, format: 'YYYY-MM-DD'})" autocomplete="off">
-                                    <a class='btn btn-info' role='button' onclick="getHistoryJfjl()"><i class='icon-search'></i>查询</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class='scrollable-area' id="cellBox">
-                        <div class="span6 delDiv"></div><div class="span6 text-right delDiv"></div>
-                        <table class='data-table data-table-column-filter table table-bordered table-striped table-hover'
-                               style='margin-bottom:0;' id="historyPlist">
-                            <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th>姓名</th>
-                                <th>身份证号</th>
-                                <th>表号</th>
-                                <th>缴费时间</th>
-                                <th>缴费状态</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </form>
-                <div class="control-group">
-                    <div class="controls">
-                        <p class="help-block"></p>
-                    </div>
+            <div class="modal-footer">
+                <div style="text-align: center">
+                    <button class="btn btn-primary btn-large" id="deleterow">打印收据</button>
                 </div>
             </div>
         </div>
-        <!--modal-adduser end-->
-        <!--modal-deleteJfjl begin-->
-        <div class="modal hide fade in" id="modal-deletejfjl" role="dialog" tabindex="-1" aria-hidden="false"
-             style="display: none;">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal" type="button">×</button>
-                <h3 style="color: white;">
-                    <div class="icon-minus-sign"></div>
-                    删除缴费记录
-                </h3>
-            </div>
-            <div class="modal-body">
-                <h4 style="color: red;">
-                    <div class="icon-exclamation-sign"></div>
-                    注意：缴费记录删除后不能恢复，请谨慎操作！
-                </h4>
-                <p>请确认是否继续删除。</p>
-                <p>非系统管理员请勿进行删除操作！</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal">取消</button>
-                <button class="btn btn-primary" id="deleterow">确认删除</button>
-            </div>
-        </div>
-        <!--modal-deleteUser end-->
+        <!--modeal-lookmsg end-->
         <!--用户列表部分 开始-->
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
@@ -234,8 +151,8 @@
                                     <th>姓名</th>
                                     <th>身份证号</th>
                                     <th>表号</th>
-                                    <th>缴费时间</th>
-                                    <th>缴费状态</th>
+                                    <th>应缴电费</th>
+                                    <th>抄表时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -245,8 +162,8 @@
                                     <th>姓名</th>
                                     <th>身份证号</th>
                                     <th>表号</th>
-                                    <th>缴费时间</th>
-                                    <th>缴费状态</th>
+                                    <th>应缴电费</th>
+                                    <th>抄表时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </tfoot>

@@ -64,6 +64,11 @@ public class TbJfjl implements Serializable {
     @TableField("receiptStatus")
     private Integer receiptStatus;
     /**
+     *  抄表时间
+     */
+    @TableField("regisTime")
+    private Date regisTime;
+    /**
      * 创建时间
      */
     @TableField("createdTime")
@@ -184,8 +189,17 @@ public class TbJfjl implements Serializable {
         ", payTime=" + payTime +
         ", receiptStatus=" + receiptStatus +
         ", createdTime=" + createdTime +
+        ", regisTime=" + regisTime +
         ", modifiedTime=" + modifiedTime +
         ", note=" + note +
         "}";
+    }
+
+    public Date getRegisTime() {
+        return regisTime;
+    }
+
+    public void setRegisTime(Date regisTime) {
+        this.regisTime = regisTime;
     }
 }

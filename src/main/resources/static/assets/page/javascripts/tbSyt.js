@@ -40,11 +40,11 @@ function findJfjl() {
         mDataProp: "meterId",
         sTitle: "表号"
     }, {
-        mDataProp: "payTime",
-        sTitle: "缴费时间"
+        mDataProp: "amountDue",
+        sTitle: "应缴电费"
     }, {
-        mDataProp: "payStatus",
-        sTitle: "缴费状态"
+        mDataProp: "regisTime",
+        sTitle: "抄表时间"
     }, {
         mDataProp: "id",
         sTitle: "操作"
@@ -62,12 +62,12 @@ function findJfjl() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfjlMsg(" + data + ")><i class='icon-search'></i>查看</a><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=saveJfjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletejfjl' role='button' onclick=saveJfjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfjlMsg(" + data + ")><i class='icon-search'></i>收费</a></div>";
         }
     }
     ];
 
-    var new_filter_url = "tbJfjl/getJfjlList"; //表#plist数据获取url
+    var new_filter_url = "syt/getJfyhList"; //表#plist数据获取url
 
     var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
 

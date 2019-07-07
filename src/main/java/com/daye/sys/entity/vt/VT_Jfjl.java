@@ -34,6 +34,8 @@ public class VT_Jfjl implements Serializable {
     private String actualAmount;
     //是否打印
     private Integer receiptStatus;
+    //抄表时间
+    private String regisTime;
     //创建时间
     private String createdTime;
     //操作时间

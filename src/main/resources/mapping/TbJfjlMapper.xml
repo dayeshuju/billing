@@ -5,7 +5,7 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="findObject">
-        and c.ydyhId = b.id
+        c.ydyhId = b.id
         <if test="sSearch != null and sSearch != ''">
             and (b.name like concat("%",#{sSearch},"%")
             or b.idCode like concat("%",#{sSearch},"%")
