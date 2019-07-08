@@ -31,7 +31,7 @@
         order by c.createdTime desc
     </sql>
     <delete id="cleanUp2Y">
-        delete from tbJfjl where payStatus &lt;&gt; 0 and payStatus &lt;&gt; 1 and date(payTime) &lt; date(DATE_SUB(NOW(),	INTERVAL 2 year))
+        delete from tbJfjl where payStatus = 2 and date(payTime) &lt; date(DATE_SUB(NOW(),	INTERVAL 2 year))
     </delete>
 
 
