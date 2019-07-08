@@ -3,14 +3,20 @@ package com.daye.sys.service.impl;
 import com.daye.common.annotation.RequiredLog;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.TbJfjl;
+import com.daye.sys.entity.TbYdyh;
+import com.daye.sys.entity.TbYhlx;
 import com.daye.sys.entity.vt.VT_Jfjl;
 import com.daye.sys.mapper.SytMapper;
 import com.daye.sys.mapper.TbJfjlMapper;
+import com.daye.sys.mapper.TbYdyhMapper;
+import com.daye.sys.mapper.TbYhlxMapper;
 import com.daye.sys.service.SytService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +29,10 @@ public class SytServiceImpl implements SytService {
     SytMapper sytMapper;
     @Autowired
     TbJfjlMapper tbJfjlMapper;
+    @Autowired
+    TbYdyhMapper tbYdyhMapper;
+    @Autowired
+    TbYhlxMapper tbYhlxMapper;
 
     @Override
     @RequiredLog(operation = "获取未缴费及欠费用户")
@@ -76,5 +86,29 @@ public class SytServiceImpl implements SytService {
         jfjl.setModifiedTime(new Date());
         if(tbJfjlMapper.updateById(jfjl) == 1) return new JsonResult("缴费成功");
         return new JsonResult(new Throwable("缴费失败"));
+    }
+
+    @Override
+    @RequiredLog(operation = "打印收据")
+    public Map<String, Object> printFactura(Integer id) {
+        TbJfjl jfjl = tbJfjlMapper.selectById(id);
+        TbYdyh ydyh = tbYdyhMapper.selectById(jfjl.getYdyhId());
+        TbYhlx yhlx = tbYhlxMapper.selectById(ydyh.getUserTypeId());
+        Map<String,Object> map = new HashMap<>();
+        map.put("date",new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        map.put("name",ydyh.getName());
+        map.put("address",ydyh.getAddress());
+        map.put("userId",ydyh.getId());
+        map.put("htj","SI");
+        map.put("dy","NO");
+        map.put("free","NO");
+        map.put("dfy",new SimpleDateFormat("MM").format(jfjl.getRegisTime()));
+        map.put("dfn",new SimpleDateFormat("yyyy").format(jfjl.getRegisTime()));
+        map.put("dydl",new BigDecimal(jfjl.getPeriodElecNum()).toString());
+        map.put("dffl",new BigDecimal(yhlx.getTate()).toString());
+        map.put("dydf",new BigDecimal(jfjl.getAmountDue()).toString());
+        map.put("dfze",new BigDecimal(jfjl.getAmountDue()).toString());
+        map.put("meterId",jfjl.getMeterId());
+        return map;
     }
 }

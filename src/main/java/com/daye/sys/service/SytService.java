@@ -10,4 +10,6 @@ public interface SytService {
     JsonResult getJfyh(Integer id);
 
     JsonResult saveJfyh(Integer id, Double actualAmount, String note);
+
+    Map<String, Object> printFactura(Integer id);
 }
