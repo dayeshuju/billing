@@ -10,8 +10,8 @@
     <sql id="findRoles">
         a.id>1
         <if test="sSearch != null and sSearch != ''">
-            and a.id like concat("%",#{sSearch},"%")
-            or a.name like concat("%",#{sSearch},"%")
+            and (a.id like concat("%",#{sSearch},"%")
+            or a.name like concat("%",#{sSearch},"%"))
         </if>
         <if test="role.id != null">
             and a.id like concat("%",#{role.id},"%")
