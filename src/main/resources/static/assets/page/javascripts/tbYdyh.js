@@ -122,47 +122,54 @@ $('#deleterow').click(function () {
 });
 
 
-/*添加、修改保存按钮onclick*/
 function adduser() {
-    var id = $("#id").val();
+    /*添加、修改保存按钮onclick*/
     var name = $("#name").val();
-    var idCode = $("#idCode").val();
-    var phoneNum = $("#phoneNum").val();
-    var address = $("#address").val();
-    var yhlxId = $("#yhlxId").val();
+    var patt = /^(?=.*\d.*\b)/;
+    if (!patt.test(name)){
+        var id = $("#id").val();
+        var idCode = $("#idCode").val();
+        var phoneNum = $("#phoneNum").val();
+        var address = $("#address").val();
+        var yhlxId = $("#yhlxId").val();
 
-    var params = {
-        id: id,
-        name: name,
-        idCode: idCode,
-        phoneNum: phoneNum,
-        address: address,
-        userTypeId: yhlxId
-    }
-
-    var url = "";
-    if (Number(id) > 0) {
-        url = "tbYdyh/updateYdyh";
-    } else {
-        url = "tbYdyh/addYdyh";
-    }
-
-    $.post(url, params, function (result) {
-        if (result.state == 1) {
-            $('#modal-adduser').modal('hide');
-            initform();
-            oTable.fnDraw(false);//重新加载当前页
-            layer.msg(result.message, {
-                icon: 1
-            });
+        var params = {
+            id: id,
+            name: name,
+            idCode: idCode,
+            phoneNum: phoneNum,
+            address: address,
+            userTypeId: yhlxId
         }
-        ;
-        if (result.state == 0) {
-            layer.msg(result.message, {
-                icon: 2
-            });
+
+        var url = "";
+        if (Number(id) > 0) {
+            url = "tbYdyh/updateYdyh";
+        } else {
+            url = "tbYdyh/addYdyh";
         }
-    })
+
+        $.post(url, params, function (result) {
+            if (result.state == 1) {
+                $('#modal-adduser').modal('hide');
+                initform();
+                oTable.fnDraw(false);//重新加载当前页
+                layer.msg(result.message, {
+                    icon: 1
+                });
+            }
+            ;
+            if (result.state == 0) {
+                layer.msg(result.message, {
+                    icon: 2
+                });
+            }
+        })
+    }else{
+        layer.msg("姓名不能包含数字！", {
+            icon: 2
+        })
+    }
 
 }
 
