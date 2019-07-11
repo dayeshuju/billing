@@ -239,6 +239,13 @@
                 return false;//防止刷新时重复提交
             },
             error: function (result) {
+                var message = eval("("+result.responseText+")").message;
+                if(message == "用户被禁用,请稍候再试"){
+                    $(".msg").css("visibility","visible");
+                    $(".msg").css("color","red");
+                    $(".msg").html(message);
+                    return;
+                }
                 $(".msg").css("visibility","visible");
                 $(".msg").css("color","red");
                 $(".msg").html("帐号或密码错误，忘记请联系管理员");

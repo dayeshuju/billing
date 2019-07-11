@@ -57,11 +57,14 @@ function updatepwd() {
         type: "POST",
         success: function (result) {
             if(result.state == 1){
-                var alertstr = "密码修改成功";
-                layer.msg(alertstr,{
+                layer.msg(result.message,{
                     icon: 1
                 });
                 window.location.href = "logout";
+            }else if(result.state == 0){
+                layer.msg(result.message,{
+                    icon:2
+                })
             }
         },
         error: function (result) {

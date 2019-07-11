@@ -77,8 +77,7 @@ public class SysUserController {
     @RequestMapping("/updatePwd")
     @RequiresPermissions("sys:userself")
     public JsonResult updatePassword(String oldpwd, String newpwd){
-        sysUserService.updateObject(oldpwd,newpwd);
-        return new JsonResult("修改成功");
+        return sysUserService.updateObject(oldpwd,newpwd);
     }
 
     @RequestMapping("/getUserList")

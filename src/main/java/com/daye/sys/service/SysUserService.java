@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface SysUserService extends IService<SysUser> {
 
-    boolean updateObject(String oldpwd, String newpwd);
+    JsonResult updateObject(String oldpwd, String newpwd);
 
     Map<String,Object> findObject(Map<String,String> aoData);
 

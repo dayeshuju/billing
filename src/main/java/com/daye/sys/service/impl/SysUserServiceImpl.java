@@ -2,7 +2,6 @@ package com.daye.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.daye.common.annotation.RequiredLog;
-import com.daye.common.exception.ServiceException;
 import com.daye.common.util.ShiroUtils;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.entity.SysUser;
@@ -31,24 +30,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     @RequiredLog(value = 0, operation = "修改个人密码")
-    public boolean updateObject(String oldpwd, String newpwd) {
+    public JsonResult updateObject(String oldpwd, String newpwd) {
         if(StringUtils.isEmpty(oldpwd) || StringUtils.isEmpty(newpwd)){
-            throw new ServiceException("数据不合法！！！");
+            return new JsonResult(new Throwable("数据不合法"));
         }
         SysUser user = sysUserMapper.selectById(ShiroUtils.getPrincipal().getId());
 
         SimpleHash oldM5pwd = new SimpleHash("MD5",oldpwd,user.getSalt());
+        SimpleHash newM5pwd = new SimpleHash("MD5",newpwd,user.getSalt());
         if(oldM5pwd.toHex().equals(user.getPassword())){
+            if(oldM5pwd.toHex().equals(newM5pwd.toHex())) return new JsonResult(new Throwable("新密码请勿与原密码相同"));
             String newSalt = UUID.randomUUID().toString();
             user.setSalt(newSalt);
-            SimpleHash newM5pwd = new SimpleHash("MD5",newpwd,newSalt);
+            newM5pwd = new SimpleHash("MD5",newpwd,newSalt);
             user.setModifiedTime(new Date());
             user.setPassword(newM5pwd.toHex());
         }else {
-            throw new ServiceException("旧密码错误");
+            return new JsonResult(new Throwable("原密码错误"));
         }
-        sysUserMapper.updateById(user);
-        return true;
+        if(sysUserMapper.updateById(user)==1) return new JsonResult("修改成功");
+        return new JsonResult(new Throwable("修改失败"));
     }
 
     @Override
