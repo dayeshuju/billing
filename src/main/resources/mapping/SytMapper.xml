@@ -11,7 +11,7 @@
             and (b.name like concat("%",#{sSearch},"%")
             or b.idCode like concat("%",#{sSearch},"%")
             or c.meterId like concat("%",#{sSearch},"%")
-            or date_format(c.regisTime,'%Y-%m-%d') like concat('%',#{sSearch},'%')
+            or date_format(c.regisTime,'%Y-%m-%d') like concat('%',#{sSearch},'%'))
         </if>
         <if test="vt_jfjl.name != null and vt_jfjl.name != ''">
             and b.name like concat("%",#{vt_jfjl.name},"%")
