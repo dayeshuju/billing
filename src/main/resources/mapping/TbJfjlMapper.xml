@@ -36,17 +36,21 @@
 
 
     <select id="findCount" resultType="java.lang.Integer">
-        select count(1) from tbYdyh b,tbJfjl c
-        <where>
+        select count(d.id) from (select c.ydyhId id from tbJfjl c left join tbYdyh b on c.ydyhId = b.id
+        group by c.ydyhId) d
+        <!--<where>
             <include refid="findObject"></include>
-        </where>
+        </where>-->
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
         select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,c.payTime,
                 c.payStatus  payStatu , c.createdTime
         from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
-            <include refid="findObject"></include>
+            <!--<include refid="findObject"></include>-->
+            c.ydyhId = b.id
+            group by c.ydyhId
+            order by c.createdTime desc
             limit #{iDisplayStart},#{iDisplayLength}
         </where>
     </select>

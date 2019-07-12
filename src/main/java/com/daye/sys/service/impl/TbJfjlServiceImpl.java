@@ -47,13 +47,14 @@ TbJfjlMapper tbJfjlMapper;
             if("未缴费".contains(payStatus)){
                 vt_jfjl.setPayStatu(0);
                 i++;
-            }
-            if("欠费".contains(payStatus)){
+            }else if("欠费".contains(payStatus)){
                 vt_jfjl.setPayStatu(1);
                 i++;
-            }
-            if("已缴费".contains(payStatus)){
+            }else if("已缴费".contains(payStatus)){
                 vt_jfjl.setPayStatu(2);
+                i++;
+            }else{
+                vt_jfjl.setPayStatu(3);
                 i++;
             }
             if(i==3||i==2){

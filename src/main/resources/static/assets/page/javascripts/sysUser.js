@@ -186,14 +186,17 @@ function adduser() {
     var email = $("#email").val();
     var patt = /^(?=.*\d.*\b)/;
     var emailPatt = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    debugger;
     if(patt.test(name)){
         layer.msg("真实姓名不能包含数字！", {
             icon: 2
         })
-    }else if(!emailPatt.test(email)){
-        layer.msg("邮箱格式不正确！", {
-            icon: 2
-        })
+    }else if(email != ""){
+        if(!emailPatt.test(email)){
+            layer.msg("邮箱格式不正确！", {
+                icon: 2
+            })
+        }
     }else {
         var id = $("#id").val();
         var nickname = $("#nickname").val();
