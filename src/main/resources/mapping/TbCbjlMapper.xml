@@ -33,10 +33,10 @@
         order by a.createdTime desc
     </sql>
     <insert id="insertCbjls" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into tbCbjl (meterId,regisTime,meterNum)
+        insert into tbCbjl (meterId,regisTime,meterNum,status)
         values 
         <foreach collection="cbjlList" separator="," item="cbjl">
-            (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum})
+            (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum},1)
         </foreach>
     </insert>
     <delete id="cleanUp2Y">
@@ -82,12 +82,13 @@
         </where>
     </select>
     <select id="selectByEntity" resultType="java.lang.Boolean">
-        select exists (select id from tbCbjl
-        <where>
-            meterId=#{meterId}
-            and regisTime=#{regisTime}
-            and meterNum=#{meterNum}
-        </where>)
+        SELECT EXISTS (SELECT id FROM tbCbjl
+        WHERE meterId =  #{meterId}
+            AND regisTime=#{regisTime}
+            AND meterNum=#{meterNum})
+        OR NOT EXISTS (SELECT id FROM tbJlsb WHERE meterId = #{meterId} )
     </select>
-
+    <select id="findCbjlById" resultType="com.daye.sys.entity.TbCbjl">
+        select id,status from tbCbjl where id = #{id}
+    </select>
 </mapper>

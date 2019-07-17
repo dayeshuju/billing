@@ -36,20 +36,21 @@
 
     <select id="findCount" resultType="java.lang.Integer">
         select count(1) from
-        (select c.ydyhId id,c.createdTime createdTime from tbJfjl c,tbYdyh b
+        (select c.ydyhId id from tbJfjl c,tbYdyh b
         <where>
             <include refid="findObject"></include>
         </where>
         group by c.ydyhId) d
-        order by d.createdTime desc
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
         select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,c.payTime,
                 c.payStatus  payStatu , c.createdTime
-        from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
+        from tbYdyh b,tbJfjl c,(SELECT MAX(createdTime)createdTime,meterId from tbJfjl GROUP BY meterId) d,
+        (SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObject"></include>
-            group by c.ydyhId
+            AND c.meterId =d.meterId AND c.createdTime = d.createdTime
+            GROUP BY c.meterId,c.ydyhId
             order by c.createdTime desc
             limit #{iDisplayStart},#{iDisplayLength}
         </where>

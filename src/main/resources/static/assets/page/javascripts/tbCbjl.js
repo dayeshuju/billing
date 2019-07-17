@@ -187,13 +187,14 @@ function getHistoryCbjl() {
 }
 
 function saveCbjlId(id){
+    alert(id);
     $("#id").val(id);
 }
 
 /*删除确认按钮onclick*/
 $('#deleterow').click(function () {
-
     var id = $("#id").val();
+    alert(id);
     var params = {
         id: id
     }

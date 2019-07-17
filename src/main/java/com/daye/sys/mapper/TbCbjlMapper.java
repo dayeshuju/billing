@@ -42,4 +42,6 @@ public interface TbCbjlMapper extends BaseMapper<TbCbjl> {
     void insertJfjls(Map<String, Long> map);
 
     void cleanUp2Y();
+
+    TbCbjl findCbjlById(@Param("id")Integer id);
 }

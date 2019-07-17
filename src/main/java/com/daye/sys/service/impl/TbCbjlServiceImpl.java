@@ -18,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * <p>
@@ -92,7 +89,9 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
     @Override
     @RequiredLog(operation = "根据id删除抄表记录")
     public JsonResult deleteCbjl(Integer id) {
-        if(tbCbjlMapper.deleteById(id) == 1) return new JsonResult("删除成功");
+        TbCbjl cbjl = tbCbjlMapper.findCbjlById(id);
+        cbjl.setStatus(0);;
+        if(tbCbjlMapper.updateById(cbjl) == 1) return new JsonResult("删除成功");
         return new JsonResult(new Throwable("删除失败"));
     }
 
@@ -119,26 +118,38 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
             return new JsonResult(new Throwable("文件上传错误"));
         }
         List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
+        int num = cbjlList.size();
         if(cbjlList != null && cbjlList.size()>0){
-            for(int i=cbjlList.size()-1;i>=0;i--){
-                if(tbCbjlMapper.selectByEntity(cbjlList.get(i))){
-                    cbjlList.remove(i);
+            for(int i = 0;i<num;i++){
+               if(tbCbjlMapper.selectByEntity(cbjlList.get(i))){//抄表记录已存在或者表单号不存在
+                   cbjlList.remove(i);
                 }
             }
         }else{
             return new JsonResult(new Throwable("文件为空"));
         }
-        if(cbjlList.size()==0) return new JsonResult(new Throwable("请勿重复导入文件"));
-        Integer insertCount = tbCbjlMapper.insertCbjls(cbjlList);
+        num = num-cbjlList.size();
+        Integer insertCount = null;
+        if(cbjlList.size()>0){
+            insertCount = tbCbjlMapper.insertCbjls(cbjlList);
+        }else{
+            return new JsonResult(new Throwable("导入失败，数据重复或者电表不存在！"));
+        }
         if(insertCount != null && insertCount>0){
             Map<String,Long> map = new HashMap<>();
             map.put("insertCount",Long.valueOf(insertCount));
             map.put("insId",cbjlList.get(0).getId());
             tbCbjlMapper.insertJfjls(map);
-            Long insertJfjlCount =map.get("result");
-            if(insertJfjlCount != null && insertJfjlCount>0) return new JsonResult("导入成功");
-            return new JsonResult(new Throwable("电费计算失败"));
+            Long insertJfjlCount = map.get("result");
+            if (insertJfjlCount == null || insertJfjlCount <= 0){
+                return new JsonResult(new Throwable("电费计算失败"));
+            }
         }
-        return new JsonResult(new Throwable("导入失败"));
+        if(num>0){
+            return new JsonResult("成功导入"+cbjlList.size()+"条数据，无效数据"+num+"条");
+        }else{
+            return new JsonResult("导入成功");
+        }
     }
 }
+

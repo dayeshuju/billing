@@ -186,56 +186,55 @@ function adduser() {
     var email = $("#email").val();
     var patt = /^(?=.*\d.*\b)/;
     var emailPatt = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-    debugger;
-    if(patt.test(name)){
-        layer.msg("真实姓名不能包含数字！", {
-            icon: 2
-        })
-    }else if(email != ""){
-        if(!emailPatt.test(email)){
-            layer.msg("邮箱格式不正确！", {
+    if(email == ""||emailPatt.test(email)){
+        if(patt.test(name)){
+            layer.msg("真实姓名不能包含数字！", {
                 icon: 2
+            })
+        }else{
+            var id = $("#id").val();
+            var nickname = $("#nickname").val();
+            var mobile = $("#mobile").val();
+            var officePhone = $("#officePhone").val();
+            var roleId = $("#roleId").val();
+
+            var params = {
+                id: id,
+                nickname: nickname,
+                name: name,
+                mobile: mobile,
+                officePhone: officePhone,
+                email: email,
+                roleId: roleId
+            }
+
+            var url = "";
+            if (Number(id) > 0) {
+                url = "sysUsers/updateUser";
+            } else {
+                url = "sysUsers/addUser";
+            }
+
+            $.post(url, params, function (result) {
+                if (result.state == 1) {
+                    $('#modal-adduser').modal('hide');
+                    initform();
+                    oTable.fnDraw(false);//重新加载当前页
+                    layer.msg(result.message, {
+                        icon: 1
+                    });
+                }
+                ;
+                if (result.state == 0) {
+                    layer.msg(result.message, {
+                        icon: 2
+                    });
+                }
             })
         }
     }else {
-        var id = $("#id").val();
-        var nickname = $("#nickname").val();
-        var mobile = $("#mobile").val();
-        var officePhone = $("#officePhone").val();
-        var roleId = $("#roleId").val();
-
-        var params = {
-            id: id,
-            nickname: nickname,
-            name: name,
-            mobile: mobile,
-            officePhone: officePhone,
-            email: email,
-            roleId: roleId
-        }
-
-        var url = "";
-        if (Number(id) > 0) {
-            url = "sysUsers/updateUser";
-        } else {
-            url = "sysUsers/addUser";
-        }
-
-        $.post(url, params, function (result) {
-            if (result.state == 1) {
-                $('#modal-adduser').modal('hide');
-                initform();
-                oTable.fnDraw(false);//重新加载当前页
-                layer.msg(result.message, {
-                    icon: 1
-                });
-            }
-            ;
-            if (result.state == 0) {
-                layer.msg(result.message, {
-                    icon: 2
-                });
-            }
+        layer.msg("邮箱格式不正确！", {
+            icon: 2
         })
     }
 

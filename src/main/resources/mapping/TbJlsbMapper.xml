@@ -68,4 +68,10 @@
         from tbJlsb a LEFT JOIN tbYdyh b ON a.ydyhId = b.id
         where a.id=#{id}
     </select>
+    
+    <select id="findAssociatedData" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tbCbjl c
+        LEFT JOIN tbJlsb j ON j.meterId = c.meterId
+        WHERE j.id  =#{id}
+    </select>
 </mapper>

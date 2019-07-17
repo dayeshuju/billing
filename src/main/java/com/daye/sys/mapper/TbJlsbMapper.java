@@ -18,6 +18,8 @@ import java.util.List;
  */
 public interface TbJlsbMapper extends BaseMapper<TbJlsb> {
 
+    Integer findAssociatedData(Long id);
+
     TbYdyh findYdyhByIdCode(String idCode);
 
     TbJlsb findJlsbByMeterId(String meterId);

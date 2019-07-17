@@ -82,6 +82,11 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
     @Override
     @RequiredLog(operation = "删除计量设备")
     public JsonResult deleteJlsb(Long id) {
+        //判断设备上是否关联了数据
+        Integer num = tbjlsbmapper.findAssociatedData(id);
+        if(num>0){
+            return new JsonResult(new Throwable("存在相关数据，禁止删除！"));
+        }
         if (tbjlsbmapper.deleteById(id) == 1) {
             return new JsonResult("删除成功");
         }
