@@ -7,6 +7,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,20 +52,20 @@ public class SytController {
     @RequiresPermissions("sys:tbsyt")
     public Object printFactura(Integer id, HttpServletResponse response){
         Map<String,Object> datas = sytService.printFactura(id);
-        String path = null;
-        try {
-            path = ResourceUtils.getURL("classpath:").getPath();
-        } catch (FileNotFoundException e) {
+        ApplicationHome home = new ApplicationHome(getClass());
+        File jarF = home.getSource().getParentFile();
+        String path = jarF.getParentFile().toString();
+        if(path == null || "".equals(path)){
             new Throwable("获取项目根目录错误");
         }
-        // 模板路径
-        String templatePath =path+"templates"+"/dfsjpdf.pdf";
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         // 生成收据路径
         String filename = path+"factura/"+format.format(new Date())+datas.get("userId")+datas.get("meterId")+".pdf";
         if(!new File(path+"factura/").exists()){
             new File(path+"factura/").mkdir();
         }
+        //读取模板
+        InputStream iss = this.getClass().getResourceAsStream("/templates/dfsjpdf.pdf");
         PdfReader reader;
         OutputStream os = null;
         ByteArrayOutputStream bos = null;
@@ -72,7 +73,7 @@ public class SytController {
         try {
             os = response.getOutputStream();
             // 读入pdf表单
-            reader = new PdfReader(templatePath);
+            reader = new PdfReader(iss);
             bos = new ByteArrayOutputStream();
             // 根据表单生成一个新的pdf
             stamper = new PdfStamper(reader, bos);

@@ -56,7 +56,7 @@ $(document).ready(function () {
         "aTargets": [2],
         "mRender": function (data, type, row) {
 
-            return " <div class='text-left'> <a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-addauthority' role='button' style='background-color:#00BB00' onclick='setauth(\"" + row.id + "\")'><i class='icon-wrench'></i> 权限设置</a>  <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteauthority' role='button'><i class='icon-remove'></i> 删除</a></div>";
+            return " <div class='text-left'> <a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-addauthority' role='button' style='background-color:#00BB00' onclick='setauth(\"" + row.id + "\")'><i class='icon-wrench'></i> 权限设置</a></div>";
         }
     }, {
         "aTargets": [0],
@@ -101,7 +101,7 @@ $('#plist tbody tr').live('click', function () {
 });
 
 /*删除确认按钮onclick*/
-$('#deleterow').click(function () {
+/*$('#deleterow').click(function () {
 
     var id = $("#autId").val();
 
@@ -132,7 +132,7 @@ $('#deleterow').click(function () {
         }
     });
 
-});
+});*/
 
 /*添加、修改保存按钮onclick*/
 function addauthority() {

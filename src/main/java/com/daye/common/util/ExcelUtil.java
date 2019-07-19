@@ -109,8 +109,8 @@ public class ExcelUtil {
                             }
                             break;
                         case 12:
-                            if (list.get(j).getModifiedTime() != null) {
-                                cell.setCellValue(list.get(j).getModifiedTime());
+                            if (list.get(j).getPrintTime() != null) {
+                                cell.setCellValue(list.get(j).getPrintTime());
                             }
                             break;
                         case 13:
@@ -120,33 +120,33 @@ public class ExcelUtil {
                                 if(ptin==1) cell.setCellValue("打印");
                             }
                             break;
-                        case 14:
+/*                        case 14:
                             if (list.get(j).getNote() != null) {
                                 cell.setCellValue(list.get(j).getNote());
                             }
-                            break;
-                        case 15:
+                            break;*/
+                        case 14:
                             if (list.get(j).getValid() != null) {
                                 int val = list.get(j).getValid();
                                 if(val==0) cell.setCellValue("禁用");
                                 if(val==1) cell.setCellValue("启用");
                             }
                             break;
-                        case 16:
+                        case 15:
                             if (list.get(j).getCreatedUserTime() != null) {
                                 cell.setCellValue(list.get(j).getCreatedUserTime());
                             }
                             break;
-                        case 17:
+/*                        case 17:
                             if (list.get(j).getModifiedUserTime() != null) {
                                 cell.setCellValue(list.get(j).getModifiedUserTime());
                             }
-                            break;
-                        case 18:
+                            break;*/
+                       /* case 18:
                             if (list.get(j).getUserNote() != null) {
                                 cell.setCellValue(list.get(j).getUserNote());
                             }
-                            break;
+                            break;*/
                         default:
                             break;
                     }

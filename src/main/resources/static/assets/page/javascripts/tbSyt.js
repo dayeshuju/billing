@@ -117,7 +117,7 @@ function lookJfyhMsg(id) {
     })
 }
 
-function printFactura() {
+function saveJfjl() {
     var id = $("#id").val();
     var actualAmount = $("#actualAmount").val();
     var note = $("#note").val();
@@ -132,10 +132,10 @@ function printFactura() {
             $("#modal-lookmsg").modal('hide');
             initform();
             oTable.fnDraw(false);
-            var newWindow = window.open("syt/printFactura?id="+id, "_blank");
+            /*var newWindow = window.open("syt/printFactura?id="+id, "_blank");
             setTimeout(function () {
                 newWindow.print();
-            },2000);
+            },2000);*/
         }else{
             layer.msg(result.message,{
                 icon:2

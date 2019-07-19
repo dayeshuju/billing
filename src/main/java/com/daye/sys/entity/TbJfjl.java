@@ -84,6 +84,12 @@ public class TbJfjl implements Serializable {
      */
     private String note;
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    private int status;
+
     public Long getId() {
         return id;
     }

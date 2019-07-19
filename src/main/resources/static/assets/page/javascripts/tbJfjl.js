@@ -62,7 +62,7 @@ function findJfjl() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfjlMsg(" + data + ")><i class='icon-search'></i>查看</a><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=saveJfjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletejfjl' role='button' onclick=saveJfjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfjlMsg(" + data + ")><i class='icon-search'></i>查看</a><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=saveJfjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> </div>";
         }
     }
     ];
@@ -163,24 +163,24 @@ function getHistoryJfjl(meterId) {
         }, {
             mDataProp: "payStatus",
             sTitle: "缴费状态"
-        }, {
+        }/*, {
             mDataProp: "id",
             sTitle: "操作"
-        }
+        }*/
 
         ],
         aoColumnDefs: [{
             "bSortable": false,
-            "aTargets": [0, 1, 2, 3, 4, 5, 6]
+            "aTargets": [0, 1, 2, 3, 4, 5]
         }, {
             "sDefaultContent": '',
             "aTargets": ['_all']
-        }, {
+        }/*, {
             "aTargets": [6],
             "mRender": function (data, type, row) {
                 return " <div class='text-left'><a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletejfjl' role='button' onclick=saveJfjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
             }
-        }
+        }*/
         ],
 
         fnServerData: function(sSource, aoData, fnCallback) {
@@ -207,17 +207,17 @@ function getHistoryJfjl(meterId) {
     })
 }
 
-function saveJfjlId(id){
-    $("#id").val(id);
-}
+/*function saveJfjlId(id){
+    $("#jfjlId").val(id);
+}*/
 
 /*删除确认按钮onclick*/
-$('#deleterow').click(function () {
+/*$('#deleterow').click(function () {
 
-    var id = $("#id").val();
+    var jfjlId = $("#jfjlId").val();
 
     var params = {
-        id: id
+        id: jfjlId
     }
     var url = "tbJfjl/deleteJfjl";
 
@@ -244,7 +244,7 @@ $('#deleterow').click(function () {
             });
         }
     })
-});
+});*/
 
 
 
@@ -262,7 +262,7 @@ function initform(starttime,endtime) {
         "                                <th>表号</th>\n" +
         "                                <th>抄表时间</th>\n" +
         "                                <th>表示数</th>\n" +
-        "                                <th>操作</th>\n" +
+/*        "                                <th>操作</th>\n" +*/
         "                            </tr>\n" +
         "                            </thead>\n" +
         "                        </table>");
@@ -270,7 +270,7 @@ function initform(starttime,endtime) {
 
 /*弹出层展示抄表记录详细信息*/
 function lookJfjlMsg(id) {
-    $("#id").val(id);
+    $("#jfjlId").val(id);
     var url = "tbJfjl/getJfjl";
     var params = {
         id: id
@@ -291,8 +291,8 @@ function lookJfjlMsg(id) {
             if(result.data.receiptStatus==1){$("#receiptStatus").text("已打印");}
 
             $("#createdTime").text(result.data.createdTime);
-            $("#modifiedTime").text(result.data.modifiedTime);
-            $("#note").text(result.data.note);
+/*            $("#modifiedTime").text(result.data.modifiedTime);
+            $("#note").text(result.data.note);*/
             $("#address").text(result.data.address);
             $("#phoneNum").text(result.data.phoneNum);
             $("#tate").text(result.data.tate);
@@ -300,8 +300,8 @@ function lookJfjlMsg(id) {
             if(result.data.valid==1){$("#valid").text("启用");}
 
             $("#createdUserTime").text(result.data.createdUserTime);
-            $("#modifiedUserTime").text(result.data.modifiedUserTime);
-            $("#userNote").text(result.data.userNote);
+           $("#printTime").text(result.data.printTime);
+/*           $("#userNote").text(result.data.userNote);*/
         }
     })
 }

@@ -5,7 +5,7 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="findObject">
-        c.ydyhId = b.id
+        c.ydyhId = b.id and c.status = 1
         <if test="sSearch != null and sSearch != ''">
             and (b.name like concat("%",#{sSearch},"%")
             or b.idCode like concat("%",#{sSearch},"%")
@@ -58,7 +58,7 @@
 
     <sql id="findObjectById">
         c.meterId=#{meterId}
-        and c.ydyhId = b.id
+        and c.ydyhId = b.id and c.status = 1
         <if test="startTime != null and startTime != ''">
             and c.payTime  BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and DATE_ADD(STR_TO_DATE(#{endTime},'%Y-%m-%d'),interval 1 day)
         </if>
@@ -81,8 +81,8 @@
 
     <select id="getJfjl" resultType="com.daye.sys.entity.vt.VT_Jfjl">
         select c.meterId ,c.periodElecNum  ,cast(c.amountDue as char(50)) amountDue ,cast(c.actualAmount as char(50)) actualAmount ,c.payStatus payStatu ,date_format(c.payTime,'%Y-%m-%d') payTime
-         ,c.receiptStatus  ,date_format(c.createdTime,'%Y-%m-%d') createdTime  ,date_format(c.modifiedTime,'%Y-%m-%d') modifiedTime ,c.note  ,b.`name` ,b.idCode ,
-        b.address , b.phoneNum  ,cast(d.tate as char(20)) tate  ,b.valid ,date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime, b.note userNote
+         ,c.receiptStatus  ,date_format(c.createdTime,'%Y-%m-%d') createdTime  ,date_format(c.printTime,'%Y-%m-%d') printTime ,b.`name` ,b.idCode ,
+        b.address , b.phoneNum  ,cast(d.tate as char(20)) tate  ,b.valid ,date_format(b.createdTime,'%Y-%m-%d')  createdUserTime
         from tbYdyh b,tbJfjl c ,tbYhlx  d where
          c.id=#{id}
          and c.ydyhId = b.id and b.userTypeId=d.id
@@ -99,20 +99,17 @@
                date_format(c.payTime,'%Y-%m-%d') payTime ,
                c.receiptStatus ,
                date_format(c.createdTime,'%Y-%m-%d') createdTime ,
-               date_format(c.modifiedTime,'%Y-%m-%d') modifiedTime ,
-               c.note ,
+               date_format(c.printTime,'%Y-%m-%d') printTime ,
                b.`name`,
                b.idCode ,
                b.address ,
                b.phoneNum ,
                cast(d.tate as char(20))  tate,
                b.valid ,
-               date_format(b.createdTime,'%Y-%m-%d')  createdUserTime,
-               date_format(b.modifiedTime,'%Y-%m-%d') modifiedUserTime,
-               b.note userNote
+               date_format(b.createdTime,'%Y-%m-%d')  createdUserTime
         from tbYdyh b,tbJfjl c ,tbYhlx d ,(SELECT @i:=0) t
         <where>
-            c.ydyhId = b.id and b.userTypeId=d.id
+            c.ydyhId = b.id and b.userTypeId=d.id and c.status = 1
             <choose>
                 <when test="payStatus=='2'">
                   and c.payTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(concat(#{endTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')

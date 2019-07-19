@@ -31,7 +31,7 @@ function findyhlx() {
     }, {
         "aTargets": [3],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-addYhlx' role='button' style='background-color:#00BB00' onclick=modifyyhlx(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteyhlx' role='button'><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-addYhlx' role='button' style='background-color:#00BB00' onclick=modifyyhlx(" + data + ")><i class='icon-pencil'></i>修改</a></div>";
         }
     }, {
         "aTargets": [0],
@@ -73,18 +73,18 @@ $('#plist tbody tr').live('click', function () {
     var nTds = $('td', this);
     var sday = $(nTds[0]).text(); //得到第1列的值------uid
 
-    $("#id").val(sday);
+    $("#yhlxId").val(sday);
 
 });
 
 
 
 /*删除确认按钮onclick*/
-$('#deleterow').click(function () {
+/*$('#deleterow').click(function () {
 
-    var id = $("#id").val();
+    var yhlxId = $("#yhlxId").val();
     var params = {
-        id: id
+        id: yhlxId
     }
     var url = "tbYhlx/deleteYhlx";
 
@@ -111,12 +111,12 @@ $('#deleterow').click(function () {
             });
         }
     })
-});
+});*/
 
 
 /*添加、修改保存按钮onclick*/
 function addYhlx() {
-    var id = $("#id").val();
+    var id = $("#yhlxId").val();
     var userType = $("#userType").val();
     var tate = $("#tate").val();
 
@@ -154,7 +154,7 @@ function addYhlx() {
 
 
 function initform() {
-    $("#id").val("0");
+    $("#yhlxId").val("0");
     $("#userType").val("");
     $("#tate").val("");
 }
@@ -162,7 +162,7 @@ function initform() {
 /*修改用户弹出层*/
 function modifyyhlx(id) {
     initform();
-    $("#id").val(id);
+    $("#yhlxId").val(id);
     var url = "tbYhlx/getYhlx";
     var params = {
         id: id

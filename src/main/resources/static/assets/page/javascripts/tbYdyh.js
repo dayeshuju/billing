@@ -41,7 +41,7 @@ function finduser() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deleteuser' role='button'><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>修改</a></div>";
         }
     }, {
         "aTargets": [0],
@@ -83,14 +83,14 @@ $('#plist tbody tr').live('click', function () {
     var nTds = $('td', this);
     var sday = $(nTds[0]).text(); //得到第1列的值------uid
 
-    $("#id").val(sday);
+    $("#ydyhId").val(sday);
 
 });
 
 /*删除确认按钮onclick*/
-$('#deleterow').click(function () {
+/*$('#deleterow').click(function () {
 
-    var id = $("#id").val();
+    var id = $("#ydyhId").val();
     var params = {
         id: id
     }
@@ -119,7 +119,7 @@ $('#deleterow').click(function () {
             });
         }
     })
-});
+});*/
 
 
 function adduser() {
@@ -127,7 +127,7 @@ function adduser() {
     var name = $("#name").val();
     var patt = /^(?=.*\d.*\b)/;
     if (!patt.test(name)){
-        var id = $("#id").val();
+        var id = $("#ydyhId").val();
         var idCode = $("#idCode").val();
         var phoneNum = $("#phoneNum").val();
         var address = $("#address").val();
@@ -174,7 +174,7 @@ function adduser() {
 }
 
 function initform() {
-    $("#id").val("0");
+    $("#ydyhId").val("0");
     $("#name").val("");
     $("#idCode").val("");
     $("#phoneNum").val("");
@@ -185,7 +185,7 @@ function initform() {
 /*修改用户弹出层*/
 function modifyuser(id) {
     initform();
-    $("#id").val(id);
+    $("#ydyhId").val(id);
     var url = "tbYdyh/getYdyh";
     var params = {
         id: id

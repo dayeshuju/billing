@@ -40,7 +40,7 @@ function findCbjl() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historycbjl' role='button' style='background-color:#00BB00' onclick=saveCbjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletecbjl' role='button' onclick=saveCbjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historycbjl' role='button' style='background-color:#00BB00' onclick=saveCbjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a></div>";
         }
     }
     ];
@@ -149,16 +149,16 @@ function getHistoryCbjl() {
         ],
         aoColumnDefs: [{
             "bSortable": false,
-            "aTargets": [0, 1, 2, 3, 4, 5, 6]
+            "aTargets": [0, 1, 2, 3, 4, 5]
         }, {
             "sDefaultContent": '',
             "aTargets": ['_all']
-        }, {
+        }/*, {
             "aTargets": [6],
             "mRender": function (data, type, row) {
                 return " <div class='text-left'><a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletecbjl' role='button' onclick=saveCbjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
             }
-        }
+        }*/
         ],
 
         fnServerData: function(sSource, aoData, fnCallback) {
@@ -188,15 +188,15 @@ function getHistoryCbjl() {
 
 function saveCbjlId(id){
     alert(id);
-    $("#id").val(id);
+    $("#cbjlId").val(id);
 }
 
 /*删除确认按钮onclick*/
-$('#deleterow').click(function () {
-    var id = $("#id").val();
-    alert(id);
+/*$('#deleterow').click(function () {
+    var cbjlId = $("#cbjlId").val();
+    alert(cbjlId);
     var params = {
-        id: id
+        id: cbjlId
     }
     var url = "tbCbjl/deleteCbjl";
 
@@ -223,7 +223,7 @@ $('#deleterow').click(function () {
             });
         }
     })
-});
+});*/
 
 
 

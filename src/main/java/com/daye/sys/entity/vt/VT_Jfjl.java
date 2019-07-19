@@ -39,9 +39,9 @@ public class VT_Jfjl implements Serializable {
     //创建时间
     private String createdTime;
     //操作时间
-    private String modifiedTime;
+  //  private String modifiedTime;
     //备注
-    private String note;
+  //  private String note;
 
     //用户地址
     private String address;
@@ -54,9 +54,11 @@ public class VT_Jfjl implements Serializable {
     //用户创建时间
     private String createdUserTime;
     //操作时间
-    private String modifiedUserTime;
+   // private String modifiedUserTime;
     //用户备注
-    private String userNote;
+ //   private String userNote;
 
+    //打印时间
+    private String printTime;
 
 }

@@ -53,6 +53,20 @@ public class TbCbjl implements Serializable {
         this.status = status;
     }
 
+    public Date getPrintTime() {
+        return printTime;
+    }
+
+    public void setPrintTime(Date printTime) {
+        this.printTime = printTime;
+    }
+
+    /**
+     * 打印时间
+     */
+    @TableField("printTime")
+    private Date printTime;
+
     /*
     * 数据状态
     */
@@ -116,6 +130,7 @@ public class TbCbjl implements Serializable {
         ", meterNum=" + meterNum +
         ", createdTime=" + createdTime +
         ", modifiedTime=" + modifiedTime +
+        ", printTime=" + printTime +
         "}";
     }
 }

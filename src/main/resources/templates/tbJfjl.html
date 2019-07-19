@@ -1,11 +1,11 @@
 <script src='assets/page/javascripts/tbJfjl.js' type='text/javascript'></script>
 
-<input type="text" name="id" id="id" style="display: none"/>
+<input type="text" name="id" id="jfjlId" style="display: none"/>
 <input type="text" name="meterId" id="meterId" style="display: none"/>
 <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper' style="display: block;">
         <!--modal-adduser-->
-        <div class="modal-add hide fade in" id="modal-adduser" role="dialog" tabindex="-1" aria-hidden="false"
+        <div class="modal-add hide fade in" id="modal-adduser" role="dialog"  aria-hidden="false"
              style="display:none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -76,7 +76,7 @@
         </div>
         <!--modal-adduser end-->
         <!--modeal-lookmsg-->
-        <div class="modal-add hide fade in" id="modal-lookmsg" role="dialog" tabindex="-1" aria-hidden="false"
+        <div class="modal-add hide fade in" id="modal-lookmsg" role="dialog"  aria-hidden="false"
              style="display:none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -161,9 +161,9 @@
                                 </td>
                                 <td class="kv-content" id="createdTime">
                                 </td>
-                                <td class="kv-label">缴费记录操作时间
+                                <td class="kv-label">打印时间
                                 </td>
-                                <td class="kv-content" id="modifiedTime">
+                                <td class="kv-content" id="printTime">
                                 </td>
                             </tr>
                             <tr>
@@ -171,27 +171,25 @@
                                 </td>
                                 <td class="kv-content" id="createdUserTime">
                                 </td>
-                                <td class="kv-label">操作时间
-                                </td>
-                                <td class="kv-content" id="modifiedUserTime">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="kv-label">缴费备注
-                                </td>
-                                <td class="kv-content" id="note">
-                                </td>
-                                <td class="kv-label">用户备注
-                                </td>
-                                <td class="kv-content" id="userNote" >
-                                </td>
-                            </tr>
-                            <tr>
                                 <td class="kv-label">用户状态
                                 </td>
                                 <td class="kv-content" id="valid" colspan="3">
                                 </td>
+                                <!--<td class="kv-label">操作时间
+                                </td>
+                                <td class="kv-content" id="modifiedUserTime">
+                                </td>-->
+                                <!--<td class="kv-label">缴费备注
+                                </td>
+                                <td class="kv-content" id="note">
+                                </td>-->
                             </tr>
+                            <!--<tr>
+                                <td class="kv-label">用户备注
+                                </td>
+                                <td class="kv-content" id="userNote" >
+                                </td>
+                            </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -206,7 +204,7 @@
         </div>
         <!--modeal-lookmsg end-->
         <!--modal-historyjfjl-->
-        <div class="modal-add hide fade in" id="modal-historyjfjl" role="dialog" tabindex="-1" aria-hidden="false"
+        <div class="modal-add hide fade in" id="modal-historyjfjl" role="dialog"  aria-hidden="false"
              style="display:none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -265,7 +263,7 @@
         </div>
         <!--modal-adduser end-->
         <!--modal-deleteJfjl begin-->
-        <div class="modal hide fade in" id="modal-deletejfjl" role="dialog" tabindex="-1" aria-hidden="false"
+        <!--<div class="modal hide fade in" id="modal-deletejfjl" role="dialog"  aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -286,7 +284,7 @@
                 <button class="btn" data-dismiss="modal">取消</button>
                 <button class="btn btn-primary" id="deleterow">确认删除</button>
             </div>
-        </div>
+        </div>-->
         <!--modal-deleteUser end-->
         <!--用户列表部分 开始-->
         <div class='row-fluid'>

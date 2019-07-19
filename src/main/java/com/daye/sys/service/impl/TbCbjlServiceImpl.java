@@ -9,12 +9,14 @@ import com.daye.sys.entity.vt.VT_Cbjl;
 import com.daye.sys.mapper.TbCbjlMapper;
 import com.daye.sys.service.TbCbjlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,6 +35,8 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
 
     @Autowired
     TbCbjlMapper tbCbjlMapper;
+    @Autowired
+    HttpServletRequest request;
 
     @Override
     @RequiredLog(operation = "获取最近一期的抄表记录")
@@ -89,8 +93,8 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
     @Override
     @RequiredLog(operation = "根据id删除抄表记录")
     public JsonResult deleteCbjl(Integer id) {
-        TbCbjl cbjl = tbCbjlMapper.findCbjlById(id);
-        cbjl.setStatus(0);;
+        TbCbjl cbjl = tbCbjlMapper.selectById(id);
+        cbjl.setStatus(0);
         if(tbCbjlMapper.updateById(cbjl) == 1) return new JsonResult("删除成功");
         return new JsonResult(new Throwable("删除失败"));
     }
@@ -99,12 +103,10 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
     @Transactional
     @RequiredLog(value = 0,operation = "批量导入抄表记录")
     public JsonResult uploadCbjl(MultipartFile file) {
-        String path = null;
-        try {
-            path = ResourceUtils.getURL("classpath:").getPath();
-        } catch (FileNotFoundException e) {
-            return new JsonResult(new Throwable("获取项目根目录错误"));
-        }
+        ApplicationHome home = new ApplicationHome(getClass());
+        File jarF = home.getSource().getParentFile();
+        String path = jarF.getParentFile().toString();
+        if (path == null || path.equals("")) return new JsonResult(new Throwable("获取项目根目录错误"));
         path = path+"cbjl/";
         String uuid = UUID.randomUUID().toString();
         File dir = new File(path);
@@ -118,9 +120,18 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
             return new JsonResult(new Throwable("文件上传错误"));
         }
         List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
+        for(int i = cbjlList.size()- 1;i>=0;i--){//筛掉表内重复记录
+            for(int j = cbjlList.size() -2;j>=0;j--){
+                if(cbjlList.get(i).getMeterId()==cbjlList.get(j).getMeterId()){
+                    if(cbjlList.get(i).getMeterNum()< cbjlList.get(j).getMeterNum()){
+                        cbjlList.remove(i);
+                    }else cbjlList.remove(j);
+                }
+            }
+        }
         int num = cbjlList.size();
         if(cbjlList != null && cbjlList.size()>0){
-            for(int i = 0;i<num;i++){
+            for(int i = num - 1;i>=0;i--){
                if(tbCbjlMapper.selectByEntity(cbjlList.get(i))){//抄表记录已存在或者表单号不存在
                    cbjlList.remove(i);
                 }

@@ -102,8 +102,9 @@ TbJfjlMapper tbJfjlMapper;
         if(jfjl.getPayStatus()==0||jfjl.getPayStatus()==1){
          return  new JsonResult(new Throwable("欠费的，未缴费的记录不可以删除！！！"));
         }
-        if (tbJfjlMapper.deleteById(id)==0) return  new JsonResult(new Throwable("删除失败！！！"));
-        return new JsonResult("删除成功！！！");
+        jfjl.setStatus(0);
+        if (tbJfjlMapper.updateById(jfjl)==1) return new JsonResult("删除成功！！！");
+        return  new JsonResult(new Throwable("删除失败！！！"));
     }
 
     @Override
@@ -170,12 +171,12 @@ TbJfjlMapper tbJfjlMapper;
             if(StringUtils.isEmpty(vt_jfjl.getCreatedTime())){
                 vt_jfjl.setCreatedTime("");
             }
-            if(StringUtils.isEmpty(vt_jfjl.getModifiedTime())){
-                vt_jfjl.setModifiedTime("");
+            if(StringUtils.isEmpty(vt_jfjl.getPrintTime())){
+                vt_jfjl.setPrintTime("");
             }
-            if(StringUtils.isEmpty(vt_jfjl.getNote())){
+/*            if(StringUtils.isEmpty(vt_jfjl.getNote())){
                 vt_jfjl.setNote("");
-            }
+            }*/
             if(StringUtils.isEmpty(vt_jfjl.getAddress())){
                 vt_jfjl.setAddress("");
             }
@@ -188,12 +189,12 @@ TbJfjlMapper tbJfjlMapper;
             if(StringUtils.isEmpty(vt_jfjl.getCreatedUserTime())){
                 vt_jfjl.setCreatedUserTime("");
             }
-            if(StringUtils.isEmpty(vt_jfjl.getModifiedUserTime())){
+/*            if(StringUtils.isEmpty(vt_jfjl.getModifiedUserTime())){
                 vt_jfjl.setModifiedUserTime("");
-            }
-            if(StringUtils.isEmpty(vt_jfjl.getUserNote())){
+            }*/
+/*            if(StringUtils.isEmpty(vt_jfjl.getUserNote())){
                 vt_jfjl.setUserNote("");
-            }
+            }*/
         }
         return new JsonResult(vt_jfjl);
     }
