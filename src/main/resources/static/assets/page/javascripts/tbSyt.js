@@ -62,7 +62,12 @@ function findJfjl() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a></div>";
+            var str = new Array();
+            str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a> ");
+            if(row.receiptStatus == 0){
+                str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a>");
+            }
+            return str.join("");
         }
     }
     ];
@@ -130,16 +135,19 @@ function saveJfjl() {
     $.post(url,params,function (result) {
         if(result.state == 1){
             $("#modal-lookmsg").modal('hide');
-            initform();
-            oTable.fnDraw(false);
-            /*var newWindow = window.open("syt/printFactura?id="+id, "_blank");
-            setTimeout(function () {
-                newWindow.print();
-            },2000);*/
         }else{
             layer.msg(result.message,{
                 icon:2
             })
         }
     })
+}
+function print(sytId) {
+    initform();
+    oTable.fnDraw(false);
+    var newWindow = window.open("syt/printFactura?id="+sytId, "_blank");
+    setTimeout(function () {
+        newWindow.print();
+    },2000);
+
 }

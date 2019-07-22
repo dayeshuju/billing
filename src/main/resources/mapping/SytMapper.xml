@@ -6,7 +6,8 @@
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="findObject">
         c.ydyhId = b.id
-        and (c.payStatus=0 or c.payStatus=1)
+/*        and (c.payStatus=0 or c.payStatus=1)*/
+        and c.receiptStatus = 0
         <if test="sSearch != null and sSearch != ''">
             and (b.name like concat("%",#{sSearch},"%")
             or b.idCode like concat("%",#{sSearch},"%")
@@ -35,7 +36,7 @@
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl">
         select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,cast(c.amountDue as char(50)) amountDue,date_format(c.regisTime,'%Y-%m-%d') regisTime ,
-        c.createdTime
+        c.createdTime,c.receiptStatus receiptStatus
         from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObject"></include>

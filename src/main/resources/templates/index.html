@@ -100,8 +100,8 @@
     <div class='navbar'>
         <div class='navbar-inner' style="height: 100px;">
             <div class='container-fluid'>
-                <a class='toggle-nav btn pull-left' href='#' style="margin-top: 30px;margin-left: 20px;font-size:25px;">
-                    <i class='icon-reorder' onclick="pull_left()"></i>
+                <a class='toggle-nav btn pull-left' href='#' onclick="pull_left()" style="margin-top: 30px;margin-left: 20px;font-size:25px;">
+                    <i class='icon-reorder'></i>
                 </a>
                 <a class='brand' href='index' style="margin-top: 30px;margin-left: 20px;font-size:30px;">
                     <span class='hidden-phone'>赤几巴塔配网计费系统</span>
@@ -200,17 +200,32 @@
                 </li>
                 <li class='menu'>
                     <a class='dropdown-collapse' href='#' style="height: 60px">
-                        <i class='icon-wrench' style="margin-top: 20px"></i>
-                        <span style="font-size: 15px;">系统管理</span>
+                        <i class='icon-user' style="margin-top: 20px"></i>
+                        <span style="font-size: 15px;">个人设置</span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="sysUserSelf">
                             <a href='#'>
                                 <i class='icon-caret-right'></i>
-                                <span>个人设置</span>
+                                <span>修改密码</span>
                             </a>
                         </li>
+                    </ul>
+                </li>
+                <li class='menu'>
+                    <a class='dropdown-collapse' href='#' style="height: 60px">
+                        <i class='icon-wrench' style="margin-top: 20px"></i>
+                        <span style="font-size: 15px;">系统管理</span>
+                        <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
+                    </a>
+                    <ul class='nav nav-stacked'>
+                        <!--<li class='hidden' id="sysUserSelf">
+                            <a href='#'>
+                                <i class='icon-caret-right'></i>
+                                <span>个人设置</span>
+                            </a>
+                        </li>-->
                         <li class='hidden' id="sysPermission">
                             <a href='#'>
                                 <i class='icon-caret-right'></i>
@@ -419,8 +434,8 @@
         }
     })
     function pull_left() {
-        var xj = $("#mainContent").css("margin-left");
-        if(xj == "46px"){
+        var xj = $("#main-nav-bg").css("width");
+        if(xj == "45px"){
             $("#mainContent").css("margin-left","251px");
         }else{
             $("#mainContent").css("margin-left","46px");

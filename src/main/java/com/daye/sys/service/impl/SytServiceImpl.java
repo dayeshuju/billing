@@ -81,7 +81,6 @@ public class SytServiceImpl implements SytService {
         if(Double.doubleToLongBits(jfjl.getAmountDue()) != Double.doubleToLongBits(actualAmount)) return new JsonResult(new Throwable("实缴电费与应缴电费金额不符"));
         jfjl.setActualAmount(actualAmount);
         jfjl.setNote(note);
-        jfjl.setReceiptStatus(1);   // 1：已打印收据
         jfjl.setPayStatus(2);       // 2：已缴费
         jfjl.setPayTime(new Date());
         jfjl.setModifiedTime(new Date());
@@ -110,6 +109,12 @@ public class SytServiceImpl implements SytService {
         map.put("dydf",new BigDecimal(jfjl.getAmountDue()).toString());
         map.put("dfze",new BigDecimal(jfjl.getAmountDue()).toString());
         map.put("meterId",jfjl.getMeterId());
+
+        //打印成功 打印状态改为已打印
+        if(jfjl.getReceiptStatus()==0){
+            jfjl.setReceiptStatus(1);
+            tbJfjlMapper.updateById(jfjl);
+        }
         return map;
     }
 }

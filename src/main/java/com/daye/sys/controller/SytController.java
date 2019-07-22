@@ -53,19 +53,19 @@ public class SytController {
     public Object printFactura(Integer id, HttpServletResponse response){
         Map<String,Object> datas = sytService.printFactura(id);
         ApplicationHome home = new ApplicationHome(getClass());
-        File jarF = home.getSource().getParentFile();
-        String path = jarF.getParentFile().toString();
+        File jarF = home.getSource();
+        String path = jarF.getParentFile().getParentFile().toString();
         if(path == null || "".equals(path)){
             new Throwable("获取项目根目录错误");
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         // 生成收据路径
-        String filename = path+"factura/"+format.format(new Date())+datas.get("userId")+datas.get("meterId")+".pdf";
-        if(!new File(path+"factura/").exists()){
-            new File(path+"factura/").mkdir();
+        String filename = path+File.separator+"factura"+File.separator+format.format(new Date())+datas.get("userId")+datas.get("meterId")+".pdf";
+        if(!new File(path+File.separator+"factura").exists()){
+            new File(path+File.separator+"factura").mkdir();
         }
         //读取模板
-        InputStream iss = this.getClass().getResourceAsStream("/templates/dfsjpdf.pdf");
+        String tempPath = path+File.separator+"temp"+File.separator+"dfsjpdf.pdf";
         PdfReader reader;
         OutputStream os = null;
         ByteArrayOutputStream bos = null;
@@ -73,7 +73,7 @@ public class SytController {
         try {
             os = response.getOutputStream();
             // 读入pdf表单
-            reader = new PdfReader(iss);
+            reader = new PdfReader(new FileInputStream(tempPath));
             bos = new ByteArrayOutputStream();
             // 根据表单生成一个新的pdf
             stamper = new PdfStamper(reader, bos);
@@ -81,7 +81,7 @@ public class SytController {
             AcroFields formTexts = stamper.getAcroFields();
 
             // 设置字体(这里设置为系统字体，你也可以引入其他的字体)，不设置很可能，中文无法显示。
-            BaseFont bf = BaseFont.createFont(path+"static/assets/fonts/arial.ttf",
+            BaseFont bf = BaseFont.createFont(path+File.separator+"temp"+File.separator+"arial.ttf",
                     BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             formTexts.addSubstitutionFont(bf);
 
@@ -104,6 +104,7 @@ public class SytController {
 
             // 强制下载
             //response.reset();
+            File file = new File(filename);
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment;fileName="
                     + URLEncoder.encode(filename, "UTF-8"));

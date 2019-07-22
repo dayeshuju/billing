@@ -62,7 +62,7 @@ function findJfjl() {
     }, {
         "aTargets": [6],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfjlMsg(" + data + ")><i class='icon-search'></i>查看</a><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=saveJfjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> </div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfjlMsg(" + data + ")><i class='icon-search'></i>查看</a> <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-historyjfjl' role='button' style='background-color:#00BB00' onclick=saveJfjlMeterId(" + row.meterId + ")><i class='icon-pencil'></i>历史数据</a> </div>";
         }
     }
     ];
@@ -83,10 +83,12 @@ function findJfjl() {
 
 
 function saveJfjlMeterId(meterId) {
-    initform("","");
+    //initform("","");
     $("#meterId").val(meterId);
+    getHistoryJfjl();
+
 }
-function getHistoryJfjl(meterId) {
+function getHistoryJfjl() {
     var startTime = $("#starttime").val();
     var endTime = $("#endtime").val();
     initform(startTime,endTime);
@@ -163,24 +165,28 @@ function getHistoryJfjl(meterId) {
         }, {
             mDataProp: "payStatus",
             sTitle: "缴费状态"
-        }/*, {
+        }, {
             mDataProp: "id",
             sTitle: "操作"
-        }*/
+        }
 
         ],
         aoColumnDefs: [{
             "bSortable": false,
-            "aTargets": [0, 1, 2, 3, 4, 5]
+            "aTargets": [0, 1, 2, 3, 4, 5, 6]
         }, {
             "sDefaultContent": '',
             "aTargets": ['_all']
-        }/*, {
+        }, {
             "aTargets": [6],
             "mRender": function (data, type, row) {
-                return " <div class='text-left'><a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletejfjl' role='button' onclick=saveJfjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
+                var str;
+                if(row.payStatus != 0){
+                    str = "<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a></div>";
+                }
+                return str;
             }
-        }*/
+        }
         ],
 
         fnServerData: function(sSource, aoData, fnCallback) {
@@ -206,7 +212,13 @@ function getHistoryJfjl(meterId) {
         }
     })
 }
+function print(sytId) {
+    var newWindow = window.open("syt/printFactura?id="+sytId, "_blank");
+    setTimeout(function () {
+        newWindow.print();
+    },2000);
 
+}
 /*function saveJfjlId(id){
     $("#jfjlId").val(id);
 }*/
@@ -262,7 +274,7 @@ function initform(starttime,endtime) {
         "                                <th>表号</th>\n" +
         "                                <th>抄表时间</th>\n" +
         "                                <th>表示数</th>\n" +
-/*        "                                <th>操作</th>\n" +*/
+        "                                <th>操作</th>\n" +
         "                            </tr>\n" +
         "                            </thead>\n" +
         "                        </table>");
@@ -296,8 +308,10 @@ function lookJfjlMsg(id) {
             $("#address").text(result.data.address);
             $("#phoneNum").text(result.data.phoneNum);
             $("#tate").text(result.data.tate);
+/*
             if(result.data.valid==0){$("#valid").text("禁用");}
             if(result.data.valid==1){$("#valid").text("启用");}
+*/
 
             $("#createdUserTime").text(result.data.createdUserTime);
            $("#printTime").text(result.data.printTime);
@@ -307,7 +321,7 @@ function lookJfjlMsg(id) {
 }
 
 
-function getYhlxlist() {
+/*function getYhlxlist() {
 
     var url = "tbYdyh/getYhlxlist";
     var astr = "<option></option>";
@@ -335,7 +349,7 @@ function getYhlxlist() {
     });
 
 
-}
+}*/
 
 function clearExportConditions(){
     $("#payStatus_export option:selected").removeAttrs("selected");
