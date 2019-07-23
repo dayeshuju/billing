@@ -28,11 +28,11 @@ public class TbYdyhController {
     @Autowired
     TbYdyhService tbYdyhService;
 
-    @RequestMapping("/deleteYdyh")
+/*    @RequestMapping("/deleteYdyh")
     @RequiresPermissions("sys:tbydyh")
     public JsonResult deleteYdyh(Integer id){
         return tbYdyhService.deleteYdyh(id);
-    }
+    }*/
 
     @RequestMapping("/addYdyh")
     @RequiresPermissions("sys:tbydyh")

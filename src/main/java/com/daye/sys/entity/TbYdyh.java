@@ -27,7 +27,7 @@ public class TbYdyh implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
-     * 用户身份id
+     * 用户身份证号
      */
     @TableField("idCode")
     private String idCode;

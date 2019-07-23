@@ -392,11 +392,11 @@ span.red {
 
 .navbar .nav>li {
     line-height: 28px;
-    border-right: 1px solid rgba(0, 0, 0, 0.2)
+    /*border-right: 1px solid rgba(0, 0, 0, 0.2)*/
 }
 
 .navbar .nav>li:first-child {
-    border-left: 1px solid rgba(0, 0, 0, 0.21)
+    /*border-left: 1px solid rgba(0, 0, 0, 0.21)*/
 }
 
 .navbar .nav>li.nav-toggle {

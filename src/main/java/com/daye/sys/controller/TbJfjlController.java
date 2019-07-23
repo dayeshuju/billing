@@ -51,12 +51,12 @@ public class TbJfjlController {
         Map<String,Object> map = tbJfjlService.getHistoryJfjlList(startTime,endTime,meterId,aoData);
         return map;
     }
-    @RequestMapping("deleteJfjl")
+    /*@RequestMapping("deleteJfjl")
     @RequiresPermissions("sys:tbJfjl")
     @ResponseBody
     public JsonResult deleteJfjl(Integer id ){
         return tbJfjlService.deleteById(id);
-    }
+    }*/
 
     @RequestMapping("getJfjl")
     @RequiresPermissions("sys:tbJfjl")

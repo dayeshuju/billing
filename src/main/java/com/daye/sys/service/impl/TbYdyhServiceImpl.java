@@ -115,7 +115,7 @@ public class TbYdyhServiceImpl extends ServiceImpl<TbYdyhMapper, TbYdyh> impleme
         return new JsonResult(new Throwable("添加失败"));
     }
 
-    @Override
+/*    @Override
     @RequiredLog(operation = "根据id删除用户")
     public JsonResult deleteYdyh(Integer id) {
         Integer qfCount = tbYdyhMapper.getQfjl(id);
@@ -124,5 +124,5 @@ public class TbYdyhServiceImpl extends ServiceImpl<TbYdyhMapper, TbYdyh> impleme
         ydyh.setValid(0);
         if(tbYdyhMapper.updateById(ydyh) == 1) return new JsonResult("删除成功");
         return new JsonResult(new Throwable("删除失败"));
-    }
+    }*/
 }

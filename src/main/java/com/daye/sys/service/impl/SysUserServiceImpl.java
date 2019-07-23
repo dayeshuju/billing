@@ -131,7 +131,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return new JsonResult(new Throwable("修改失败"));
     }
 
-    @Override
+/*    @Override
     @RequiredLog(operation = "删除系统用户")
     public JsonResult deleteUser(Integer id) {
         SysUser user = sysUserMapper.selectById(id);
@@ -140,7 +140,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return new JsonResult("删除成功");
         }
         return new JsonResult(new Throwable("删除失败"));
-    }
+    }*/
 
     @Override
     @RequiredLog(operation = "重置密码")

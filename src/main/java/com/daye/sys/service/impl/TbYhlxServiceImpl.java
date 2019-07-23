@@ -91,12 +91,12 @@ public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> impleme
         return  new JsonResult(new Throwable("修改失败"));
     }
 
-    @Override
+/*    @Override
     @RequiredLog(operation = "删除用户类型")
     public JsonResult deleteYhlx(Long id) {
         if (tbYhlxMapper.deleteById(id) == 1) {
             return new JsonResult("删除成功");
         }
         return  new JsonResult(new Throwable("删除失败"));
-    }
+    }*/
 }

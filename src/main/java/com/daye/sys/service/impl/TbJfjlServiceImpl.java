@@ -94,6 +94,7 @@ TbJfjlMapper tbJfjlMapper;
 
     }
 
+/*
     @Override
     @RequiredLog(operation = "根据主键id删除数据")
     public JsonResult deleteById(Integer id) {
@@ -102,10 +103,10 @@ TbJfjlMapper tbJfjlMapper;
         if(jfjl.getPayStatus()==0||jfjl.getPayStatus()==1){
          return  new JsonResult(new Throwable("欠费的，未缴费的记录不可以删除！！！"));
         }
-        jfjl.setStatus(0);
         if (tbJfjlMapper.updateById(jfjl)==1) return new JsonResult("删除成功！！！");
         return  new JsonResult(new Throwable("删除失败！！！"));
     }
+*/
 
     @Override
     @RequiredLog(operation = "根据电表号获取该电表的历史数据")

@@ -41,11 +41,11 @@ public class SysUserController {
         return sysUserService.resetPassword(id);
     }
 
-    @RequestMapping("/deleteUser")
+/*    @RequestMapping("/deleteUser")
     @RequiresPermissions("sys:user")
     public JsonResult deleteUser(Integer id){
         return sysUserService.deleteUser(id);
-    }
+    }*/
 
     @RequestMapping("/updateUser")
     @RequiresPermissions("sys:user")

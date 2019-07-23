@@ -266,8 +266,11 @@ function modifyuser(id) {
             $("#officePhone").val(result.data.officePhone);
             $("#email").val(result.data.email);
             $("#roleId").val(result.data.roleId);
-            if(Number(id) == 2){
-                $("#roleId").attr("disabled","disabled");
+            if(result.data.nickname == 'root'){
+                $("#roleId").attr("disabled",true);
+            }else{
+                $("#roleId").attr("disabled",false);
+
             }
         }
     })

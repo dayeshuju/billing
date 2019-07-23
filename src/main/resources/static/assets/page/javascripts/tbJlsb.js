@@ -19,7 +19,7 @@ function findjlsb() {
         sTitle: "用户姓名"
     }, {
         mDataProp: "idCode",
-        sTitle: "用户身份id"
+        sTitle: "用户身份证号"
     }, {
         mDataProp: "id",
         sTitle: "操作"

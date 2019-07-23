@@ -70,10 +70,10 @@ public class SysRoleController {
         return sysRoleService.updateObject(sysRole,menuIds);
     }
 
-    @RequestMapping("/deleteAuth")
+/*    @RequestMapping("/deleteAuth")
     @RequiresPermissions("sys:permission")
     public JsonResult deleteAuth(Integer id){
         return sysRoleService.deleteAuth(id);
-    }
+    }*/
 }
 

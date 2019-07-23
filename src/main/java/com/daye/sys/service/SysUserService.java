@@ -26,7 +26,7 @@ public interface SysUserService extends IService<SysUser> {
 
     JsonResult updateUser(SysUser user);
 
-    JsonResult deleteUser(Integer id);
+/*    JsonResult deleteUser(Integer id);*/
 
     JsonResult resetPassword(Integer id);
 

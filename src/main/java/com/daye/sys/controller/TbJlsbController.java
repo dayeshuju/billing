@@ -40,9 +40,9 @@ public class TbJlsbController {
     @RequiresPermissions("sys:tbjlsb")
     public JsonResult updateJlsb(VT_Jlsb Jlsb){return tbjlsbservice.updateJlsb(Jlsb);}
 
-    @RequestMapping("/deleteJlsb")
+/*    @RequestMapping("/deleteJlsb")
     @RequiresPermissions("sys:tbjlsb")
-    public JsonResult deleteJlsb(Long id){return tbjlsbservice.deleteJlsb(id);}
+    public JsonResult deleteJlsb(Long id){return tbjlsbservice.deleteJlsb(id);}*/
 
     @RequestMapping("/getJlsbList")
     @RequiresPermissions("sys:tbjlsb")

@@ -30,5 +30,5 @@ public interface SysRoleService extends IService<SysRole> {
 
     JsonResult updateObject(SysRole sysRole,Integer... menuIds);
 
-    JsonResult deleteAuth(Integer id);
+/*    JsonResult deleteAuth(Integer id);*/
 }

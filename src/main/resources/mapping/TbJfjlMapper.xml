@@ -5,7 +5,7 @@
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
     <sql id="findObject">
-        c.ydyhId = b.id and c.status = 1
+        c.ydyhId = b.id
         <if test="sSearch != null and sSearch != ''">
             and (b.name like concat("%",#{sSearch},"%")
             or b.idCode like concat("%",#{sSearch},"%")
@@ -58,7 +58,7 @@
 
     <sql id="findObjectById">
         c.meterId=#{meterId}
-        and c.ydyhId = b.id and c.status = 1
+        and c.ydyhId = b.id
         <if test="startTime != null and startTime != ''">
             and c.payTime  BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and DATE_ADD(STR_TO_DATE(#{endTime},'%Y-%m-%d'),interval 1 day)
         </if>
@@ -109,7 +109,7 @@
                date_format(b.createdTime,'%Y-%m-%d')  createdUserTime
         from tbYdyh b,tbJfjl c ,tbYhlx d ,(SELECT @i:=0) t
         <where>
-            c.ydyhId = b.id and b.userTypeId=d.id and c.status = 1
+            c.ydyhId = b.id and b.userTypeId=d.id
             <choose>
                 <when test="payStatus=='2'">
                   and c.payTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and STR_TO_DATE(concat(#{endTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')

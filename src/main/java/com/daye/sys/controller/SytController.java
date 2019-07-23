@@ -1,6 +1,7 @@
 package com.daye.sys.controller;
 
 import com.daye.common.util.JsonToMap;
+import com.daye.common.util.ShiroUtils;
 import com.daye.common.vo.JsonResult;
 import com.daye.sys.service.SytService;
 import com.itextpdf.text.Document;
@@ -45,7 +46,8 @@ public class SytController {
     @RequestMapping("/saveJfyh")
     @RequiresPermissions("sys:tbsyt")
     public JsonResult saveJfyh(Integer id,Double actualAmount,String note){
-        return sytService.saveJfyh(id,actualAmount,note);
+        Integer cashier = ShiroUtils.getPrincipal().getId();
+        return sytService.saveJfyh(id,actualAmount,note,cashier);
     }
 
     @RequestMapping("/printFactura")

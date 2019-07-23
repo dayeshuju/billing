@@ -21,7 +21,7 @@ public interface TbCbjlService extends IService<TbCbjl> {
 
     Map<String, Object> getHistoryCbjlList(String startTime,String endTime,String meterId, Map<String,String> aoData);
 
-    JsonResult deleteCbjl(Integer id);
+/*    JsonResult deleteCbjl(Integer id);*/
 
     JsonResult uploadCbjl(MultipartFile file);
 }

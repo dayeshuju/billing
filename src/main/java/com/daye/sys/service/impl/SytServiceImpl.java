@@ -75,7 +75,7 @@ public class SytServiceImpl implements SytService {
 
     @Override
     @RequiredLog(operation = "完成缴费")
-    public JsonResult saveJfyh(Integer id, Double actualAmount, String note) {
+    public JsonResult saveJfyh(Integer id, Double actualAmount, String note,Integer casher) {
         TbJfjl jfjl = tbJfjlMapper.selectById(id);
         if(actualAmount == null) return new JsonResult(new Throwable("请输入实缴电费"));
         if(Double.doubleToLongBits(jfjl.getAmountDue()) != Double.doubleToLongBits(actualAmount)) return new JsonResult(new Throwable("实缴电费与应缴电费金额不符"));
@@ -84,6 +84,7 @@ public class SytServiceImpl implements SytService {
         jfjl.setPayStatus(2);       // 2：已缴费
         jfjl.setPayTime(new Date());
         jfjl.setModifiedTime(new Date());
+        jfjl.setCashier(casher);
         if(tbJfjlMapper.updateById(jfjl) == 1) return new JsonResult("缴费成功");
         return new JsonResult(new Throwable("缴费失败"));
     }

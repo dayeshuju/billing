@@ -25,5 +25,5 @@ public interface TbYhlxService extends IService<TbYhlx> {
 
     JsonResult updateYhlx(TbYhlx yhlx);
 
-    JsonResult deleteYhlx(Long id);
+/*    JsonResult deleteYhlx(Long id);*/
 }

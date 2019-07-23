@@ -90,14 +90,13 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
         return map;
     }
 
-    @Override
+/*    @Override
     @RequiredLog(operation = "根据id删除抄表记录")
     public JsonResult deleteCbjl(Integer id) {
         TbCbjl cbjl = tbCbjlMapper.selectById(id);
-        cbjl.setStatus(0);
         if(tbCbjlMapper.updateById(cbjl) == 1) return new JsonResult("删除成功");
         return new JsonResult(new Throwable("删除失败"));
-    }
+    }*/
 
     @Override
     @Transactional

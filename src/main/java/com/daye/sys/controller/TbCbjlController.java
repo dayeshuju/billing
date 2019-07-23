@@ -34,11 +34,11 @@ public class TbCbjlController {
         return tbCbjlService.uploadCbjl(file);
     }
 
-    @RequestMapping("deleteCbjl")
+/*    @RequestMapping("deleteCbjl")
     @RequiresPermissions("sys:tbcbjl")
     public JsonResult deleteCbjl(Integer id){
         return tbCbjlService.deleteCbjl(id);
-    }
+    }*/
 
     @RequestMapping("getHistoryCbjlList")
     @RequiresPermissions("sys:tbcbjl")

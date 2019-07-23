@@ -41,9 +41,9 @@ public class TbYhlxController {
     @RequiresPermissions("sys:tbyhlx")
     public JsonResult updateYhlx(TbYhlx yhlx){return tbYhlxService.updateYhlx(yhlx);}
 
-    @RequestMapping("/deleteYhlx")
+/*    @RequestMapping("/deleteYhlx")
     @RequiresPermissions("sys:tbyhlx")
-    public JsonResult deleteYhlx(Long id){return tbYhlxService.deleteYhlx(id);}
+    public JsonResult deleteYhlx(Long id){return tbYhlxService.deleteYhlx(id);}*/
 
     @RequestMapping("/getYhlxList")
     @RequiresPermissions("sys:tbyhlx")

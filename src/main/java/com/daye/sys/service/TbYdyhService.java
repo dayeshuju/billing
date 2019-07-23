@@ -26,5 +26,5 @@ public interface TbYdyhService extends IService<TbYdyh> {
 
     JsonResult addYdyh(TbYdyh ydyh);
 
-    JsonResult deleteYdyh(Integer id);
+/*    JsonResult deleteYdyh(Integer id);*/
 }

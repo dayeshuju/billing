@@ -8,7 +8,6 @@
         a.id in (select max(d.id) from tbCbjl d group by d.meterId)
         and a.meterId = b.meterId
         and b.ydyhId = c.id
-        and a.status = 1
         <if test="sSearch != null and sSearch != ''">
             and (c.name like concat("%",#{sSearch},"%")
             or c.idCode like concat("%",#{sSearch},"%")
@@ -34,10 +33,10 @@
         order by a.createdTime desc
     </sql>
     <insert id="insertCbjls" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into tbCbjl (meterId,regisTime,meterNum,status)
+        insert into tbCbjl (meterId,regisTime,meterNum)
         values 
         <foreach collection="cbjlList" separator="," item="cbjl">
-            (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum},1)
+            (#{cbjl.meterId},#{cbjl.regisTime},#{cbjl.meterNum})
         </foreach>
     </insert>
     <delete id="cleanUp2Y">
@@ -65,7 +64,6 @@
         a.meterId=#{meterId}
         and a.meterId = b.meterId
         and b.ydyhId = c.id
-        and a.status = 1
         <if test="startTime != null and startTime != ''">
             and a.regisTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m-%d') and DATE_ADD(STR_TO_DATE(#{endTime},'%Y-%m-%d'),interval 1 day)
         </if>
@@ -87,8 +85,7 @@
         SELECT EXISTS (SELECT id FROM tbCbjl
         WHERE meterId =  #{meterId}
             AND regisTime=#{regisTime}
-            AND meterNum=#{meterNum}
-            AND status = 1)
+            AND meterNum=#{meterNum})
         OR NOT EXISTS (SELECT id FROM tbJlsb WHERE meterId = #{meterId} )
     </select>
 </mapper>

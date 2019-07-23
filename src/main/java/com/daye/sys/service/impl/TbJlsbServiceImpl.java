@@ -45,11 +45,11 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
         TbJlsb jlsbInsert = new TbJlsb();
         if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("表号不能为空"));
         if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("表箱号不能为空"));
-        if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份id不能为空"));
+        if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份证号不能为空"));
         TbYdyh ydyh = tbjlsbmapper.findYdyhByIdCode(jlsb.getIdCode().trim());
         TbJlsb oldJlsb= tbjlsbmapper.findJlsbByMeterId(jlsb.getMeterId().trim());
         if(oldJlsb!=null) return new JsonResult(new Throwable("计量设备已存在，请更改表号"));
-        if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份id"));
+        if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份证号"));
         jlsbInsert.setMeterId(jlsb.getMeterId().trim());
         jlsbInsert.setMeterBoxId(jlsb.getMeterBoxId().trim());
         jlsbInsert.setYdyhId(ydyh.getId());
@@ -63,10 +63,10 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
         TbJlsb jlsbInsert = new TbJlsb();
         if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("表号不能为空"));
         if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("表箱号不能为空"));
-        if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份id不能为空"));
+        if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份证号不能为空"));
         TbYdyh ydyh = tbjlsbmapper.findYdyhByIdCode(jlsb.getIdCode().trim());
         TbJlsb oldJlsb= tbjlsbmapper.findJlsbByMeterId(jlsb.getMeterId().trim());
-        if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份id"));
+        if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份证号"));
         if(oldJlsb!=null&&oldJlsb.getId()!=jlsb.getId()) return new JsonResult(new Throwable("计量设备已存在，请更改表号"));
         jlsbInsert.setMeterId(jlsb.getMeterId().trim());
         jlsbInsert.setMeterBoxId(jlsb.getMeterBoxId().trim());
@@ -79,7 +79,7 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
         return  new JsonResult(new Throwable("修改失败"));
     }
 
-    @Override
+/*    @Override
     @RequiredLog(operation = "删除计量设备")
     public JsonResult deleteJlsb(Long id) {
         //判断设备上是否关联了数据
@@ -91,7 +91,7 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
             return new JsonResult("删除成功");
         }
         return  new JsonResult(new Throwable("删除失败"));
-    }
+    }*/
 
     @Override
     @RequiredLog(value = 0, operation = "获得所有计量设备信息")

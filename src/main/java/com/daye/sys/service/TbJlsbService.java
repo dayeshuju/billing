@@ -23,7 +23,7 @@ public interface TbJlsbService extends IService<TbJlsb> {
 
     JsonResult updateJlsb(VT_Jlsb jlsb);
 
-    JsonResult deleteJlsb(Long id);
+/*    JsonResult deleteJlsb(Long id);*/
 
     Map<String,Object> findObject(Map<String, String> aoData);
 }

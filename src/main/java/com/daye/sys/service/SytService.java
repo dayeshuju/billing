@@ -9,7 +9,7 @@ public interface SytService {
 
     JsonResult getJfyh(Integer id);
 
-    JsonResult saveJfyh(Integer id, Double actualAmount, String note);
+    JsonResult saveJfyh(Integer id, Double actualAmount, String note,Integer cashier);
 
     Map<String, Object> printFactura(Integer id);
 }

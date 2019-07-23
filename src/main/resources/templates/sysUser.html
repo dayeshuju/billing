@@ -5,7 +5,7 @@
 <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper' style="display: block;">
         <!--modal-adduser-->
-        <div class="modal-add hide fade in" id="modal-adduser" role="dialog"  aria-hidden="false"
+        <div class="modal-add hide fade in" id="modal-adduser" role="dialog" tabindex="-1" aria-hidden="false"
              style="display:none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -81,7 +81,7 @@
         </div>
         <!--modal-adduser end-->
         <!--modal-deleteUser begin-->
-        <!--<div class="modal hide fade in" id="modal-deleteuser" role="dialog"  aria-hidden="false"
+        <div class="modal hide fade in" id="modal-deleteuser" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -102,10 +102,10 @@
                 <button class="btn" data-dismiss="modal">取消</button>
                 <button class="btn btn-primary" id="deleterow">确认删除</button>
             </div>
-        </div>-->
+        </div>
         <!--modal-deleteUser end-->
         <!--modal-lockuser & unlockuser begin-->
-        <div class="modal hide fade in" id="modal-lockuser" role="dialog" aria-hidden="false"
+        <div class="modal hide fade in" id="modal-lockuser" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -126,7 +126,7 @@
                 <button class="btn btn-primary" onclick="lockuser()">确认锁定</button>
             </div>
         </div>
-        <div class="modal hide fade in" id="modal-unlockuser" role="dialog" aria-hidden="false"
+        <div class="modal hide fade in" id="modal-unlockuser" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -149,7 +149,7 @@
         </div>
         <!--modal-lockuser & unlockuser end-->
         <!--modal-reset password begin-->
-        <div class="modal hide fade in" id="modal-resetpassword" role="dialog" aria-hidden="false"
+        <div class="modal hide fade in" id="modal-resetpassword" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -177,9 +177,11 @@
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
                     <div class='title'>用户列表</div>
-                    <div class='pull-right'>
+                    <div class='pull-right' style="margin-top:-80px;width:100px;height:30px;margin-right:13px;">
                         <a id="adduser" class="btn btn-default" data-toggle="modal" href="#modal-adduser" role="button"
-                           style="margin-bottom:5px" onclick="initform()"><i class="icon-plus"></i> 添加新用户</a>
+                           style="background-color:#00aceb;color:white;width:100%;height:100%;padding-top:10px;font-size:16px;" onclick="initform()">
+                            <i class="icon-plus"></i> 添加新用户
+                        </a>
                     </div>
                 </div>
                 <div class='box-content box-no-padding'>

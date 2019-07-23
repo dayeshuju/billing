@@ -49,10 +49,6 @@ public class TbCbjl implements Serializable {
     @TableField("modifiedTime")
     private Date modifiedTime;
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public Date getPrintTime() {
         return printTime;
     }
@@ -66,12 +62,6 @@ public class TbCbjl implements Serializable {
      */
     @TableField("printTime")
     private Date printTime;
-
-    /*
-    * 数据状态
-    */
-    @TableField("status")
-    private int status;
 
     public Long getId() {
         return id;

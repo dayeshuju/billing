@@ -94,6 +94,7 @@
     <link rel="stylesheet" href="assets/stylesheets/ztree/css/metroStyle/metroStyle.css"/>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
 </head>
 <body class='contrast-sea-blue '>
 <header>
@@ -119,7 +120,7 @@
                             <li>
                                 <a href='logout'>
                                     <i class='icon-signout'></i>
-                                    Sign out
+                                    登出
                                 </a>
                             </li>
                         </ul>
@@ -158,7 +159,7 @@
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="tbSyt">
-                            <a href='#'>
+                            <a href='#' id="syt" onclick="bg_color('syt')">
                                 <i class='icon-caret-right'></i>
                                 <span>收银台</span>
                             </a>
@@ -173,25 +174,25 @@
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="tbJfjl">
-                            <a href='#'>
+                            <a href='#' id="jfjlgl" onclick="bg_color('jfjlgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>缴费记录管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbYdyh">
-                            <a href='#'>
+                            <a href='#' id="ydyhgl" onclick="bg_color('ydyhgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>用电用户管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbCbjl">
-                            <a href='#'>
+                            <a href='#' id="cbjlgl" onclick="bg_color('cbjlgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>抄表记录管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbJlsb">
-                            <a href='#'>
+                            <a href='#' id="jlsbgl" onclick="bg_color('jlsbgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>计量设备管理</span>
                             </a>
@@ -206,7 +207,7 @@
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="sysUserSelf">
-                            <a href='#'>
+                            <a href='#' id="xgmm" onclick="bg_color('xgmm')">
                                 <i class='icon-caret-right'></i>
                                 <span>修改密码</span>
                             </a>
@@ -227,19 +228,19 @@
                             </a>
                         </li>-->
                         <li class='hidden' id="sysPermission">
-                            <a href='#'>
+                            <a href='#' id="qxgl" onclick="bg_color('qxgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>权限管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="sysUserId">
-                            <a href='#'>
+                            <a href='#' id="xtyhgl" onclick="bg_color('xtyhgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>系统用户管理</span>
                             </a>
                         </li>
                         <li class='hidden' id="tbYhlx">
-                            <a href='#'>
+                            <a href='#' id="yhlxgl" onclick="bg_color('yhlxgl')">
                                 <i class='icon-caret-right'></i>
                                 <span>用户类型管理</span>
                             </a>
@@ -440,6 +441,14 @@
         }else{
             $("#mainContent").css("margin-left","46px");
         }
+    }
+    var last_a_id;
+    function bg_color(a_id){
+        if(last_a_id != undefined){
+            $("#"+last_a_id).css("background-color","#e5e5e5");
+        }
+        $("#"+a_id).css("background-color","#00acec");
+        last_a_id = a_id;
     }
 </script>
 </body>

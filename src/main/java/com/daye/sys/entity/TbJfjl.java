@@ -84,11 +84,11 @@ public class TbJfjl implements Serializable {
      */
     private String note;
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCashier(int cashier) {
+        this.cashier = cashier;
     }
-
-    private int status;
+//收银员ID
+    private int cashier;
 
     public Long getId() {
         return id;
