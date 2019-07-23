@@ -151,8 +151,8 @@
                         <span style="font-size: 18px; position: absolute;left: 19%; top: 50%; transform: translateY(-50%)">功能导航</span>
                     </a>
                 </li>
-                <li class='menu'>
-                    <a class='dropdown-collapse' href='#' style="height: 60px">
+                <li class='menu hidden' id="jfgn">
+                    <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-credit-card' style="margin-top: 20px"></i>
                         <span style="font-size: 15px;">缴费功能</span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
@@ -166,8 +166,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class='menu'>
-                    <a class='dropdown-collapse' href='#' style="height: 60px">
+                <li class='menu hidden' id="sjgl">
+                    <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-info' style="margin-top: 20px"></i>
                         <span style="font-size: 15px;">数据管理</span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
@@ -197,16 +197,22 @@
                                 <span>计量设备管理</span>
                             </a>
                         </li>
+                        <li class='hidden' id="tbSftj">
+                            <a href='#' id="sftjgl" onclick="bg_color('sftjgl')">
+                            <i class='icon-caret-right'></i>
+                            <span>收费统计管理</span>
+                        </a>
+                        </li>
                     </ul>
                 </li>
-                <li class='menu'>
-                    <a class='dropdown-collapse' href='#' style="height: 60px">
+                <li class='menu hidden' id="sysUserSelf">
+                    <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-user' style="margin-top: 20px"></i>
                         <span style="font-size: 15px;">个人设置</span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
-                        <li class='hidden' id="sysUserSelf">
+                        <li class='hidden' id="changePassword">
                             <a href='#' id="xgmm" onclick="bg_color('xgmm')">
                                 <i class='icon-caret-right'></i>
                                 <span>修改密码</span>
@@ -214,19 +220,13 @@
                         </li>
                     </ul>
                 </li>
-                <li class='menu'>
-                    <a class='dropdown-collapse' href='#' style="height: 60px">
+                <li class='hidden menu' id="xtgl">
+                    <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-wrench' style="margin-top: 20px"></i>
                         <span style="font-size: 15px;">系统管理</span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
-                        <!--<li class='hidden' id="sysUserSelf">
-                            <a href='#'>
-                                <i class='icon-caret-right'></i>
-                                <span>个人设置</span>
-                            </a>
-                        </li>-->
                         <li class='hidden' id="sysPermission">
                             <a href='#' id="qxgl" onclick="bg_color('qxgl')">
                                 <i class='icon-caret-right'></i>
@@ -445,9 +445,9 @@
     var last_a_id;
     function bg_color(a_id){
         if(last_a_id != undefined){
-            $("#"+last_a_id).css("background-color","#e5e5e5");
+            $("#"+last_a_id).css("border-right","none");
         }
-        $("#"+a_id).css("background-color","#00acec");
+        $("#"+a_id).css("border-right","4px solid #0263ac");
         last_a_id = a_id;
     }
 </script>

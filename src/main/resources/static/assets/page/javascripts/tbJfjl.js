@@ -180,8 +180,9 @@ function getHistoryJfjl() {
         }, {
             "aTargets": [6],
             "mRender": function (data, type, row) {
+                debugger;
                 var str;
-                if(row.payStatus == 2){
+                if(row.payStatu == 2){
                     str = "<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a></div>";
                 }
                 return str;

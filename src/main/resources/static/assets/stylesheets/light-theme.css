@@ -1682,7 +1682,7 @@ header .navbar .nav > li > a:focus, header .navbar .nav > li > a:hover {
   background: #f4f4f4; }
 #main-nav .navigation > .nav > li {
   position: relative;
-  display: block; }
+/*  display: block;*/ }
 @media screen and (max-width: 768px) {
   #main-nav .navigation > .nav > li span, #main-nav .navigation > .nav > li i.angle-down {
     display: none !important; } }
@@ -1732,7 +1732,7 @@ header .navbar .nav > li > a:focus, header .navbar .nav > li > a:hover {
   transition: all 100ms ease; }
 #main-nav .navigation > .nav > li > a span {
   color: #3c3c3c;
-  text-shadow: 1px 1px 1px #ececec;
+  /*text-shadow: 1px 1px 1px #ececec;*/
   position: relative;
   top: -2px;
   -webkit-transition: all 100ms ease;
@@ -1740,11 +1740,11 @@ header .navbar .nav > li > a:focus, header .navbar .nav > li > a:hover {
   -o-transition: all 100ms ease;
   transition: all 100ms ease; }
 #main-nav .navigation > .nav > li:hover > a, #main-nav .navigation > .nav > li:focus > a, #main-nav .navigation > .nav > li.active > a {
-  background-color: #fefefe; }
+  background-color: #0263ac;font-weight:bold; }
 #main-nav .navigation > .nav > li:hover > a [class^="icon-"], #main-nav .navigation > .nav > li:hover > a [class*=" icon-"], #main-nav .navigation > .nav > li:focus > a [class^="icon-"], #main-nav .navigation > .nav > li:focus > a [class*=" icon-"], #main-nav .navigation > .nav > li.active > a [class^="icon-"], #main-nav .navigation > .nav > li.active > a [class*=" icon-"] {
   color: #f34541 !important; }
 #main-nav .navigation > .nav > li:hover > a span, #main-nav .navigation > .nav > li:focus > a span, #main-nav .navigation > .nav > li.active > a span {
-  color: #222222 !important;
+  color: #fff;
   padding-left: 2px !important; }
 #main-nav .navigation > .nav > li .nav {
   background: #e5e5e5;
@@ -5379,7 +5379,7 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
 .contrast-sea-blue header .navbar .navbar-inner .medium:hover > a, .contrast-sea-blue header .navbar .navbar-inner .medium:active > a, .contrast-sea-blue header .navbar .navbar-inner .medium:focus > a {
   background-color: #01406f; }
 .contrast-sea-blue header .navbar .navbar-inner .dark {
-  background: #0163ac; }
+  background: #0263ac; }
 .contrast-sea-blue header .navbar .navbar-inner .dark .label {
   color: #013c69; }
 .contrast-sea-blue header .navbar .navbar-inner .dark:hover > a, .contrast-sea-blue header .navbar .navbar-inner .dark:active > a, .contrast-sea-blue header .navbar .navbar-inner .dark:focus > a {
@@ -5391,13 +5391,13 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
 .contrast-sea-blue #main-nav .navigation > .nav > li > a.in [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li > a.in [class*=" icon-"] {
   color: #0163ac; }
 .contrast-sea-blue #main-nav .navigation > .nav > li:hover > a [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li:hover > a [class*=" icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li:focus > a [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li:focus > a [class*=" icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li.active > a [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li.active > a [class*=" icon-"] {
-  color: #0163ac !important; }
+  color: #fff !important; }
 .contrast-sea-blue #main-nav .navigation > .nav > li .nav > li.active > a [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li .nav > li.active > a [class*=" icon-"] {
   color: #0163ac; }
 .contrast-sea-blue #main-nav .navigation > .nav > li .nav > li > a:hover [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li .nav > li > a:hover [class*=" icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li .nav > li > a:focus [class^="icon-"], .contrast-sea-blue #main-nav .navigation > .nav > li .nav > li > a:focus [class*=" icon-"] {
   color: #0163ac; }
 .contrast-sea-blue .box .box-header.contrast-background .actions .btn-link:hover {
-  color: #0163ac !important; }
+  color: #fff !important; }
 .contrast-sea-blue.contrast-background, .contrast-sea-blue .contrast-background {
   background: #0163ac !important; }
 .contrast-sea-blue .text-contrast, .contrast-sea-blue .contrast {

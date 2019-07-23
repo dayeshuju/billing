@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -64,26 +63,6 @@ public class SysMenu implements Serializable {
      */
     @TableField("modifiedTime")
     private Date modifiedTime;
-
-    public void setSecondMenus(SysMenu[] secondMenus) {
-        this.secondMenus = secondMenus;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    /**
-     * 最大二级菜单数
-     */
-    @TableField("num")
-    private Integer num;
-
-    /**
-     * 二级菜单
-     */
-    @TableField("secondMenus")
-    private SysMenu[] secondMenus;
 
 
     public Integer getId() {
