@@ -266,7 +266,7 @@ function modifyuser(id) {
             $("#officePhone").val(result.data.officePhone);
             $("#email").val(result.data.email);
             $("#roleId").val(result.data.roleId);
-            if(result.data.nickname == 'root'){
+            if(result.data.roleId == 1){
                 $("#roleId").attr("disabled",true);
             }else{
                 $("#roleId").attr("disabled",false);
