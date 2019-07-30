@@ -27,4 +27,6 @@ public interface TbJfjlService extends IService<TbJfjl> {
     JsonResult getJfjl(Long id);
 
     List<VT_Jfjl> exportJfjl( String payStatus, String meterId, String idCode, String startTime, String endTime);
+
+    Map<String, Object> findSftj(Map<String, String> aoData);
 }
