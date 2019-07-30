@@ -69,4 +69,10 @@ public class PageController {
         return "tbSyt";
     }
 
+    @RequestMapping("tbSftj")
+    @RequiresPermissions("sys:tbsftj")
+    public String loadTbSftjUI(){
+        return "tbSftj";
+    }
+
 }
