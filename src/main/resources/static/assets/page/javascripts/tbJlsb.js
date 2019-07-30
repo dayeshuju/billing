@@ -188,3 +188,72 @@ function modifyjlsb(id) {
     })
 }
 
+//查询用电用户
+function finduser() {
+    /*定义列id和名称*/
+    var aoColumns = [{
+        mDataProp: "id",
+        sTitle: "ID"
+    }, {
+        mDataProp: "name",
+        sTitle: "姓名"
+    }, {
+        mDataProp: "idCode",
+        sTitle: "身份证号"
+    }, {
+        mDataProp: "address",
+        sTitle: "用户地址"
+    }, {
+        mDataProp: "phoneNum",
+        sTitle: "联系方式"
+    }, {
+        mDataProp: "note",
+        sTitle: "用户类型"
+    }, {
+        mDataProp: "id",
+        sTitle: "操作"
+    }
+
+    ];
+
+    /*给操作列设置填充 */
+    var aoColumnDefs = [{
+        "bSortable": false,
+        "aTargets": [0, 1, 2, 3, 4, 5, 6]
+    }, {
+        "sDefaultContent": '',
+        "aTargets": ['_all']
+    }, {
+        "aTargets": [6],
+        "mRender": function (data, type, row) {
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' role='button' style='background-color:#00BB00' onclick=selectYDuser(\""+ row.idCode +"\")><i class='icon-pencil'></i> 选择</a></div>";
+        }
+    }, {
+        "aTargets": [0],
+        "mRender": function (data, type, full) {
+            return "<span class='label label-number'>" + data + "</span>";
+        }
+    }
+
+
+    ];
+
+    var new_filter_url = "tbYdyh/getYdyhList"; //表#plist数据获取url
+
+    var oTable = setDataTable_ajax($("#userList"), new_filter_url, aoColumns, aoColumnDefs, true);
+
+    oTable.columnFilter();
+    var oSettings = oTable.fnSettings();
+    oSettings.sAjaxSource = new_filter_url;
+    oTable.fnDraw();
+}
+
+function selectUser(){
+    finduser();
+    $("#modal-selectUser").modal("show");
+}
+
+function selectYDuser(idCode){
+    $("#idCode").val(idCode);
+    $("#modal-selectUser").modal("hide");
+}
