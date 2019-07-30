@@ -100,5 +100,14 @@ public class TbJfjlController {
 
         return  null;
     }
+
+    @RequestMapping("getSftjList")
+    @RequiresPermissions("sys:tbSftj")
+    @ResponseBody
+    public Map<String,Object> getSftjList(@RequestParam Map<String,String> aoData){
+        aoData = JsonToMap.jsonToMap(aoData.get("aoData"));
+        Map<String,Object> map = tbJfjlService.findSftj(aoData);
+        return map;
+    }
 }
 
