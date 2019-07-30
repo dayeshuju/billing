@@ -132,4 +132,41 @@
 
     </select>
 
+    <sql id="findSfObject">
+        c.cashier = b.id
+        <if test="sSearch != null and sSearch != ''">
+            and (
+                b.name like concat("%",#{sSearch},"%")
+             or date_format(c.payTime,'%Y-%m-%d') like concat('%',#{sSearch},'%')
+            )
+        </if>
+        <if test="vt_jfjl.name != null and vt_jfjl.name != ''">
+            and b.name like concat("%",#{vt_jfjl.name},"%")
+        </if>
+        <if test="vt_jfjl.payTime != null and vt_jfjl.payTime != ''">
+            and date_format(c.payTime,'%Y-%m-%d') like concat('%',#{vt_jfjl.payTime},'%')
+        </if>
+    </sql>
+
+    <select id="findSfCount" resultType="java.lang.Integer">
+        select count(1) from
+        (select c.cashier from tbJfjl c,sysUsers b
+        <where>
+            <include refid="findSfObject"></include>
+        </where>
+        group by c.cashier) d
+    </select>
+
+    <select id="findSfObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
+        select b.id,b.name,c.payTime,sum(c.actualAmount) actualAmount
+        from sysUsers b,tbJfjl c,
+        (SELECT @i:=#{iDisplayStart}) t
+        <where>
+            <include refid="findSfObject"></include>
+            GROUP BY c.cashier
+            order by c.cashier asc
+            limit #{iDisplayStart},#{iDisplayLength}
+        </where>
+    </select>
+
 </mapper>
