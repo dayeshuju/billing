@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * <p>
@@ -206,6 +208,47 @@ TbJfjlMapper tbJfjlMapper;
         List<VT_Jfjl> jfjlList = tbJfjlMapper.selectByParameters(payStatus, meterId, idCode, startTime, endTime);
 
         return jfjlList;
+    }
+
+    @Override
+    @RequiredLog(operation = "获取收费统计信息")
+    public Map<String, Object> findSftj(Map<String, String> aoData) {
+
+        VT_Jfjl vt_jfjl = new VT_Jfjl();
+
+        //姓名
+        if(!StringUtils.isEmpty(aoData.get("sSearch_1").trim())) {
+            vt_jfjl.setName(aoData.get("sSearch_1"));
+        }
+
+        //收费时间
+        if(!StringUtils.isEmpty(aoData.get("sSearch_2").trim())) {
+            vt_jfjl.setPayTime(aoData.get("sSearch_2"));
+        } else {
+            Date day = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            vt_jfjl.setPayTime(df.format(day));
+        }
+
+        String sSearch = aoData.get("sSearch");
+        Object iDisplayStartObj = aoData.get("iDisplayStart");
+        Integer iDisplayStart = (Integer) iDisplayStartObj;
+        Object iDisplayLengthsObj = aoData.get("iDisplayLength");
+        Integer iDisplayLength = (Integer) iDisplayLengthsObj;
+        Object sEchoStr = aoData.get("sEcho");
+        Integer sEcho = (Integer) sEchoStr;
+
+        Integer count =tbJfjlMapper.findSfCount(vt_jfjl,sSearch);
+        List<VT_Jfjl> jfjlList = tbJfjlMapper.findSfObject(vt_jfjl,iDisplayStart,iDisplayLength,sSearch);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("iTotalDisplayRecords",count);
+        map.put("iTotalRecords",count);
+        map.put("sEcho",sEcho);
+        map.put("aaData",jfjlList);
+
+        return map;
+
     }
 
 }
