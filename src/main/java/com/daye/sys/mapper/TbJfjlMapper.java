@@ -44,5 +44,13 @@ public interface TbJfjlMapper extends BaseMapper<TbJfjl> {
                                      @Param("startTime") String startTime,
                                      @Param("endTime") String endTime);
 
+
+    Integer findSfCount(@Param("vt_jfjl") VT_Jfjl vt_jfjl, @Param("sSearch") String sSearch);
+
+    List<VT_Jfjl> findSfObject(@Param("vt_jfjl") VT_Jfjl vt_jfjl,
+                             @Param("iDisplayStart") Integer iDisplayStart,
+                             @Param("iDisplayLength") Integer iDisplayLength,
+                             @Param("sSearch") String sSearch);
+
     void cleanUp2Y();
 }
