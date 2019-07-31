@@ -1,5 +1,5 @@
 <script src='assets/page/javascripts/tbSyt.js' type='text/javascript'></script>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <input type="text" name="id" id="id" style="display: none"/>
 <input type="text" name="meterId" id="meterId" style="display: none"/>
 <div class='container-fluid'>
@@ -11,7 +11,7 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    缴费详情
+                    缴费详情@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 </h3>
             </div>
             <div class="modal-body">
@@ -20,9 +20,9 @@
                         <table class="kv-table">
                             <tbody>
                             <tr>
-                                <td class="kv-label">姓名
+                                <td class="kv-label" th:text="#{username}">姓名
                                 </td>
-                                <td class="kv-content" id="name">
+                                <td class="kv-content" id="name" th:text="#{IDCardNumber}">
                                 </td>
                                 <td class="kv-label">身份证号
                                 </td>
@@ -30,37 +30,37 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">表号</td>
+                                <td class="kv-label" th:text="#{meterNumber}">表号</td>
                                 <td class="kv-content" id="meterNum">
                                 </td>
-                                <td class="kv-label">用户地址
+                                <td class="kv-label" th:text="#{userAddress}">用户地址
                                 </td>
                                 <td class="kv-content" id="address">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">用电量
+                                <td class="kv-label" th:text="#{jfjl.electricityConsumption}">用电量
                                 </td>
                                 <td class="kv-content" id="periodElecNum">
                                 </td>
-                                <td class="kv-label">电费费率
+                                <td class="kv-label" th:text="#{jfjl.electricityTariff}">电费费率
                                 </td>
                                 <td class="kv-content" id="tate">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">应缴电费
+                                <td class="kv-label" th:text="#{jfjl.payableElectricityCharge}">应缴电费
                                 </td>
                                 <td class="kv-content" id="amountDue">
                                 </td>
-                                <td class="kv-label">实缴电费
+                                <td class="kv-label" th:text="#{jfjl.actualElectricityPayment}">实缴电费
                                 </td>
                                 <td class="kv-content">
                                     <input class="span13" id="actualAmount" placeholder="" type="text" autocomplete="off">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">备注
+                                <td class="kv-label" th:text="#{syt.remarks}">备注
                                 </td>
                                 <td class="kv-content" colspan="3">
                                     <input class="span13" id="note" placeholder="" type="text" autocomplete="off">
@@ -78,7 +78,7 @@
             </div>
             <div class="modal-footer">
                 <div style="text-align: center">
-                    <button class="btn btn-primary btn-large" id="printFactura" onclick="saveJfjl()">保存</button>
+                    <button class="btn btn-primary btn-large" id="printFactura" onclick="saveJfjl()">[[#{save}]]</button>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
-                    <div class='title'>缴费用户列表</div>
+                    <div class='title' th:text="#{syt.ListOfSubscribers}">缴费用户列表</div>
                 </div>
                 <div class='box-content box-no-padding'>
                     <div class='responsive-table'>
@@ -96,24 +96,24 @@
                                    style='margin-bottom:0;' id="plist" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>序号</th>
-                                    <th>姓名</th>
-                                    <th>身份证号</th>
-                                    <th>表号</th>
-                                    <th>应缴电费</th>
-                                    <th>抄表时间</th>
-                                    <th>操作</th>
+                                    <th th:text="#{serialNumber}">序号</th>
+                                    <th th:text="#{username}">姓名</th>
+                                    <th th:text="#{IDCardNumber}">身份证号</th>
+                                    <th th:text="#{meterNumber}">表号</th>
+                                    <th th:text="#{jfjl.payableElectricityCharge}">应缴电费</th>
+                                    <th th:text="#{cbjl.recordTime}">抄表时间</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>序号</th>
-                                    <th>姓名</th>
-                                    <th>身份证号</th>
-                                    <th>表号</th>
-                                    <th>应缴电费</th>
-                                    <th>抄表时间</th>
-                                    <th>操作</th>
+                                    <th th:text="#{serialNumber}">序号</th>
+                                    <th th:text="#{username}">姓名</th>
+                                    <th th:text="#{IDCardNumber}">身份证号</th>
+                                    <th th:text="#{meterNumber}">表号</th>
+                                    <th th:text="#{jfjl.payableElectricityCharge}">应缴电费</th>
+                                    <th th:text="#{cbjl.recordTime}">抄表时间</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </tfoot>
                             </table>

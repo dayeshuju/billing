@@ -30,7 +30,6 @@ public class ShiroUserRealm extends AuthorizingRealm{
 	private SysRoleMenuMapper sysRoleMenuMapper;
 	@Autowired
 	private SysMenuMapper sysMenuMapper;
-
 	/**
 	 * 设置凭证匹配器
 	 * @param credentialsMatcher
@@ -79,7 +78,7 @@ public class ShiroUserRealm extends AuthorizingRealm{
 		if(user==null)
 			throw new AuthenticationException("用户名不正确");
 		if(user.getValid()==0)
-			throw new AuthenticationException("用户被禁用,请稍候再试");
+			throw new AuthenticationException("1");
 
 		//4.对用户信息进行封装
 		ByteSource credentialsSalt=

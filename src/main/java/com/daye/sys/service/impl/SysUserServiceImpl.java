@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -27,29 +28,55 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     SysUserMapper sysUserMapper;
+    @Autowired
+    HttpSession session;
 
     @Override
     @RequiredLog(value = 0, operation = "修改个人密码")
     public JsonResult updateObject(String oldpwd, String newpwd) {
-        if(StringUtils.isEmpty(oldpwd) || StringUtils.isEmpty(newpwd)){
-            return new JsonResult(new Throwable("数据不合法"));
-        }
+        String language=session.getAttribute("language").toString().substring(0,2);
         SysUser user = sysUserMapper.selectById(ShiroUtils.getPrincipal().getId());
 
         SimpleHash oldM5pwd = new SimpleHash("MD5",oldpwd,user.getSalt());
         SimpleHash newM5pwd = new SimpleHash("MD5",newpwd,user.getSalt());
-        if(oldM5pwd.toHex().equals(user.getPassword())){
-            if(oldM5pwd.toHex().equals(newM5pwd.toHex())) return new JsonResult(new Throwable("新密码请勿与原密码相同"));
-            String newSalt = UUID.randomUUID().toString();
-            user.setSalt(newSalt);
-            newM5pwd = new SimpleHash("MD5",newpwd,newSalt);
-            user.setModifiedTime(new Date());
-            user.setPassword(newM5pwd.toHex());
-        }else {
-            return new JsonResult(new Throwable("原密码错误"));
+        if("zh".equals(language)){
+            /*if(StringUtils.isEmpty(oldpwd) || StringUtils.isEmpty(newpwd)){
+                return new JsonResult(new Throwable("数据不合法"));
+            }*/
+            if(oldM5pwd.toHex().equals(user.getPassword())){
+                if(oldM5pwd.toHex().equals(newM5pwd.toHex())) return new JsonResult(new Throwable("新密码请勿与原密码相同！"));
+                String newSalt = UUID.randomUUID().toString();
+                user.setSalt(newSalt);
+                newM5pwd = new SimpleHash("MD5",newpwd,newSalt);
+                user.setModifiedTime(new Date());
+                user.setPassword(newM5pwd.toHex());
+            }else {
+                return new JsonResult(new Throwable("原密码错误"));
+            }
+            if(sysUserMapper.updateById(user)==1) return new JsonResult("修改成功");
+            return new JsonResult(new Throwable("修改失败"));
+        }else{//西班牙语
+           /* if(StringUtils.isEmpty(oldpwd) || StringUtils.isEmpty(newpwd)){
+                return new JsonResult(new Throwable("数据不合法es"));
+            }
+            SysUser user = sysUserMapper.selectById(ShiroUtils.getPrincipal().getId());
+
+            SimpleHash oldM5pwd = new SimpleHash("MD5",oldpwd,user.getSalt());
+            SimpleHash newM5pwd = new SimpleHash("MD5",newpwd,user.getSalt());*/
+            if(oldM5pwd.toHex().equals(user.getPassword())){
+                if(oldM5pwd.toHex().equals(newM5pwd.toHex())) return new JsonResult(new Throwable("es新密码请勿与原密码相同"));
+                String newSalt = UUID.randomUUID().toString();
+                user.setSalt(newSalt);
+                newM5pwd = new SimpleHash("MD5",newpwd,newSalt);
+                user.setModifiedTime(new Date());
+                user.setPassword(newM5pwd.toHex());
+            }else {
+                return new JsonResult(new Throwable("es原密码错误"));
+            }
+            if(sysUserMapper.updateById(user)==1) return new JsonResult("es修改成功");
+            return new JsonResult(new Throwable("es修改失败"));
         }
-        if(sysUserMapper.updateById(user)==1) return new JsonResult("修改成功");
-        return new JsonResult(new Throwable("修改失败"));
+
     }
 
     @Override
@@ -88,26 +115,52 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @RequiredLog(operation = "添加系统用户")
     public JsonResult addUser(SysUser user) {
-        if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空"));
-        if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空"));
-        if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
+        String language=session.getAttribute("language").toString().substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空es"));
+            if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空es"));
+            if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空es"));
 
-        SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname().trim());
-        if(oldUser != null) return new JsonResult(new Throwable("系统用户已存在，请更改登录名"));
-        String salt = UUID.randomUUID().toString();
-        String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
-        user.setSalt(salt);
-        user.setPassword(password);
-        user.setName(user.getName().trim());
-        user.setNickname(user.getNickname().trim());
-        sysUserMapper.insert(user);
-        return new JsonResult("添加成功");
+            SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname().trim());
+            if(oldUser != null) return new JsonResult(new Throwable("系统用户已存在，请更改登录名es"));
+            String salt = UUID.randomUUID().toString();
+            String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
+            user.setSalt(salt);
+            user.setPassword(password);
+            user.setName(user.getName().trim());
+            user.setNickname(user.getNickname().trim());
+            sysUserMapper.insert(user);
+            return new JsonResult("添加成功");
+        }else{
+            if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空"));
+            if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空"));
+            if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
+
+            SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname().trim());
+            if(oldUser != null) return new JsonResult(new Throwable("系统用户已存在，请更改登录名"));
+            String salt = UUID.randomUUID().toString();
+            String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
+            user.setSalt(salt);
+            user.setPassword(password);
+            user.setName(user.getName().trim());
+            user.setNickname(user.getNickname().trim());
+            sysUserMapper.insert(user);
+            return new JsonResult("添加成功");
+        }
+
     }
 
     @Override
     @RequiredLog(operation = "根据用户ID获取系统用户")
     public JsonResult getUser(Integer id) {
-        if(id == null || id== 0) return new JsonResult(new Throwable("用户不存在"));
+        String language=session.getAttribute("language").toString().substring(0,2);
+        if(id == null || id== 0){
+            if("zh".equals(language)) {
+                return new JsonResult(new Throwable("用户不存在"));
+            }else{
+                return new JsonResult(new Throwable("用户不存在es"));
+                }
+        }
         SysUser user = sysUserMapper.selectById(id);
         user.setPassword("");
         user.setSalt("");
@@ -117,18 +170,34 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @RequiredLog(operation = "修改系统用户信息")
     public JsonResult updateUser(SysUser user) {
-        if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空"));
-        if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空"));
-        if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
-        SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname());
-        if(oldUser != null && user.getId() != oldUser.getId()) return new JsonResult(new Throwable("修改后的用户名已存在"));
-        user.setModifiedTime(new Date());
-        user.setName(user.getName().trim());
-        user.setNickname(user.getNickname().trim());
-        if(sysUserMapper.updateById(user)==1){
-            return new JsonResult("修改成功");
+        String language=session.getAttribute("language").toString().substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空"));
+            if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空"));
+            if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空"));
+            SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname());
+            if(oldUser != null && user.getId() != oldUser.getId()) return new JsonResult(new Throwable("修改后的用户名已存在"));
+            user.setModifiedTime(new Date());
+            user.setName(user.getName().trim());
+            user.setNickname(user.getNickname().trim());
+            if(sysUserMapper.updateById(user)==1){
+                return new JsonResult("修改成功");
+            }
+            return new JsonResult(new Throwable("修改失败"));
+        }else{//西班牙语
+            if(StringUtils.isEmpty(user.getNickname().trim())) return new JsonResult(new Throwable("登录名不能为空es"));
+            if(StringUtils.isEmpty(user.getName().trim())) return new JsonResult(new Throwable("真实姓名不能为空es"));
+            if(user.getRoleId()==null || user.getRoleId() == 0) return new JsonResult(new Throwable("权限类型不能为空es"));
+            SysUser oldUser = sysUserMapper.findUserByNickname(user.getNickname());
+            if(oldUser != null && user.getId() != oldUser.getId()) return new JsonResult(new Throwable("修改后的用户名已存在es"));
+            user.setModifiedTime(new Date());
+            user.setName(user.getName().trim());
+            user.setNickname(user.getNickname().trim());
+            if(sysUserMapper.updateById(user)==1){
+                return new JsonResult("修改成功es");
+            }
+            return new JsonResult(new Throwable("修改失败es"));
         }
-        return new JsonResult(new Throwable("修改失败"));
     }
 
 /*    @Override
@@ -145,38 +214,67 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @RequiredLog(operation = "重置密码")
     public JsonResult resetPassword(Integer id) {
+        String language=session.getAttribute("language").toString().substring(0,2);
         SysUser user = sysUserMapper.selectById(id);
         String salt = UUID.randomUUID().toString();
         String password = new SimpleHash("MD5","c92bf378km",salt).toHex();
         user.setSalt(salt);
         user.setPassword(password);
         user.setModifiedTime(new Date());
-        if(sysUserMapper.updateById(user)==1){
-            return new JsonResult("重置成功");
+        if("zh".equals(language)){
+            if(sysUserMapper.updateById(user)==1){
+                return new JsonResult("重置成功");
+            }
+            return new JsonResult(new Throwable("重置失败"));
+        }else{
+            if(sysUserMapper.updateById(user)==1){
+                return new JsonResult("重置成功es");
+            }
+            return new JsonResult(new Throwable("重置失败es"));
         }
-        return new JsonResult(new Throwable("重置失败"));
     }
 
     @Override
     @RequiredLog(operation = "更改用户锁定状态")
     public JsonResult resetStatus(Integer id) {
         SysUser user = sysUserMapper.selectById(id);
-        if(user.getRoleId() == 1) return new JsonResult(new Throwable("禁止锁定超级管理员"));
-        Map<String,Object> map = new HashMap<>();
-        String message = null;
-        if(user.getValid() == null || user.getValid() == 0){
-            user.setValid(1);
-            message = "解锁成功";
-            map.put("message",message);
-            map.put("valid",1);
+        String language=session.getAttribute("language").toString().substring(0,2);
+        if("zh".equals(language)){
+            if(user.getRoleId() == 1) return new JsonResult(new Throwable("禁止锁定超级管理员"));
+            Map<String,Object> map = new HashMap<>();
+            String message = null;
+            if(user.getValid() == null || user.getValid() == 0){
+                user.setValid(1);
+                message = "解锁成功";
+                map.put("message",message);
+                map.put("valid",1);
+            }else{
+                user.setValid(0);
+                message = "锁定成功";
+                map.put("message",message);
+                map.put("valid",0);
+            }
+            user.setModifiedTime(new Date());
+            if(sysUserMapper.updateById(user)==1) return new JsonResult(map);
+            return new JsonResult(new Throwable("操作失败"));
         }else{
-            user.setValid(0);
-            message = "锁定成功";
-            map.put("message",message);
-            map.put("valid",0);
+            if(user.getRoleId() == 1) return new JsonResult(new Throwable("禁止锁定超级管理员es"));
+            Map<String,Object> map = new HashMap<>();
+            String message = null;
+            if(user.getValid() == null || user.getValid() == 0){
+                user.setValid(1);
+                message = "解锁成功es";
+                map.put("message",message);
+                map.put("valid",1);
+            }else{
+                user.setValid(0);
+                message = "锁定成功es";
+                map.put("message",message);
+                map.put("valid",0);
+            }
+            user.setModifiedTime(new Date());
+            if(sysUserMapper.updateById(user)==1) return new JsonResult(map);
+            return new JsonResult(new Throwable("操作失败es"));
         }
-        user.setModifiedTime(new Date());
-        if(sysUserMapper.updateById(user)==1) return new JsonResult(map);
-        return new JsonResult(new Throwable("操作失败"));
     }
 }

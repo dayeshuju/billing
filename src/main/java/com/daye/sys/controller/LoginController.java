@@ -8,13 +8,15 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/")
 public class LoginController {
 
     @RequestMapping("doLogin")
     @RequiredLog(operation="登录")
-    public JsonResult doLogin(String nickname, String password){
+    public JsonResult doLogin(String nickname, String password, HttpServletRequest request){
         //1.获取Subject对象
         Subject subject= SecurityUtils.getSubject();
         //2.通过Subject提交用户信息,交给shiro框架进行认证操作
@@ -25,6 +27,13 @@ public class LoginController {
                         password);//凭证信息
         //2.2对用户信息进行身份认证
         subject.login(token);
-        return new JsonResult("登录成功");
+        String lang = request.getSession().getAttribute("language").toString();
+        String json = "";
+        if("zh".equals(lang)){
+            json = "登录成功";
+        }else{
+            json= "Acceso concedido";
+        }
+        return new JsonResult(json);
     }
 }

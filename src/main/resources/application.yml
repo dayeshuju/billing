@@ -6,9 +6,9 @@ spring:
     basename: i18n/lang
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: daye
-    password: daye2019
-    url: jdbc:mysql://www.tdd-nas.cn:3306/daye_billing?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.0.30:3306/daye_billing?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
     dbcp2:                                          # 进行数据库连接池的配置
       min-idle: 5                                   # 数据库连接池的最小维持连接数
       initial-size: 5                               # 初始化提供的连接数

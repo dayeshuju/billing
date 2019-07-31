@@ -1,7 +1,13 @@
 /*引用theme.js*/
 $(document).ready(function () {
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
     getAuthoritylist();
-    finduser();
+    if("zh" == lang){
+        finduser();
+    }else{
+        finduserEs();
+    }
 });
 
 function finduser() {
@@ -65,8 +71,70 @@ function finduser() {
     var oSettings = oTable.fnSettings();
     oSettings.sAjaxSource = new_filter_url;
     oTable.fnDraw();
-}
+};
+//西班牙语
+function finduserEs() {
+    /*定义列id和名称*/
+    var aoColumns = [{
+        mDataProp: "id",
+        sTitle: "ID"
+    }, {
+        mDataProp: "nickname",
+        sTitle: "Iniciar sesión "
+    }, {
+        mDataProp: "name",
+        sTitle: "Nombre real "
+    }, {
+        mDataProp: "mobile",
+        sTitle: " Número de móvil"
+    }, {
+        mDataProp: "officePhone",
+        sTitle: "Telefono de oficina"
+    }, {
+        mDataProp: "email",
+        sTitle: "Email"
+    }, {
+        mDataProp: "note",
+        sTitle: "Tipo de permiso"
+    }, {
+        mDataProp: "id",
+        sTitle: "Operar "
+    }
 
+    ];
+
+    /*给操作列设置填充 */
+    var aoColumnDefs = [{
+        "bSortable": false,
+        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7]
+    }, {
+        "sDefaultContent": '',
+        "aTargets": ['_all']
+    }, {
+        "aTargets": [7],
+        "mRender": function (data, type, row) {
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>Modificar</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href=" + (row.valid == 1 ? "#modal-lockuser" : "#modal-unlockuser") + " role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid == 1 ? "Bloquear" : "Desbloquear") + "</span></a></div>";
+        }
+    }, {
+        "aTargets": [0],
+        "mRender": function (data, type, full) {
+
+            return "<span class='label label-number'>" + data + "</span>";
+        }
+    }
+
+
+    ];
+
+    var new_filter_url = "sysUsers/getUserList"; //表#plist数据获取url
+
+    var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
+
+    oTable.columnFilter();
+    var oSettings = oTable.fnSettings();
+    oSettings.sAjaxSource = new_filter_url;
+    oTable.fnDraw();
+}
 //var oSettings = oTable.fnSettings();
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();
@@ -122,14 +190,14 @@ function lockuser() {
         if (result.state == 1) {
             if (result.data.valid == 1) {
                 $('#modal-unlockuser').modal('hide');
-                $("#clock" + id).html("锁定");
+                $("#clock" + id).html("Bloquear");
                 $("#aclock" + id).attr("href", "#modal-lockuser");
                 layer.msg(result.data.message, {
                     icon: 1
                 });
             } else if (result.data.valid == 0) {
                 $('#modal-lockuser').modal('hide');
-                $("#clock" + id).html("解锁");
+                $("#clock" + id).html("Desbloquear");
                 $("#aclock" + id).attr("href", "#modal-unlockuser");
                 layer.msg(result.data.message, {
                     icon: 1
@@ -182,15 +250,23 @@ function lockuser() {
 
 /*添加、修改保存按钮onclick*/
 function adduser() {
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
     var name = $("#name").val();
     var email = $("#email").val();
     var patt = /^(?=.*\d.*\b)/;
     var emailPatt = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if(email == ""||emailPatt.test(email)){
         if(patt.test(name)){
-            layer.msg("真实姓名不能包含数字！", {
-                icon: 2
-            })
+            if("zh"==lang){
+                layer.msg("真实姓名不能包含数字！", {
+                    icon: 2
+                })
+            }else{//西班牙语
+                layer.msg("真实姓名不能包含数字！", {
+                    icon: 2
+                })
+            }
         }else{
             var id = $("#id").val();
             var nickname = $("#nickname").val();
@@ -233,9 +309,16 @@ function adduser() {
             })
         }
     }else {
-        layer.msg("邮箱格式不正确！", {
-            icon: 2
-        })
+        if("zh"==lang){
+            layer.msg("邮箱格式不正确！", {
+                icon: 2
+            })
+        }else{//西班牙语
+            layer.msg("邮箱格式不正确！", {
+                icon: 2
+            })
+        }
+
     }
 
 }

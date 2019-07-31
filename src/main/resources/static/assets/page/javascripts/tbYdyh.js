@@ -1,7 +1,13 @@
 /*引用theme.js*/
 $(document).ready(function () {
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
     getYhlxlist();
-    finduser();
+    if(lang == 'zh'){
+        finduser();
+    }else{
+        finduserEs();
+    }
 });
 
 function finduser() {
@@ -63,7 +69,66 @@ function finduser() {
     oSettings.sAjaxSource = new_filter_url;
     oTable.fnDraw();
 }
+//西班牙语
+function finduserEs() {
+    /*定义列id和名称*/
+    var aoColumns = [{
+        mDataProp: "id",
+        sTitle: "ID"
+    }, {
+        mDataProp: "name",
+        sTitle: "Nombre y apellido"
+    }, {
+        mDataProp: "idCode",
+        sTitle: "DNI No"
+    }, {
+        mDataProp: "address",
+        sTitle: "Direccion de usuario"
+    }, {
+        mDataProp: "phoneNum",
+        sTitle: "Contacto"
+    }, {
+        mDataProp: "note",
+        sTitle: "Tipo de usuario"
+    }, {
+        mDataProp: "id",
+        sTitle: "Operar"
+    }
 
+    ];
+
+    /*给操作列设置填充 */
+    var aoColumnDefs = [{
+        "bSortable": false,
+        "aTargets": [0, 1, 2, 3, 4, 5, 6]
+    }, {
+        "sDefaultContent": '',
+        "aTargets": ['_all']
+    }, {
+        "aTargets": [6],
+        "mRender": function (data, type, row) {
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>Modificar</a></div>";
+        }
+    }, {
+        "aTargets": [0],
+        "mRender": function (data, type, full) {
+
+            return "<span class='label label-number'>" + data + "</span>";
+        }
+    }
+
+
+    ];
+
+    var new_filter_url = "tbYdyh/getYdyhList"; //表#plist数据获取url
+
+    var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
+
+    oTable.columnFilter();
+    var oSettings = oTable.fnSettings();
+    oSettings.sAjaxSource = new_filter_url;
+    oTable.fnDraw();
+}
 //var oSettings = oTable.fnSettings();
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();
@@ -166,9 +231,17 @@ function adduser() {
             }
         })
     }else{
-        layer.msg("姓名不能包含数字！", {
-            icon: 2
-        })
+        var lang = navigator.language||navigator.userLanguage;
+        lang = lang.substr(0, 2);
+        if("zh"==lang){
+            layer.msg("姓名不能包含数字！", {
+                icon: 2
+            })
+        }else {//西班牙语
+            layer.msg("姓名不能包含数字！", {
+                icon: 2
+            })
+        }
     }
 
 }

@@ -31,6 +31,15 @@ function doLoadSysMenus() {
 }
 
 $(document).ready(function () {
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
+    if(lang == 'zh'){
+        permissionList();
+    }else{
+        permissionListEs();
+    }
+});
+function permissionList() {
     /*定义列id和名称*/
     var aoColumns = [{
         mDataProp: "id",
@@ -76,7 +85,55 @@ $(document).ready(function () {
     oTable.columnFilter();
 
 
-});
+};
+//西班牙语
+function permissionListEs() {
+    /*定义列id和名称*/
+    var aoColumns = [{
+        mDataProp: "id",
+        sTitle: "ID"
+    }, {
+        mDataProp: "name",
+        sTitle: "Tipo de permiso"
+    }, {
+        mDataProp: "id",
+        sTitle: "Operar"
+    }
+
+    ];
+
+    /*给操作列设置填充 */
+    var aoColumnDefs = [{
+        "bSortable": false,
+        "aTargets": [0, 1, 2]
+    }, {
+        "sDefaultContent": '',
+        "aTargets": ['_all']
+    }, {
+        "aTargets": [2],
+        "mRender": function (data, type, row) {
+
+            return " <div class='text-left'> <a class='btn btn-primary btn-mini' data-toggle='modal' href='#modal-addauthority' role='button' style='background-color:#00BB00' onclick='setauth(\"" + row.id + "\")'><i class='icon-wrench'></i> Tipo de autorización</a></div>";
+        }
+    }, {
+        "aTargets": [0],
+        "mRender": function (data, type, full) {
+
+            return "<span class='label label-number'>" + data + "</span>";
+        }
+    }
+
+
+    ];
+
+    var new_filter_url = "sysRoles/getAuthoritylist"; //表#plist数据获取url
+
+    var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
+
+    oTable.columnFilter();
+
+
+};
 //var oSettings = oTable.fnSettings();
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();
@@ -186,7 +243,7 @@ function initform() {
     $("#menuTree").html("");
 }
 
-function updateauthority() {
+/*function updateauthority() {
     var autName = document.getElementById("autName").value;
     var aaf = getCheckboxvalue("aaf");
     var abf = getCheckboxvalue("abf");
@@ -234,7 +291,7 @@ function updateauthority() {
     });
 
 
-}
+}*/
 
 function setauth(roleId) {
     initform();

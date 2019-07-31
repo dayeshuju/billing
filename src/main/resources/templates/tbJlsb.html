@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <style>
     #userList_length {
         display: none;
@@ -19,27 +20,27 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    添加/修改计量设备
+                    [[#{jlsb.addOrEditMeter}]]
                 </h3>
             </div>
             <div class="modal-body">
                 <form class="form" style="margin-bottom: 0;">
                     <div class="text-center">
-                        <h2>计量设备信息</h2>
+                        <h2 th:text="#{jlsb.meterInfo}">计量设备信息</h2>
                         <br/>
                     </div>
                     <div class="box-content" style="display: inline;">
                         <table class="kv-table">
                             <tbody>
                             <tr>
-                                <td class="kv-label">表号
+                                <td class="kv-label">[[#{meterNumber}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <input class="span11" id="meterId" type="text" autocomplete="off">
                                     <font id="meterId_alert" color="red" style="display: none;">必填</font>
                                 </td>
-                                <td class="kv-label">表箱号
+                                <td class="kv-label">[[#{jlsb.meterBoxNumber}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
@@ -48,12 +49,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">用户身份证号
+                                <td class="kv-label">[[#{jlsb.userIdNumber}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <input class="span11" id="idCode" placeholder="" type="text" autocomplete="off" style="width:72%;">
-                                    <button class="btn btn-success" data-toggle="modal" onclick="selectUser()"><i class="icon-search"></i> 选择用户</button>
+                                    <button class="btn btn-success" data-toggle="modal" onclick="selectUser()"><i class="icon-search"></i>[[#{jlsb.selectingUsers}]]</button>
                                 </td>
                                 <td class="kv-label"></td>
                                 <td class="kv-content">
@@ -73,8 +74,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
-                <button class="btn btn-primary" onclick="addjlsb()"><i class="icon-save"></i> 保 存</button>
+                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>[[#{cancel}]]</button>
+                <button class="btn btn-primary" onclick="addjlsb()"><i class="icon-save"></i> [[#{save}]]</button>
             </div>
         </div>
         <!--modal-addjlsb end-->
@@ -109,7 +110,7 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    选择用户
+                    [[#{jlsb.selectingUsers}]]
                 </h3>
             </div>
             <div class="modal-body" style="height: 584px">
@@ -119,24 +120,23 @@
                                style='margin-bottom:0;' id="userList">
                             <thead>
                                 <tr>
-                                    <th>id</th>
-                                    <th>姓名</th>
-                                    <th>身份证号</th>
-                                    <th>用户地址</th>
-                                    <th>联系方式</th>
-                                    <th>用户类型</th>
-                                    <th>操作</th>
+                                    <th>ID</th>
+                                    <th th:text="#{username}">姓名</th>
+                                    <th th:text="#{IDCardNumber}">身份证号</th>
+                                    <th th:text="#{userAddress}">用户地址</th>
+                                    <th th:text="#{ydyh.contactInfo}">联系方式</th>
+                                    <th th:text="#{ydyh.userType}">用户类型</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>姓名</th>
-                                    <th>身份证号</th>
-                                    <th>地址</th>
-                                    <th>联系方式</th>
-                                    <th>用户类型</th>
-                                    <th>操作</th>
+                                    <th th:text="#{username}">姓名</th>
+                                    <th th:text="#{IDCardNumber}">身份证号</th>
+                                    <th th:text="#{userAddress}">用户地址</th>
+                                    <th th:text="#{ydyh.contactInfo}">联系方式</th>
+                                    <th th:text="#{ydyh.userType}">用户类型</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -151,14 +151,14 @@
         </div>
         <!--选择用户 结束-->
 
-        <!--用户列表部分 开始-->
+        <!--部分 开始-->
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
-                    <div class='title'>计量设备列表</div>
-                    <div class='pull-right' style="margin-top:-80px;width:140px;height:30px;margin-right:13px;">
+                    <div class='title' th:text="#{jlsb.meterList}">计量设备列表</div>
+                    <div class='pull-right' style="margin-top:-80px;width:auto;height:30px;margin-right:13px;">
                         <a id="addjlsb" class="btn btn-default" data-toggle="modal" href="#modal-addjlsb" role="button"
-                           style="background-color:#00aceb;color:white;width:100%;height:100%;padding-top:10px;font-size:16px;" onclick="initform()"><i class="icon-plus"></i> 添加新计量设备</a>
+                           style="background-color:#00aceb;color:white;width:100%;height:100%;padding-top:10px;font-size:16px;" onclick="initform()"><i class="icon-plus"></i> [[#{jlsb.addMeter}]]</a>
                     </div>
                 </div>
                 <div class='box-content box-no-padding'>
@@ -169,23 +169,23 @@
                                 <thead>
                                 <tr>
                                     <th>
-                                        id
+                                        ID
                                     </th>
-                                    <th>表号</th>
-                                    <th>表箱号</th>
-                                    <th>用户姓名</th>
-                                    <th>用户身份证号</th>
-                                    <th>操作</th>
+                                    <th th:text="#{meterNumber}">表号</th>
+                                    <th th:text="#{jlsb.meterBoxNumber}">表箱号</th>
+                                    <th th:text="#{ydyh.userName}">用户姓名</th>
+                                    <th th:text="#{ydyh.userIdNumber}">用户身份证号</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>表号</th>
-                                    <th>表箱号</th>
-                                    <th>用户姓名</th>
-                                    <th>用户身份证号</th>
-                                    <th>操作</th>
+                                    <th th:text="#{meterNumber}">表号</th>
+                                    <th th:text="#{jlsb.meterBoxNumber}">表箱号</th>
+                                    <th th:text="#{ydyh.userName}">用户姓名</th>
+                                    <th th:text="#{ydyh.userIdNumber}">用户身份证号</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </tfoot>
                             </table>

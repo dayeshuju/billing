@@ -167,7 +167,7 @@
             bFilter: trueorfalse,
             oLanguage: {
                 "sLengthMenu": "_MENU_ 条/页",
-                "sSearch": "搜索:",
+                "sSearch": "search:",
                 "sZeroRecords": "没有检索到数据",
                 "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
                 "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
@@ -244,7 +244,7 @@
             bFilter: trueorfalse,
             oLanguage: {
                 sLengthMenu: "_MENU_ 条/页",
-                sSearch: "搜索:",
+                sSearch: "ss搜索:",
                 "sZeroRecords": "没有检索到数据",
                 "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
                 "sInfoFiltered": "(筛选自 _MAX_ 条数据)",

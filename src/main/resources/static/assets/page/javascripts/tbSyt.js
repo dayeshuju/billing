@@ -1,6 +1,12 @@
 /*引用theme.js*/
 $(document).ready(function () {
-    findJfjl();
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
+    if(lang == 'zh'){
+        findJfjl();
+    }else{
+        findJfjlEs();
+    }
     // $('#plist').DataTable( {
     //     initComplete: function () {
     //         var api = this.api();
@@ -64,7 +70,7 @@ function findJfjl() {
         "mRender": function (data, type, row) {
             var str = new Array();
             str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a> ");
-            if(row.receiptStatus == 0){
+            if(row.receiptStatus == 1){
                 str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a>");
             }
             return str.join("");
@@ -81,7 +87,64 @@ function findJfjl() {
     oSettings.sAjaxSource = new_filter_url;
     oTable.fnDraw();
 }
+//西班牙语
+function findJfjlEs() {
+    /*定义列id和名称*/
+    var aoColumns = [{
+        mDataProp: "sort",
+        sTile: "Serie",
+        sWidth: "50px"
+    }, {
+        mDataProp: "name",
+        sTitle: "Nombre y apellido"
+    }, {
+        mDataProp: "idCode",
+        sTitle: "DNI No"
+    }, {
+        mDataProp: "meterId",
+        sTitle: "Contador No"
+    }, {
+        mDataProp: "amountDue",
+        sTitle: "luz a pagar"
+    }, {
+        mDataProp: "regisTime",
+        sTitle: "Tiempo de lectura del contador "
+    }, {
+        mDataProp: "id",
+        sTitle: "Operar "
+    }
 
+    ];
+
+    /*给操作列设置填充 */
+    var aoColumnDefs = [{
+        "bSortable": false,
+        "aTargets": [0, 1, 2, 3, 4, 5, 6]
+    }, {
+        "sDefaultContent": '',
+        "aTargets": ['_all']
+    }, {
+        "aTargets": [6],
+        "mRender": function (data, type, row) {
+            var str = new Array();
+            str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>Cobro</a> ");
+            if(row.receiptStatus == 1){
+                str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>Imprimir recibo</a>");
+            }
+            return str.join("");
+        }
+    }
+    ];
+
+    var new_filter_url = "syt/getJfyhList"; //表#plist数据获取url
+
+    var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
+
+    oTable.columnFilter();
+    var oSettings = oTable.fnSettings();
+    oSettings.sAjaxSource = new_filter_url;
+    oTable.fnDraw();
+}
 //var oSettings = oTable.fnSettings();
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();

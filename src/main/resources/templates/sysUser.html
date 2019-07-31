@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <script src='assets/page/javascripts/sysUser.js' type='text/javascript'></script>
 
 <input type="text" name="id" id="id" style="display: none"/>
@@ -11,50 +12,50 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    添加/修改用户
+                    [[#{sys.addOrEditUser}]]
                 </h3>
             </div>
             <div class="modal-body">
                 <form class="form" style="margin-bottom: 0;">
                     <div class="text-center">
-                        <h2>用户信息</h2>
+                        <h2 th:text="#{ydyh.userInfo}">用户信息</h2>
                         <br/>
                     </div>
                     <div class="box-content" style="display: inline;">
                         <table class="kv-table">
                             <tbody>
                             <tr>
-                                <td class="kv-label">登录名
+                                <td class="kv-label">[[#{sys.nickname}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <input class="span11" id="nickname" type="text" autocomplete="off">
-                                    <font id="login_name_alert" color="red" style="display: none;">必填</font>
+                                    <font id="login_name_alert" color="red" style="display: none;">[[#{mustFill}]]</font>
                                 </td>
-                                <td class="kv-label">真实姓名
+                                <td class="kv-label">[[#{sys.trueName}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <input class="span11" id="name" placeholder="" type="text" autocomplete="off">
-                                    <font id="name_alert" color="red" style="display: none;">必填</font>
+                                    <font id="name_alert" color="red" style="display: none;">[[#{mustFill}]]</font>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">手机号码</td>
+                                <td class="kv-label" th:text="#{sys.phoneNumber}">手机号码</td>
                                 <td class="kv-content">
                                     <input class="span11" id="mobile" placeholder="" type="text" autocomplete="off">
                                 </td>
-                                <td class="kv-label">办公电话</td>
+                                <td class="kv-label" th:text="#{sys.officePhoneNumber}">办公电话</td>
                                 <td class="kv-content">
                                     <input class="span11" id="officePhone" placeholder="" type="text" autocomplete="off">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">邮箱</td>
+                                <td class="kv-label" th:text="#{sys.email}">邮箱</td>
                                 <td class="kv-content">
                                     <input class="span11" id="email" placeholder="" type="text" autocomplete="off">
                                 </td>
-                                <td class="kv-label">权限类型
+                                <td class="kv-label">[[#{per.permissionType}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
@@ -75,13 +76,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
-                <button class="btn btn-primary" onclick="adduser()"><i class="icon-save"></i> 保 存</button>
+                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>[[#{cancel}]]</button>
+                <button class="btn btn-primary" onclick="adduser()"><i class="icon-save"></i>[[#{save}]]</button>
             </div>
         </div>
         <!--modal-adduser end-->
         <!--modal-deleteUser begin-->
-        <div class="modal hide fade in" id="modal-deleteuser" role="dialog" tabindex="-1" aria-hidden="false"
+        <!--<div class="modal hide fade in" id="modal-deleteuser" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -102,7 +103,7 @@
                 <button class="btn" data-dismiss="modal">取消</button>
                 <button class="btn btn-primary" id="deleterow">确认删除</button>
             </div>
-        </div>
+        </div>-->
         <!--modal-deleteUser end-->
         <!--modal-lockuser & unlockuser begin-->
         <div class="modal hide fade in" id="modal-lockuser" role="dialog" tabindex="-1" aria-hidden="false"
@@ -111,19 +112,19 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-minus-sign"></div>
-                    锁定用户
+                    [[#{sys.lockUser}]]
                 </h3>
             </div>
             <div class="modal-body">
                 <h4 style="color: red;">
                     <div class="icon-exclamation-sign"></div>
-                    注意：用户锁定后将不能使用系统，请谨慎操作！
+                    [[#{sys.lockWarning1}]]
                 </h4>
-                <p>请确认是否继续锁定。</p>
+                <p th:text="#{sys.lockWarning2}">请确认是否继续锁定。</p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal">取消</button>
-                <button class="btn btn-primary" onclick="lockuser()">确认锁定</button>
+                <button class="btn" data-dismiss="modal">[[#{cancel}]]</button>
+                <button class="btn btn-primary" onclick="lockuser()" th:text="#{sys.confirmLocking}">确认锁定</button>
             </div>
         </div>
         <div class="modal hide fade in" id="modal-unlockuser" role="dialog" tabindex="-1" aria-hidden="false"
@@ -132,19 +133,19 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-minus-sign"></div>
-                    解锁用户
+                    [[#{sys.unlockUer}]]
                 </h3>
             </div>
             <div class="modal-body">
                 <h4 style="color: red;">
                     <div class="icon-exclamation-sign"></div>
-                    注意：用户解锁后可继续使用系统，请谨慎操作！
+                    [[#{sys.unlockWarning1}]]
                 </h4>
-                <p>请确认是否继续解锁</p>
+                <p th:text="#{sys.unlockWarning2}">请确认是否继续解锁</p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal">取消</button>
-                <button class="btn btn-primary" onclick="lockuser()">确认解锁</button>
+                <button class="btn" data-dismiss="modal">[[#{cancel}]]</button>
+                <button class="btn btn-primary" onclick="lockuser()">[[#{sys.confirmUnlocking}]]</button>
             </div>
         </div>
         <!--modal-lockuser & unlockuser end-->
@@ -155,20 +156,20 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-minus-sign"></div>
-                    重置密码
+                    [[#{sys.resetPassword}]]
                 </h3>
             </div>
             <div class="modal-body">
                 <h4 style="color: red;">
                     <div class="icon-exclamation-sign"></div>
-                    注意：用户密码将被重置，请谨慎操作！
+                    [[#{sys.resetWarning1}]]
                 </h4>
-                <p>请确认是否继续重置密码。</p>
-                <p>用户密码将被重置为 <b style="color: red;font-size: 1.5em;">c92bf378km</b>，请及时通知用户。</p>
+                <p th:text="#{sys.resetWarning2}">请确认是否继续重置密码。</p>
+                <p>[[#{sys.reseted1}]]<b style="color: red;font-size: 1.5em;">c92bf378km</b>,[[#{sys.reseted2}]]</p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal">取消</button>
-                <button class="btn btn-primary" onclick="resetPassword()">确认重置</button>
+                <button class="btn" data-dismiss="modal">[[#{cancel}]]</button>
+                <button class="btn btn-primary" onclick="resetPassword()">[[#{sys.confirmReset}]]</button>
             </div>
         </div>
         <!--modal-reset password end-->
@@ -176,11 +177,11 @@
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
-                    <div class='title'>用户列表</div>
-                    <div class='pull-right' style="margin-top:-80px;width:100px;height:30px;margin-right:13px;">
+                    <div class='title' th:text="#{sys.userList}">用户列表</div>
+                    <div class='pull-right' style="margin-top:-80px;width:auto;height:30px;margin-right:13px;">
                         <a id="adduser" class="btn btn-default" data-toggle="modal" href="#modal-adduser" role="button"
                            style="background-color:#00aceb;color:white;width:100%;height:100%;padding-top:10px;font-size:16px;" onclick="initform()">
-                            <i class="icon-plus"></i> 添加新用户
+                            <i class="icon-plus"></i> [[#{sys.addUser}]]
                         </a>
                     </div>
                 </div>
@@ -192,27 +193,27 @@
                                 <thead>
                                 <tr>
                                     <th>
-                                        id
+                                        ID
                                     </th>
-                                    <th>登录账号</th>
-                                    <th>真实姓名</th>
-                                    <th>手机号码</th>
-                                    <th>办工电话</th>
-                                    <th>email</th>
-                                    <th>权限类型</th>
-                                    <th>操作</th>
+                                    <th th:text="#{sys.loginAccount}">登录账号</th>
+                                    <th th:text="#{sys.trueName}">真实姓名</th>
+                                    <th th:text="#{sys.phoneNumber}">手机号码</th>
+                                    <th th:text="#{sys.officePhoneNumber}">办工电话</th>
+                                    <th th:text="#{sys.email}">email</th>
+                                    <th th:text="#{per.permissionType}">权限类型</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>登录账号</th>
-                                    <th>真实姓名</th>
-                                    <th>手机号码</th>
-                                    <th>办工电话</th>
-                                    <th>email</th>
-                                    <th>权限类型</th>
-                                    <th>操作</th>
+                                    <th th:text="#{sys.loginAccount}">登录账号</th>
+                                    <th th:text="#{sys.trueName}">真实姓名</th>
+                                    <th th:text="#{sys.phoneNumber}">手机号码</th>
+                                    <th th:text="#{sys.officePhoneNumber}">办工电话</th>
+                                    <th th:text="#{sys.email}">email</th>
+                                    <th th:text="#{per.permissionType}">权限类型</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </tfoot>
                             </table>

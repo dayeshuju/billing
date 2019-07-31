@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
-    <title>赤几巴塔配网计费系统</title>
+    <title>[[#{title}]]</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
 
     <!--[if lt IE 9]>
@@ -105,14 +106,14 @@
                     <i class='icon-reorder'></i>
                 </a>
                 <a class='brand' href='index' style="margin-top: 30px;margin-left: 20px;font-size:30px;">
-                    <span class='hidden-phone'>赤几巴塔配网计费系统</span>
+                    <span class='hidden-phone' th:text="#{title}">赤几巴塔配网计费系统</span>
                 </a>
                 <ul class='nav pull-right'>
                     <li class='dropdown dark user-menu' style="height: 50px;">
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#' style="margin-top: 5px">
                             <img height='23' src='assets/images/avatar.png' width='23'
                                  style="border: 2px solid transparent"/>
-                            <span class='user-name hidden-phone'>Mila Kunis</span>
+                            <span class='user-name hidden-phone'>Mila Kunis</span><span class='hidden-phone' th:text="#{index.hello}"></span>
                             <b class='caret'></b>
                         </a>
                         <ul class='dropdown-menu'>
@@ -120,7 +121,7 @@
                             <li>
                                 <a href='logout'>
                                     <i class='icon-signout'></i>
-                                    登出
+                                    [[#{login.loginOut}]]
                                 </a>
                             </li>
                         </ul>
@@ -148,20 +149,20 @@
                 <li class='active'>
                     <a style="height: 82px;">
                         <i class='icon-dashboard' style="position: absolute; top: 50%; transform: translateY(-50%)"></i>
-                        <span style="font-size: 18px; position: absolute;left: 19%; top: 50%; transform: translateY(-50%)">功能导航</span>
+                        <span style="font-size: 18px; position: absolute;left: 19%; top: 50%; transform: translateY(-50%)" th:text="#{index.menuList}"></span>
                     </a>
                 </li>
                 <li class='menu hidden' id="jfgn">
                     <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-credit-card' style="margin-top: 20px"></i>
-                        <span style="font-size: 15px;">缴费功能</span>
+                        <span style="font-size: 15px;" th:text="#{index.jfgn}"></span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="tbSyt">
                             <a href='#' id="syt" onclick="bg_color('syt')">
                                 <i class='icon-caret-right'></i>
-                                <span>收银台</span>
+                                <span th:text="#{index.syt}"></span>
                             </a>
                         </li>
                     </ul>
@@ -169,38 +170,38 @@
                 <li class='menu hidden' id="sjgl">
                     <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-info' style="margin-top: 20px"></i>
-                        <span style="font-size: 15px;">数据管理</span>
+                        <span style="font-size: 15px;" th:text="#{index.sjgl}"></span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="tbJfjl">
                             <a href='#' id="jfjlgl" onclick="bg_color('jfjlgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>缴费记录管理</span>
+                                <span th:text="#{index.jfjlgl}"></span>
                             </a>
                         </li>
                         <li class='hidden' id="tbYdyh">
                             <a href='#' id="ydyhgl" onclick="bg_color('ydyhgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>用电用户管理</span>
+                                <span th:text="#{index.ydyhgl}"></span>
                             </a>
                         </li>
                         <li class='hidden' id="tbCbjl">
                             <a href='#' id="cbjlgl" onclick="bg_color('cbjlgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>抄表记录管理</span>
+                                <span th:text="#{index.cbjlgl}"></span>
                             </a>
                         </li>
                         <li class='hidden' id="tbJlsb">
                             <a href='#' id="jlsbgl" onclick="bg_color('jlsbgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>计量设备管理</span>
+                                <span th:text="#{index.jlsbgl}"></span>
                             </a>
                         </li>
                         <li class='hidden' id="tbSftj">
                             <a href='#' id="sftjgl" onclick="bg_color('sftjgl')">
                             <i class='icon-caret-right'></i>
-                            <span>收费统计管理</span>
+                            <span th:text="#{index.sftjgl}"></span>
                         </a>
                         </li>
                     </ul>
@@ -208,14 +209,14 @@
                 <li class='menu hidden' id="sysUserSelf">
                     <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-user' style="margin-top: 20px"></i>
-                        <span style="font-size: 15px;">个人设置</span>
+                        <span style="font-size: 15px;" th:text="#{index.sysUserSelf}"></span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="changePassword">
                             <a href='#' id="xgmm" onclick="bg_color('xgmm')">
                                 <i class='icon-caret-right'></i>
-                                <span>修改密码</span>
+                                <span th:text="#{index.changePassword}"></span>
                             </a>
                         </li>
                     </ul>
@@ -223,26 +224,26 @@
                 <li class='hidden menu' id="xtgl">
                     <a class='dropdown-collapse' href='#' style="height: 60px" >
                         <i class='icon-wrench' style="margin-top: 20px"></i>
-                        <span style="font-size: 15px;">系统管理</span>
+                        <span style="font-size: 15px;" th:text="#{index.xtgl}"></span>
                         <i class='icon-angle-down angle-down' style="margin-top: 10px"></i>
                     </a>
                     <ul class='nav nav-stacked'>
                         <li class='hidden' id="sysPermission">
                             <a href='#' id="qxgl" onclick="bg_color('qxgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>权限管理</span>
+                                <span th:text="#{index.sysPermission}"></span>
                             </a>
                         </li>
                         <li class='hidden' id="sysUserId">
                             <a href='#' id="xtyhgl" onclick="bg_color('xtyhgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>系统用户管理</span>
+                                <span th:text="#{index.sysUser}"></span>
                             </a>
                         </li>
                         <li class='hidden' id="tbYhlx">
                             <a href='#' id="yhlxgl" onclick="bg_color('yhlxgl')">
                                 <i class='icon-caret-right'></i>
-                                <span>用户类型管理</span>
+                                <span th:text="#{index.yhlxgl}"></span>
                             </a>
                         </li>
                     </ul>
@@ -257,7 +258,7 @@
                     <div class='page-header'>
                         <h1 class='pull-left'>
                             <i class='icon-credit-card'></i>
-                            <span id="lable-top">收银台</span>
+                            <span id="lable-top" th:text="#{index.syt}"></span>
                         </h1>
                         <div class='pull-right'>
                             <div class='btn-group'>
@@ -397,7 +398,7 @@
     function doLoadUser() {
         $.post("sysUsers/doLoadUser", function (result) {
             if (result.state == 1) {
-                $(".user-name").html(result.data.nickname + "，您好！");
+                $(".user-name").html(result.data.nickname + "，");
             }
         })
     }

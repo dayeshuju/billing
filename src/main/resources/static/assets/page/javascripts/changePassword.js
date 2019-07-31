@@ -1,4 +1,6 @@
 function updatepwd() {
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
     var oldpwd = document.getElementById("oldpwd").value;
     var newpwd = document.getElementById("newpwd").value;
     var newpwd2 = document.getElementById("newpwd2").value;
@@ -8,8 +10,11 @@ function updatepwd() {
     var alertstr = "";
     if (flag > 0) {
         document.getElementById("oldpwdalert").style.display = "";
-        
-        alertstr = "原密码不能为空！";
+        if("zh"==lang){
+            alertstr = "原密码不能为空！";
+        }else{//es
+            alertstr = "原密码不能为空！";
+        }
         layer.msg(alertstr, {
             icon: 2
         });
@@ -18,8 +23,11 @@ function updatepwd() {
     flag += saveverify("newpwd", "newpwdalert");
     if (flag > 0) {
         document.getElementById("newpwdalert").style.display = "";
-
-        alertstr = "新密码不能为空！";
+        if("zh"==lang){
+            alertstr = "新密码不能为空！";
+        }else{//es
+            alertstr = "新密码不能为空！";
+        }
         layer.msg(alertstr, {
             icon: 2
         });
@@ -28,7 +36,11 @@ function updatepwd() {
     }
     flag += saveverify("newpwd2", "newpwd2alert");
     if (flag > 0) {
-        alertstr = "请再输入一遍新密码！";
+        if("zh"==lang){
+            alertstr = "请再输入一遍新密码！";
+        }else{//es
+            alertstr = "请再输入一遍新密码！";
+        }
         layer.msg(alertstr, {
             icon: 2
         });
@@ -37,8 +49,11 @@ function updatepwd() {
         return;
     }
     if (newpwd != newpwd2) {
-        
-        alertstr = "两次输入的密码不一致！";
+        if("zh"==lang){
+            alertstr = "两次输入的密码不一致！";
+        }else{//es
+            alertstr = "两次输入的密码不一致！";
+        }
         layer.msg(alertstr, {
             icon: 2
         });
@@ -68,7 +83,11 @@ function updatepwd() {
             }
         },
         error: function (result) {
-            var alertstr = "原密码错误";
+            if("zh"==lang){
+                alertstr = "原密码错误！";
+            }else{//es
+                alertstr = "原密码错误！";
+            }
             layer.msg(alertstr,{
                 icon: 2
             });
@@ -110,7 +129,13 @@ function verifysame(obj, newpwd, tipinput, tipinfo) {
 function saveverify(checkinput, alertinput) {
     var inputv = $("#" + checkinput).val();
     if (inputv.replace(/^ +| +$/g, '') == '') {
-        document.getElementById(alertinput).value = "必填项";
+        var lan = navigator.language||navigator.userLanguage;
+        lan = lan.substr(0, 2);
+        if("zh"==lan){
+            document.getElementById(alertinput).value = "必填";
+        }else{
+            document.getElementById(alertinput).value = "Requerido";
+        }
         return 1;
     } else {
         document.getElementById(alertinput).value = "";

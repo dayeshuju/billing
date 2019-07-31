@@ -1,6 +1,12 @@
 /*引用theme.js*/
 $(document).ready(function () {
-    findyhlx();
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
+    if("zh"==lang){
+        findyhlx();
+    }else{
+        findyhlxEs();
+    }
 });
 
 function findyhlx() {
@@ -53,7 +59,57 @@ function findyhlx() {
     oSettings.sAjaxSource = new_filter_url;
     oTable.fnDraw();
 }
+//西班牙语
+function findyhlxEs() {
+    /*定义列id和名称*/
+    var aoColumns = [{
+        mDataProp: "id",
+        sTitle: "ID"
+    }, {
+        mDataProp: "userType",
+        sTitle: "Tipo de usuario"
+    }, {
+        mDataProp: "tate",
+        sTitle: "Tarifa de luz"
+    }, {
+        mDataProp: "id",
+        sTitle: "Operar"
+    }
 
+    ];
+
+    /*给操作列设置填充 */
+    var aoColumnDefs = [{
+        "bSortable": false,
+        "aTargets": [0, 1, 2, 3]
+    }, {
+        "sDefaultContent": '',
+        "aTargets": ['_all']
+    }, {
+        "aTargets": [3],
+        "mRender": function (data, type, row) {
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-addYhlx' role='button' style='background-color:#00BB00' onclick=modifyyhlx(" + data + ")><i class='icon-pencil'></i>Modificar</a></div>";
+        }
+    }, {
+        "aTargets": [0],
+        "mRender": function (data, type, full) {
+
+            return "<span class='label label-number'>" + data + "</span>";
+        }
+    }
+
+
+    ];
+
+    var new_filter_url = "tbYhlx/getYhlxList"; //表#plist数据获取url
+
+    var oTable = setDataTable_ajax($("#plist"), new_filter_url, aoColumns, aoColumnDefs, true);
+
+    oTable.columnFilter();
+    var oSettings = oTable.fnSettings();
+    oSettings.sAjaxSource = new_filter_url;
+    oTable.fnDraw();
+}
 //var oSettings = oTable.fnSettings();
 //oSettings.sAjaxSource = new_filter_url;
 //oTable.fnDraw();

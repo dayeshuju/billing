@@ -1,5 +1,5 @@
 <script src='assets/page/javascripts/tbYdyh.js' type='text/javascript'></script>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <input type="text" name="id" id="ydyhId" style="display: none"/>
 
 <div class='container-fluid'>
@@ -11,50 +11,50 @@
                 <button class="close" data-dismiss="modal" type="button">×</button>
                 <h3 style="color: white;">
                     <div class="icon-edit"></div>
-                    添加/修改用户
+                    [[#{ydyh.addOrEditUser}]]
                 </h3>
             </div>
             <div class="modal-body">
                 <form class="form" style="margin-bottom: 0;">
                     <div class="text-center">
-                        <h2>用户信息</h2>
+                        <h2 th:text="#{ydyh.userInfo}">用户信息</h2>
                         <br/>
                     </div>
                     <div class="box-content" style="display: inline;">
                         <table class="kv-table">
                             <tbody>
                             <tr>
-                                <td class="kv-label">姓名
+                                <td class="kv-label">[[#{username}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <input class="span11" id="name" type="text" autocomplete="off">
-                                    <font id="login_name_alert" color="red" style="display: none;">必填</font>
+                                    <font id="login_name_alert" color="red" style="display: none;">[[#{mustFill}]]</font>
                                 </td>
-                                <td class="kv-label">身份证号
+                                <td class="kv-label">[[#{IDCardNumber}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <input class="span11" id="idCode" placeholder="" type="text" autocomplete="off">
-                                    <font id="name_alert" color="red" style="display: none;">必填</font>
+                                    <font id="name_alert" color="red" style="display: none;">[[#{mustFill}]]</font>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">联系方式</td>
+                                <td class="kv-label" th:text="#{ydyh.contactInfo}">联系方式</td>
                                 <td class="kv-content">
                                     <input class="span11" id="phoneNum" placeholder="" type="text" autocomplete="off">
                                 </td>
-                                <td class="kv-label">用户类型
+                                <td class="kv-label">[[#{ydyh.userType}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content">
                                     <select class="span11" id="yhlxId">
                                     </select>
-                                    <font id="yhlx_alert" color="red" style="display: none;">必填</font>
+                                    <font id="yhlx_alert" color="red" style="display: none;">[[#{mustFill}]]</font>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="kv-label">用户地址
+                                <td class="kv-label">[[#{userAddress}]]
                                     <font color="red">*</font>
                                 </td>
                                 <td class="kv-content" colspan="3">
@@ -74,13 +74,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>取消</button>
-                <button class="btn btn-primary" onclick="adduser()"><i class="icon-save"></i> 保 存</button>
+                <button class="btn" data-dismiss="modal"><i class="icon-remove"></i>[[#{cancel}]]</button>
+                <button class="btn btn-primary" onclick="adduser()"><i class="icon-save"></i> [[#{save}]]</button>
             </div>
         </div>
         <!--modal-adduser end-->
         <!--modal-deleteUser begin-->
-        <div class="modal hide fade in" id="modal-deleteuser" role="dialog" tabindex="-1" aria-hidden="false"
+        <!--<div class="modal hide fade in" id="modal-deleteuser" role="dialog" tabindex="-1" aria-hidden="false"
              style="display: none;">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">×</button>
@@ -101,17 +101,17 @@
                 <button class="btn" data-dismiss="modal">取消</button>
                 <button class="btn btn-primary" id="deleterow">确认删除</button>
             </div>
-        </div>
+        </div>-->
         <!--modal-deleteUser end-->
         <!--用户列表部分 开始-->
         <div class='row-fluid'>
             <div class='span12 box bordered-box blue-border' style='margin-bottom:0;'>
                 <div class='box-header blue-background'>
-                    <div class='title'>用户列表</div>
-                    <div class='pull-right' style="margin-top:-80px;width:100px;height:30px;margin-right:13px;">
+                    <div class='title' th:text="#{sys.userList}">用户列表</div>
+                    <div class='pull-right' style="margin-top:-80px;width:auto;height:30px;margin-right:13px;">
                         <a id="adduser" class="btn btn-default" data-toggle="modal" href="#modal-adduser" role="button"
                            style="background-color:#00aceb;color:white;width:100%;height:100%;padding-top:10px;font-size:16px;" onclick="initform()">
-                            <i class="icon-plus"></i> 添加新用户
+                            <i class="icon-plus"></i>[[#{ydyh.addUer}]]
                         </a>
                     </div>
                 </div>
@@ -123,25 +123,25 @@
                                 <thead>
                                 <tr>
                                     <th>
-                                        id
+                                        ID
                                     </th>
-                                    <th>姓名</th>
-                                    <th>身份证号</th>
-                                    <th>用户地址</th>
-                                    <th>联系方式</th>
-                                    <th>用户类型</th>
-                                    <th>操作</th>
+                                    <th th:text="#{username}">姓名</th>
+                                    <th th:text="#{IDCardNumber}">身份证号</th>
+                                    <th th:text="#{userAddress}">用户地址</th>
+                                    <th th:text="#{ydyh.contactInfo}">联系方式</th>
+                                    <th th:text="#{ydyh.userType}">用户类型</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>姓名</th>
-                                    <th>身份证号</th>
-                                    <th>地址</th>
-                                    <th>联系方式</th>
-                                    <th>用户类型</th>
-                                    <th>操作</th>
+                                    <th th:text="#{username}">姓名</th>
+                                    <th th:text="#{IDCardNumber}">身份证号</th>
+                                    <th th:text="#{userAddress}">用户地址</th>
+                                    <th th:text="#{ydyh.contactInfo}">联系方式</th>
+                                    <th th:text="#{ydyh.userType}">用户类型</th>
+                                    <th th:text="#{operation}">操作</th>
                                 </tr>
                                 </tfoot>
                             </table>

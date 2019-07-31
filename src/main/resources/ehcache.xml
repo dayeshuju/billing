@@ -77,5 +77,4 @@
 		whether elements can overflow to disk when the in-memory cache has reached 
 		the maxInMemory limit. -->
 	<!-- Place configuration for your caches following -->
-
 </ehcache>
