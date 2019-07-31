@@ -60,6 +60,8 @@ function findCbjl() {
 //oTable.fnDraw();
 
 function saveCbjlMeterId(meterId) {
+    $("#starttime").val("");
+    $("#endtime").val("");
     $("#meterId").val(meterId);
     getHistoryCbjl();
 }

@@ -84,6 +84,8 @@ function findJfjl() {
 
 function saveJfjlMeterId(meterId) {
     //initform("","");
+    $("#starttime").val("");
+    $("#endtime").val("");
     $("#meterId").val(meterId);
     getHistoryJfjl();
 
