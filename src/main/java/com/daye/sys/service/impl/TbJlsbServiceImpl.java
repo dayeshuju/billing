@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +31,20 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
 
     @Autowired
     TbJlsbMapper tbjlsbmapper;
+    @Autowired
+    HttpServletRequest request;
     
     @Override
     @RequiredLog(operation = "根据计量设备ID获取计量设备")
     public JsonResult getJlsb(Long id) {
-        if(id == null || id== 0L) return new JsonResult(new Throwable("用户不存在"));
+        if(id == null || id== 0L) {
+            String language = request.getHeader("Accept-Language").substring(0,2);
+            if("zh".equals(language)){
+                return new JsonResult(new Throwable("用户不存在"));
+            }else{
+                return new JsonResult(new Throwable("El usuario no existe"));
+            }
+        }
         VT_Jlsb jlsb = tbjlsbmapper.selectJlsbWithIdCodeById(id);
         return new JsonResult(jlsb);
     }
@@ -43,40 +53,75 @@ public class TbJlsbServiceImpl extends ServiceImpl<TbJlsbMapper, TbJlsb> impleme
     @RequiredLog(operation = "添加计量设备")
     public JsonResult addJlsb(VT_Jlsb jlsb) {
         TbJlsb jlsbInsert = new TbJlsb();
-        if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("表号不能为空"));
-        if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("表箱号不能为空"));
-        if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份证号不能为空"));
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("表号不能为空"));
+            if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("表箱号不能为空"));
+            if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份证号不能为空"));
+        }else{
+            if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("El número de contador no pueda estar vacío"));
+            if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("El número de cuadro de contador no pueda estar vacío"));
+            if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("El id de usuario no pueda estar vacío "));
+        }
         TbYdyh ydyh = tbjlsbmapper.findYdyhByIdCode(jlsb.getIdCode().trim());
         TbJlsb oldJlsb= tbjlsbmapper.findJlsbByMeterId(jlsb.getMeterId().trim());
-        if(oldJlsb!=null) return new JsonResult(new Throwable("计量设备已存在，请更改表号"));
-        if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份证号"));
+        if("zh".equals(language)){
+            if(oldJlsb!=null) return new JsonResult(new Throwable("计量设备已存在，请更改表号"));
+            if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份证号"));
+        }else{
+            if(oldJlsb!=null) return new JsonResult(new Throwable("El medidor ya existe, cambie el número de tabla"));
+            if(ydyh == null) return new JsonResult(new Throwable("El usuario no existe,  cambie la de usuario id "));
+        }
         jlsbInsert.setMeterId(jlsb.getMeterId().trim());
         jlsbInsert.setMeterBoxId(jlsb.getMeterBoxId().trim());
         jlsbInsert.setYdyhId(ydyh.getId());
         tbjlsbmapper.insert(jlsbInsert);
-        return new JsonResult("添加成功");
+        if("zh".equals(language)){
+            return new JsonResult("添加成功");
+        }else{
+            return new JsonResult("Agregado exitosamente");
+        }
     }
 
     @Override
     @RequiredLog(operation = "修改计量设备信息")
     public JsonResult updateJlsb(VT_Jlsb jlsb) {
         TbJlsb jlsbInsert = new TbJlsb();
-        if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("表号不能为空"));
-        if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("表箱号不能为空"));
-        if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份证号不能为空"));
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("表号不能为空"));
+            if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("表箱号不能为空"));
+            if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("用户身份证号不能为空"));
+        }else{
+            if(StringUtils.isEmpty(jlsb.getMeterId().trim())) return new JsonResult(new Throwable("El número de contador no pueda estar vacío"));
+            if(StringUtils.isEmpty(jlsb.getMeterBoxId().trim())) return new JsonResult(new Throwable("El número de cuadro de contador no pueda estar vacío"));
+            if(StringUtils.isEmpty(jlsb.getIdCode().trim())) return new JsonResult(new Throwable("El id de usuario no pueda estar vacío "));
+        }
         TbYdyh ydyh = tbjlsbmapper.findYdyhByIdCode(jlsb.getIdCode().trim());
         TbJlsb oldJlsb= tbjlsbmapper.findJlsbByMeterId(jlsb.getMeterId().trim());
-        if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份证号"));
-        if(oldJlsb!=null&&oldJlsb.getId()!=jlsb.getId()) return new JsonResult(new Throwable("计量设备已存在，请更改表号"));
+        if("zh".equals(language)){
+            if(ydyh == null) return new JsonResult(new Throwable("用户不存在，请更改用户身份证号"));
+            if(oldJlsb!=null&&oldJlsb.getId()!=jlsb.getId()) return new JsonResult(new Throwable("计量设备已存在，请更改表号"));
+        }else{
+            if(ydyh == null) return new JsonResult(new Throwable("El usuario no existe,  cambie la de usuario id "));
+            if(oldJlsb!=null&&oldJlsb.getId()!=jlsb.getId()) return new JsonResult(new Throwable("El medidor ya existe, cambie el número de tabla"));
+        }
         jlsbInsert.setMeterId(jlsb.getMeterId().trim());
         jlsbInsert.setMeterBoxId(jlsb.getMeterBoxId().trim());
         jlsbInsert.setYdyhId(ydyh.getId());
         jlsbInsert.setId(jlsb.getId());
         jlsbInsert.setModifiedTime(new Date());
-        if (tbjlsbmapper.updateById(jlsbInsert) == 1) {
-            return new JsonResult("修改成功");
+        if("zh".equals(language)){
+            if (tbjlsbmapper.updateById(jlsbInsert) == 1) {
+                return new JsonResult("修改成功");
+            }
+            return  new JsonResult(new Throwable("修改失败"));
+        }else{
+            if (tbjlsbmapper.updateById(jlsbInsert) == 1) {
+                return new JsonResult("Modificado exitosamente");
+            }
+            return  new JsonResult(new Throwable("Fallado al modificar"));
         }
-        return  new JsonResult(new Throwable("修改失败"));
     }
 
 /*    @Override

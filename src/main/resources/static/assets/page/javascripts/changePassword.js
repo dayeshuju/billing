@@ -13,7 +13,7 @@ function updatepwd() {
         if("zh"==lang){
             alertstr = "原密码不能为空！";
         }else{//es
-            alertstr = "原密码不能为空！";
+            alertstr = "La contraseña original no pueda estar vacía！";
         }
         layer.msg(alertstr, {
             icon: 2
@@ -26,7 +26,7 @@ function updatepwd() {
         if("zh"==lang){
             alertstr = "新密码不能为空！";
         }else{//es
-            alertstr = "新密码不能为空！";
+            alertstr = "La nueva contraseña no pueda estar vacía！";
         }
         layer.msg(alertstr, {
             icon: 2
@@ -39,7 +39,7 @@ function updatepwd() {
         if("zh"==lang){
             alertstr = "请再输入一遍新密码！";
         }else{//es
-            alertstr = "请再输入一遍新密码！";
+            alertstr = "Ingrese nueva contraseña de otra vez！";
         }
         layer.msg(alertstr, {
             icon: 2
@@ -52,7 +52,7 @@ function updatepwd() {
         if("zh"==lang){
             alertstr = "两次输入的密码不一致！";
         }else{//es
-            alertstr = "两次输入的密码不一致！";
+            alertstr = "No coinciden contraseñas introducida por dos veces！";
         }
         layer.msg(alertstr, {
             icon: 2
@@ -86,7 +86,7 @@ function updatepwd() {
             if("zh"==lang){
                 alertstr = "原密码错误！";
             }else{//es
-                alertstr = "原密码错误！";
+                alertstr = "La contraseña original es incorrecta！";
             }
             layer.msg(alertstr,{
                 icon: 2

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,8 @@ public class TbYdyhServiceImpl extends ServiceImpl<TbYdyhMapper, TbYdyh> impleme
 
     @Autowired
     TbYdyhMapper tbYdyhMapper;
+    @Autowired
+    HttpServletRequest request;
 
     @Override
     @RequiredLog(operation = "获取所有用户类型")
@@ -78,41 +81,76 @@ public class TbYdyhServiceImpl extends ServiceImpl<TbYdyhMapper, TbYdyh> impleme
     @Override
     @RequiredLog(operation = "根据id修改用电用户")
     public JsonResult updateYdyh(TbYdyh ydyh) {
-        if(StringUtils.isEmpty(ydyh.getName().trim())) return new JsonResult(new Throwable("请填写用户姓名"));
-        if(StringUtils.isEmpty(ydyh.getIdCode().trim())) return new JsonResult(new Throwable("请填写用户身份证号"));
-        if(StringUtils.isEmpty(ydyh.getAddress().trim())) return new JsonResult(new Throwable("请填写用户住址"));
-        if(ydyh.getUserTypeId()==null || ydyh.getUserTypeId() == 0) return  new JsonResult(new Throwable("请选择用户类型"));
-        TbYdyh oldYdyh = tbYdyhMapper.getYdyhByIdCode(ydyh.getIdCode().trim());
-        if(oldYdyh != null && oldYdyh.getId() != ydyh.getId()) return new JsonResult(new Throwable("修改后的身份证号已存在"));
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(ydyh.getName().trim())) return new JsonResult(new Throwable("请填写用户姓名"));
+            if(StringUtils.isEmpty(ydyh.getIdCode().trim())) return new JsonResult(new Throwable("请填写用户身份证号"));
+            if(StringUtils.isEmpty(ydyh.getAddress().trim())) return new JsonResult(new Throwable("请填写用户住址"));
+            if(ydyh.getUserTypeId()==null || ydyh.getUserTypeId() == 0) return  new JsonResult(new Throwable("请选择用户类型"));
+            TbYdyh oldYdyh = tbYdyhMapper.getYdyhByIdCode(ydyh.getIdCode().trim());
+            if(oldYdyh != null && oldYdyh.getId() != ydyh.getId()) return new JsonResult(new Throwable("修改后的身份证号已存在"));
+        }else{
+            if(StringUtils.isEmpty(ydyh.getName().trim())) return new JsonResult(new Throwable("Ingrese el nombre de usuario"));
+            if(StringUtils.isEmpty(ydyh.getIdCode().trim())) return new JsonResult(new Throwable("Rellene el número de identidad de usuario"));
+            if(StringUtils.isEmpty(ydyh.getAddress().trim())) return new JsonResult(new Throwable("Relene la dirección del usuario"));
+            if(ydyh.getUserTypeId()==null || ydyh.getUserTypeId() == 0) return  new JsonResult(new Throwable("seleccione un tipo de usuario"));
+            TbYdyh oldYdyh = tbYdyhMapper.getYdyhByIdCode(ydyh.getIdCode().trim());
+            if(oldYdyh != null && oldYdyh.getId() != ydyh.getId()) return new JsonResult(new Throwable("El número de ID modificado ya existe"));
+        }
         ydyh.setName(ydyh.getName().trim());
         ydyh.setIdCode(ydyh.getIdCode().trim());
         ydyh.setPhoneNum(ydyh.getPhoneNum().trim());
         ydyh.setAddress(ydyh.getAddress().trim());
         ydyh.setModifiedTime(new Date());
-        if(tbYdyhMapper.updateById(ydyh)==1) return new JsonResult("修改成功");
-        return new JsonResult(new Throwable("修改失败"));
+        if("zh".equals(language)){
+            if(tbYdyhMapper.updateById(ydyh)==1) return new JsonResult("修改成功");
+            return new JsonResult(new Throwable("修改失败"));
+        }else{
+            if(tbYdyhMapper.updateById(ydyh)==1) return new JsonResult("Modificado exitosamente");
+            return new JsonResult(new Throwable("Fallado al modificar"));
+        }
     }
 
     @Override
     @RequiredLog(operation = "添加用电用户")
     public JsonResult addYdyh(TbYdyh ydyh) {
-        if(StringUtils.isEmpty(ydyh.getName().trim())) return new JsonResult(new Throwable("请填写用户姓名"));
-        if(StringUtils.isEmpty(ydyh.getIdCode().trim())) return new JsonResult(new Throwable("请填写用户身份证号"));
-        if(StringUtils.isEmpty(ydyh.getAddress().trim())) return new JsonResult(new Throwable("请填写用户住址"));
-        if(ydyh.getUserTypeId()==null || ydyh.getUserTypeId() == 0) return  new JsonResult(new Throwable("请选择用户类型"));
-        TbYdyh oldYdyh = tbYdyhMapper.getYdyhByIdCode(ydyh.getIdCode().trim());
-        if(oldYdyh != null && oldYdyh.getValid() == 0){
-            ydyh.setId(oldYdyh.getId());
-            ydyh.setValid(1);
-            if(tbYdyhMapper.updateById(ydyh)==1) return new JsonResult("添加成功");
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(ydyh.getName().trim())) return new JsonResult(new Throwable("请填写用户姓名"));
+            if(StringUtils.isEmpty(ydyh.getIdCode().trim())) return new JsonResult(new Throwable("请填写用户身份证号"));
+            if(StringUtils.isEmpty(ydyh.getAddress().trim())) return new JsonResult(new Throwable("请填写用户住址"));
+            if(ydyh.getUserTypeId()==null || ydyh.getUserTypeId() == 0) return  new JsonResult(new Throwable("请选择用户类型"));
+            TbYdyh oldYdyh = tbYdyhMapper.getYdyhByIdCode(ydyh.getIdCode().trim());
+            if(oldYdyh != null && oldYdyh.getValid() == 0){
+                ydyh.setId(oldYdyh.getId());
+                ydyh.setValid(1);
+                if(tbYdyhMapper.updateById(ydyh)==1) return new JsonResult("添加成功");
+            }
+            if(oldYdyh != null && oldYdyh.getValid() == 1) return new JsonResult(new Throwable("该用户已存在"));
+        }else{
+            if(StringUtils.isEmpty(ydyh.getName().trim())) return new JsonResult(new Throwable("Ingrese el nombre de usuario"));
+            if(StringUtils.isEmpty(ydyh.getIdCode().trim())) return new JsonResult(new Throwable("Rellene el número de identidad de usuario"));
+            if(StringUtils.isEmpty(ydyh.getAddress().trim())) return new JsonResult(new Throwable("complete la dirección del usuario"));
+            if(ydyh.getUserTypeId()==null || ydyh.getUserTypeId() == 0) return  new JsonResult(new Throwable("seleccione un tipo de usuario"));
+            TbYdyh oldYdyh = tbYdyhMapper.getYdyhByIdCode(ydyh.getIdCode().trim());
+            if(oldYdyh != null && oldYdyh.getValid() == 0){
+                ydyh.setId(oldYdyh.getId());
+                ydyh.setValid(1);
+                if(tbYdyhMapper.updateById(ydyh)==1) return new JsonResult("Agregado exitosamente");
+            }
+            if(oldYdyh != null && oldYdyh.getValid() == 1) return new JsonResult(new Throwable("Este usuario ya existe "));
         }
-        if(oldYdyh != null && oldYdyh.getValid() == 1) return new JsonResult(new Throwable("该用户已存在"));
         ydyh.setName(ydyh.getName().trim());
         ydyh.setIdCode(ydyh.getIdCode().trim());
         ydyh.setPhoneNum(ydyh.getPhoneNum().trim());
         ydyh.setAddress(ydyh.getAddress().trim());
-        if(tbYdyhMapper.insert(ydyh)==1) return new JsonResult("添加成功");
-        return new JsonResult(new Throwable("添加失败"));
+        if("zh".equals(language)){
+            if(tbYdyhMapper.insert(ydyh)==1) return new JsonResult("添加成功");
+            return new JsonResult(new Throwable("添加失败"));
+        }else{
+            if(tbYdyhMapper.insert(ydyh)==1) return new JsonResult("Agregado exitosamente");
+            return new JsonResult(new Throwable("Fallo al añadir"));
+        }
     }
 
 /*    @Override

@@ -159,67 +159,130 @@
         if (new_filter_url.substr(0,16)=="zheshiyigeshibie") {
             count_count = 1000;
         }
-        return selector.dataTable({
-            sDom: "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
-            iDisplayLength: count_count, 
-            sPaginationType: "bootstrap",
-            sAjaxSource: new_filter_url,
-            bFilter: trueorfalse,
-            oLanguage: {
-                "sLengthMenu": "_MENU_ 条/页",
-                "sSearch": "search:",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
-                "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
-                "sInfoEmpty": "当前显示0到0条，共0条记录",
-                "sEmptyTable": "没有获取到数据",
-                "sProcessing": "正在加载数据...",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前一页",
-                    "sNext": "后一页",
-                    "sLast": "末页"
-                } 
-                
+        var lang = navigator.language||navigator.userLanguage;
+        lang = lang.substr(0, 2);
+        if("zh"==lang){
+            return selector.dataTable({
+                sDom: "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
+                iDisplayLength: count_count,
+                sPaginationType: "bootstrap",
+                sAjaxSource: new_filter_url,
+                bFilter: trueorfalse,
+                oLanguage: {
+                            "sLengthMenu": "_MENU_ 条/页",
+                            "sSearch": "搜索:",
+                            "sZeroRecords": "没有检索到数据",
+                            "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
+                            "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
+                            "sInfoEmpty": "当前显示0到0条，共0条记录",
+                            "sEmptyTable": "没有获取到数据",
+                            "sProcessing": "正在加载数据...",
+                            "oPaginate": {
+                                "sFirst": "首页",
+                                "sPrevious": "前一页",
+                                "sNext": "后一页",
+                                "sLast": "末页"
+                            }
+                },
+                //bLengthChange: true,
+                bInfo: true,
+                bSortL:true,
+                bRetrieve:true,
+                bDestroy: true,
+                bAutoWidth: true,
+                bStateSave: false,
+                bProcessing: true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+                bServerSide: true, //开启服务器模式，使用服务器端处理配置datatable。注意：sAjaxSource参数也必须被给予为了给datatable源代码来获取所需的数据对于每个画。 这个翻译有点别扭。开启此模式后，你对datatables的每个操作 每页显示多少条记录、下一页、上一页、排序（表头）、搜索，这些都会传给服务器相应的值。
+                aoColumns: aoColumns,
+                aoColumnDefs: aoColumnDefs,
 
-            },
-            //bLengthChange: true,
-            bInfo: true,
-            bSortL:true,
-            bRetrieve:true,
-            bDestroy: true,
-            bAutoWidth: true,
-            bStateSave: false,
-            bProcessing: true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
-            bServerSide: true, //开启服务器模式，使用服务器端处理配置datatable。注意：sAjaxSource参数也必须被给予为了给datatable源代码来获取所需的数据对于每个画。 这个翻译有点别扭。开启此模式后，你对datatables的每个操作 每页显示多少条记录、下一页、上一页、排序（表头）、搜索，这些都会传给服务器相应的值。 
-            aoColumns: aoColumns,
-            aoColumnDefs: aoColumnDefs,
-
-            fnServerData: function(sSource, aoData, fnCallback) {
-                if (sSource.substr(0,16)=="zheshiyigeshibie") {
-                    sSource=sSource.slice(16);
-                    aoData[4]["value"] = 10000;
-                }
-                $.ajax({
-                    url: sSource, //这个就是请求地址对应sAjaxSource
-                    data: {
-                        "aoData": JSON.stringify(aoData)
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    async: false,
-                    success: function(result) {
-                        //alert("ss");
-                        //var obj=JSON.parse(result);
-                        //alert(JSON.stringify(result));
-                        fnCallback(result); //把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+                fnServerData: function(sSource, aoData, fnCallback) {
+                    if (sSource.substr(0,16)=="zheshiyigeshibie") {
+                        sSource=sSource.slice(16);
+                        aoData[4]["value"] = 10000;
                     }
-                });
+                    $.ajax({
+                        url: sSource, //这个就是请求地址对应sAjaxSource
+                        data: {
+                            "aoData": JSON.stringify(aoData)
+                        },
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        success: function(result) {
+                            //alert("ss");
+                            //var obj=JSON.parse(result);
+                            //alert(JSON.stringify(result));
+                            fnCallback(result); //把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+                        }
+                    });
 
-            }
+                }
 
 
-        });
+            });
+        }else{
+            return selector.dataTable({
+                sDom: "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
+                iDisplayLength: count_count,
+                sPaginationType: "bootstrap",
+                sAjaxSource: new_filter_url,
+                bFilter: trueorfalse,
+                oLanguage: {
+                            "sLengthMenu": "_MENU_ Artículo / página",
+                            "sSearch": "Búsqueda:",
+                            "sZeroRecords": "No encontrado con datos",
+                            "sInfo": "Exhibir _START_ A _END_ Registro &nbsp;&nbsp;Total _TOTAL_ Registro",
+                            "sInfoFiltered": "(Filtrar desde _MAX_ Datos)",
+                            "sInfoEmpty": "Actualmente mostrando 0 a 0, un total de 0 registros",
+                            "sEmptyTable": "No han obtenido datos ",
+                            "sProcessing": "Cargando datos...",
+                            "oPaginate": {
+                                "sFirst": "Inicio",
+                                "sPrevious": "Pagina anterior",
+                                "sNext": "Siguiente pagina",
+                                "sLast": "Ultima pagina"
+                            }
+                    },
+                //bLengthChange: true,
+                bInfo: true,
+                bSortL:true,
+                bRetrieve:true,
+                bDestroy: true,
+                bAutoWidth: true,
+                bStateSave: false,
+                bProcessing: true, //开启读取服务器数据时显示正在加载中……特别是大数据量的时候，开启此功能比较好
+                bServerSide: true, //开启服务器模式，使用服务器端处理配置datatable。注意：sAjaxSource参数也必须被给予为了给datatable源代码来获取所需的数据对于每个画。 这个翻译有点别扭。开启此模式后，你对datatables的每个操作 每页显示多少条记录、下一页、上一页、排序（表头）、搜索，这些都会传给服务器相应的值。
+                aoColumns: aoColumns,
+                aoColumnDefs: aoColumnDefs,
+
+                fnServerData: function(sSource, aoData, fnCallback) {
+                    if (sSource.substr(0,16)=="zheshiyigeshibie") {
+                        sSource=sSource.slice(16);
+                        aoData[4]["value"] = 10000;
+                    }
+                    $.ajax({
+                        url: sSource, //这个就是请求地址对应sAjaxSource
+                        data: {
+                            "aoData": JSON.stringify(aoData)
+                        },
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        success: function(result) {
+                            //alert("ss");
+                            //var obj=JSON.parse(result);
+                            //alert(JSON.stringify(result));
+                            fnCallback(result); //把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+                        }
+                    });
+
+                }
+
+
+            });
+        }
+
 
         
 

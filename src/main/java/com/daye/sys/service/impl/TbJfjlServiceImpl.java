@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +28,15 @@ import java.text.SimpleDateFormat;
  */
 @Service
 public class TbJfjlServiceImpl extends ServiceImpl<TbJfjlMapper, TbJfjl> implements TbJfjlService {
-@Autowired
-TbJfjlMapper tbJfjlMapper;
+    @Autowired
+    TbJfjlMapper tbJfjlMapper;
+    @Autowired
+    HttpServletRequest request;
+
     @Override
     @RequiredLog(operation = "获取全部的缴费记录")
     public Map<String, Object> findObject(Map<String, String> aoData) {
-
+        String language = request.getHeader("Accept-Language").substring(0,2);
         VT_Jfjl vt_jfjl = new VT_Jfjl();
         //姓名
         if(!StringUtils.isEmpty(aoData.get("sSearch_1").trim())) vt_jfjl.setName(aoData.get("sSearch_1"));
@@ -46,18 +50,34 @@ TbJfjlMapper tbJfjlMapper;
         if(!StringUtils.isEmpty(aoData.get("sSearch_5").trim())){
             String payStatus = aoData.get("sSearch_5").trim();
             int i = 0;
-            if("未缴费".contains(payStatus)){
-                vt_jfjl.setPayStatu(0);
-                i++;
-            }else if("欠费".contains(payStatus)){
-                vt_jfjl.setPayStatu(1);
-                i++;
-            }else if("已缴费".contains(payStatus)){
-                vt_jfjl.setPayStatu(2);
-                i++;
+            if("zh".equals(language)){
+                if("未缴费".contains(payStatus)){
+                    vt_jfjl.setPayStatu(0);
+                    i++;
+                }else if("欠费".contains(payStatus)){
+                    vt_jfjl.setPayStatu(1);
+                    i++;
+                }else if("已缴费".contains(payStatus)){
+                    vt_jfjl.setPayStatu(2);
+                    i++;
+                }else{
+                    vt_jfjl.setPayStatu(3);
+                    i++;
+                }
             }else{
-                vt_jfjl.setPayStatu(3);
-                i++;
+                if("Impago".contains(payStatus)){
+                    vt_jfjl.setPayStatu(0);
+                    i++;
+                }else if("Pago pendiente".contains(payStatus)){
+                    vt_jfjl.setPayStatu(1);
+                    i++;
+                }else if("Pagado".contains(payStatus)){
+                    vt_jfjl.setPayStatu(2);
+                    i++;
+                }else{
+                    vt_jfjl.setPayStatu(3);
+                    i++;
+                }
             }
             if(i==3||i==2){
                 vt_jfjl.setPayStatu(null);
@@ -75,15 +95,29 @@ TbJfjlMapper tbJfjlMapper;
         Integer count =tbJfjlMapper.findCount(vt_jfjl,sSearch);
         List<VT_Jfjl> jfjlList = tbJfjlMapper.findObject(vt_jfjl,iDisplayStart,iDisplayLength,sSearch);
         if (jfjlList != null && jfjlList.size()>0) {
-            for (VT_Jfjl jfjl : jfjlList) {
-                if(jfjl.getPayStatu()==0){
-                    jfjl.setPayStatus("未缴费");
+            if("zh".equals(language)){
+                for (VT_Jfjl jfjl : jfjlList) {
+                    if(jfjl.getPayStatu()==0){
+                        jfjl.setPayStatus("未缴费");
+                    }
+                    if(jfjl.getPayStatu()==1){
+                        jfjl.setPayStatus("欠费");
+                    }
+                    if(jfjl.getPayStatu()==2){
+                        jfjl.setPayStatus("已缴费");
+                    }
                 }
-                if(jfjl.getPayStatu()==1){
-                    jfjl.setPayStatus("欠费");
-                }
-                if(jfjl.getPayStatu()==2){
-                    jfjl.setPayStatus("已缴费");
+            }else{
+                for (VT_Jfjl jfjl : jfjlList) {
+                    if(jfjl.getPayStatu()==0){
+                        jfjl.setPayStatus("Impago");
+                    }
+                    if(jfjl.getPayStatu()==1){
+                        jfjl.setPayStatus("Pago pendiente");
+                    }
+                    if(jfjl.getPayStatu()==2){
+                        jfjl.setPayStatus("Pagado");
+                    }
                 }
             }
         }
@@ -120,19 +154,34 @@ TbJfjlMapper tbJfjlMapper;
         Integer iDisplayLength = (Integer) iDisplayLengthsObj;
         Object sEchoStr = aoData.get("sEcho");
         Integer sEcho = (Integer) sEchoStr;
+        String language = request.getHeader("Accept-Language").substring(0,2);
 
         Integer count =tbJfjlMapper.findCountByid(meterId,startTime,endTime);
         List<VT_Jfjl> cbjlList = tbJfjlMapper.findObjectById(meterId,startTime,endTime,iDisplayStart,iDisplayLength);
         if (cbjlList != null && cbjlList.size()>0) {
-            for (VT_Jfjl jfjl : cbjlList) {
-                if(jfjl.getPayStatu()==0){
-                    jfjl.setPayStatus("未缴费");
+            if("zh".equals(language)){
+                for (VT_Jfjl jfjl : cbjlList) {
+                    if(jfjl.getPayStatu()==0){
+                        jfjl.setPayStatus("未缴费");
+                    }
+                    if(jfjl.getPayStatu()==1){
+                        jfjl.setPayStatus("欠费");
+                    }
+                    if(jfjl.getPayStatu()==2){
+                        jfjl.setPayStatus("已缴费");
+                    }
                 }
-                if(jfjl.getPayStatu()==1){
-                    jfjl.setPayStatus("欠费");
-                }
-                if(jfjl.getPayStatu()==2){
-                    jfjl.setPayStatus("已缴费");
+            }else{
+                for (VT_Jfjl jfjl : cbjlList) {
+                    if(jfjl.getPayStatu()==0){
+                        jfjl.setPayStatus("Impago");
+                    }
+                    if(jfjl.getPayStatu()==1){
+                        jfjl.setPayStatus("Pago pendiente");
+                    }
+                    if(jfjl.getPayStatu()==2){
+                        jfjl.setPayStatus("Pagado");
+                    }
                 }
             }
         }

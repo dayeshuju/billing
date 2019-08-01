@@ -142,7 +142,7 @@ function getHistoryJfjl() {
                 icon: 2
             });
         }else{
-            layer.msg("请输入开始时间", {
+            layer.msg("Ingrese la hora de inicio", {
                 icon: 2
             });
         }
@@ -150,11 +150,11 @@ function getHistoryJfjl() {
     }
     if(startTime != "" && endTime == ""){
         if("zh"==lan){
-            layer.msg("请输入结束", {
+            layer.msg("请输入结束时间", {
                 icon: 2
             });
         }else{
-            layer.msg("请输入结束", {
+            layer.msg("Introduzca la hora de finalización", {
                 icon: 2
             });
         }
@@ -166,7 +166,7 @@ function getHistoryJfjl() {
                 icon: 2
             });
         }else{
-            layer.msg("开始时间不得晚于结束时间", {
+            layer.msg("Hora de inicio no pueda ser más tarde que la hora de termino", {
                 icon: 2
             });
         }
@@ -281,22 +281,20 @@ function getHistoryJfjl() {
             bFilter: false,
             bLengthChange: false,
             oLanguage: {
-                "sLengthMenu": "_MENU_ 条/页",
+                "sLengthMenu": "_MENU_ Artículo / página",
                 "sSearch": "Búsqueda:",
-                "sZeroRecords": "没有检索到数据",
-                "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
-                "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
-                "sInfoEmpty": "当前显示0到0条，共0条记录",
-                "sEmptyTable": "没有获取到数据",
-                "sProcessing": "正在加载数据...",
+                "sZeroRecords": "No encontrado con datos",
+                "sInfo": "Exhibir _START_ A _END_ Registro &nbsp;&nbsp;Total _TOTAL_ Registro",
+                "sInfoFiltered": "(Filtrar desde _MAX_ Datos)",
+                "sInfoEmpty": "Actualmente mostrando 0 a 0, un total de 0 registros",
+                "sEmptyTable": "No han obtenido datos ",
+                "sProcessing": "Cargando datos...",
                 "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "前一页",
-                    "sNext": "后一页",
-                    "sLast": "末页"
+                    "sFirst": "Inicio",
+                    "sPrevious": "Pagina anterior",
+                    "sNext": "Siguiente pagina",
+                    "sLast": "Ultima pagina"
                 }
-
-
             },
             //bLengthChange: true,
             bInfo: true,
@@ -467,8 +465,8 @@ function lookJfjlMsg(id) {
                 if (result.data.payStatu==0){$("#payStatus").text("Impago");}
                 if (result.data.payStatu==1) {$("#payStatus").text("Pago pendiente");}
                 if (result.data.payStatu==2) {$("#payStatus").text("Pagado");}
-                if(result.data.receiptStatus==0){$("#receiptStatus").text("未打印");}
-                if(result.data.receiptStatus==1){$("#receiptStatus").text("已打印");}
+                if(result.data.receiptStatus==0){$("#receiptStatus").text("No imprimido");}
+                if(result.data.receiptStatus==1){$("#receiptStatus").text("Imprimir");}
             }
             $("#periodElecNum").text(result.data.periodElecNum);
             $("#amountDue").text(result.data.amountDue);
@@ -549,11 +547,11 @@ function changeTimeType(){
         }
     }else{
         if($("#payStatus_export").val()=='2'){
-            $(".timeTagStart").html("缴费起始时间：<font color=\"red\">*</font>");
-            $(".timeTagEnd").html("缴费结束时间：<font color=\"red\">*</font>");
+            $(".timeTagStart").html("Hora de inicio del pago：<font color=\"red\">*</font>");
+            $(".timeTagEnd").html("Hora de termino del pago：<font color=\"red\">*</font>");
         }else{
-            $(".timeTagStart").html("创建起始时间：<font color=\"red\">*</font>");
-            $(".timeTagEnd").html("创建结束时间：<font color=\"red\">*</font>");
+            $(".timeTagStart").html("Crear hora de inicio：<font color=\"red\">*</font>");
+            $(".timeTagEnd").html("Hora de termino del pago：<font color=\"red\">*</font>");
         }
     }
 }
@@ -645,7 +643,7 @@ function exportJfjl(){
                 icon: 2
             });
         }else{
-            layer.msg('时间为必填项，不能为空！', {
+            layer.msg('Hora es del campo requerido, no pueda estar vacío！', {
                 icon: 2
             });
         }

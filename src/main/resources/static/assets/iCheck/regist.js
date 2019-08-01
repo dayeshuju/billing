@@ -10,28 +10,56 @@ function checkCode(url){
 function checkUsername(thisobj){
 	var username = $(thisobj).val();
 	var reg = new RegExp(/^[-a-z_A-Z0-9\u4e00-\u9fa5]{3,20}$/);
-	if(username.length()>2 && username.length()<21){
-		if (!reg.test(username)){
-			$("#err_msg1").html("只支持中文、字母、数字、-、_的组合");
+	var lang = navigator.language||navigator.userLanguage;
+	lang = lang.substr(0, 2);
+	if("zh"==lang){
+		if(username.length()>2 && username.length()<21){
+			if (!reg.test(username)){
+				$("#err_msg1").html("只支持中文、字母、数字、-、_的组合");
+				$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+				$("#err_msg1").css("color","red");
+			}else{
+				$("#err_msg1").html("支持中文、字母、数字、-、_的组合，3-20个字母");
+				$("#err_msg1").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
+				$("#err_msg1").css("color","#c3c3c3");
+			}
+		}else if(username.length<3 && username.length>0){
+			$("#err_msg1").html("请不要少于3个字符");
 			$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
 			$("#err_msg1").css("color","red");
-		}else{
+		}else if(username.length>20){
+			$("#err_msg1").html("请不要超过20个字符");
+			$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+			$("#err_msg1").css("color","red");
+		}else if(username.length == 0){
 			$("#err_msg1").html("支持中文、字母、数字、-、_的组合，3-20个字母");
 			$("#err_msg1").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
 			$("#err_msg1").css("color","#c3c3c3");
 		}
-	}else if(username.length<3 && username.length>0){
-		$("#err_msg1").html("请不要少于3个字符");
-		$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
-		$("#err_msg1").css("color","red");
-	}else if(username.length>20){
-		$("#err_msg1").html("请不要超过20个字符");
-		$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
-		$("#err_msg1").css("color","red");
-	}else if(username.length == 0){
-		$("#err_msg1").html("支持中文、字母、数字、-、_的组合，3-20个字母");
-		$("#err_msg1").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
-		$("#err_msg1").css("color","#c3c3c3");
+	}else{
+		if(username.length()>2 && username.length()<21){
+			if (!reg.test(username)){
+				$("#err_msg1").html("Sólo compartir combinación de chino, letras, números, -, _ ");
+				$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+				$("#err_msg1").css("color","red");
+			}else{
+				$("#err_msg1").html("Sólo compartir combinación de chino, letras, números, -, _ , 3-20 letras");
+				$("#err_msg1").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
+				$("#err_msg1").css("color","#c3c3c3");
+			}
+		}else if(username.length<3 && username.length>0){
+			$("#err_msg1").html("No debe ser menos de 3 caracteres");
+			$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+			$("#err_msg1").css("color","red");
+		}else if(username.length>20){
+			$("#err_msg1").html("No exceda de 20 caracteres");
+			$("#err_msg1").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+			$("#err_msg1").css("color","red");
+		}else if(username.length == 0){
+			$("#err_msg1").html("Sólo compartir combinación de chino, letras, números, -, _ ");
+			$("#err_msg1").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
+			$("#err_msg1").css("color","#c3c3c3");
+		}
 	}
 	return reg.test(username);
 }
@@ -39,29 +67,58 @@ function checkPassword(thisobj) {
 	var password = $(thisobj).attr("value");
 	var reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
 	var flag = false;
-	if(password.length>5 && password.length<21){
-		if (!reg.test(password)){
-			$("#err_msg2").html("请使用数字、字母和符号两种以上的组合");
+	var lang = navigator.language||navigator.userLanguage;
+	lang = lang.substr(0, 2);
+	if("zh"==lang){
+		if(password.length>5 && password.length<21){
+			if (!reg.test(password)){
+				$("#err_msg2").html("请使用数字、字母和符号两种以上的组合");
+				$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+				$("#err_msg2").css("color","red");
+			}else{
+				flag = true;
+				$("#err_msg2").html("使用数字、字母和符号两种以上的组合，6-20个字符");
+				$("#err_msg2").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
+				$("#err_msg2").css("color","#c3c3c3");
+			}
+		}else if(password.length<6 && password.length>0){
+			$("#err_msg2").html("请不要少于6个字符");
 			$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
 			$("#err_msg2").css("color","red");
-		}else{
-			flag = true;
+		}else if(password.length>20){
+			$("#err_msg2").html("请不要超过20个字符");
+			$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+			("#err_msg2").css("color","red");
+		}else if(password.length == 0){
 			$("#err_msg2").html("使用数字、字母和符号两种以上的组合，6-20个字符");
 			$("#err_msg2").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
 			$("#err_msg2").css("color","#c3c3c3");
 		}
-	}else if(password.length<6 && password.length>0){
-		$("#err_msg2").html("请不要少于6个字符");
-		$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
-		$("#err_msg2").css("color","red");
-	}else if(password.length>20){
-		$("#err_msg2").html("请不要超过20个字符");
-		$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
-		("#err_msg2").css("color","red");
-	}else if(password.length == 0){
-		$("#err_msg2").html("使用数字、字母和符号两种以上的组合，6-20个字符");
-		$("#err_msg2").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
-		$("#err_msg2").css("color","#c3c3c3");
+	}else {
+		if(password.length>5 && password.length<21){
+			if (!reg.test(password)){
+				$("#err_msg2").html("Use una combinación más de dos entre números, letras y símbolos.");
+				$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+				$("#err_msg2").css("color","red");
+			}else{
+				flag = true;
+				$("#err_msg2").html("Use una combinación más de dos entre números, letras y símbolos,. de 6 a 20 caracteres");
+				$("#err_msg2").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
+				$("#err_msg2").css("color","#c3c3c3");
+			}
+		}else if(password.length<6 && password.length>0){
+			$("#err_msg2").html("No debe ser menos de 6 caracteres");
+			$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+			$("#err_msg2").css("color","red");
+		}else if(password.length>20){
+			$("#err_msg2").html("No exceda de 20 caracteres");
+			$("#err_msg2").css("background","url('imgs/alert_2.jpg') 17px 7px no-repeat");
+			("#err_msg2").css("color","red");
+		}else if(password.length == 0){
+			$("#err_msg2").html("Use una combinación más de dos entre números, letras y símbolos,. de 6 a 20 caracteres");
+			$("#err_msg2").css("background","url('imgs/alert_1.jpg') 17px 7px no-repeat");
+			$("#err_msg2").css("color","#c3c3c3");
+		}
 	}
 	return flag;
 }
@@ -95,7 +152,13 @@ function checkEmail(thisobj){
 function sendcode(url){
 	var email = $("input[name='email']")[0];
 	if($(email).attr("value").length == 0){
-		$("#err_msg4").html("请输入邮箱")
+		var lang = navigator.language||navigator.userLanguage;
+		lang = lang.substr(0, 2);
+		if("zh"==lang){
+			$("#err_msg4").html("请输入邮箱")
+		}else{
+			$("#err_msg4").html("Ingrese correo electrónico")
+		}
 		$("#err_msg4").css("visibility","visible");
 	}else if(checkEmail(email)){
 		$("form").attr("action",url);

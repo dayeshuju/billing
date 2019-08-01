@@ -14,8 +14,8 @@ public class PageController {
     @RequestMapping("doLoginUI")
     public String doLoginUI(HttpServletRequest request) {
         //获取请求头并存入session
-        String language = request.getHeader("Accept-Language").substring(0,2);
-        request.getSession().setAttribute("language",language);
+/*        String language = request.getHeader("Accept-Language").substring(0,2);
+        request.getSession().setAttribute("language",language);*/
         return "login";
     }
 

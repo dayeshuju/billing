@@ -35,7 +35,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Autowired
     SysRoleMenuMapper sysRoleMenuMapper;
     @Autowired
-    HttpSession session;
+    HttpServletRequest request;
 
     @Override
     @RequiredLog(operation = "获得所有角色信息")
@@ -74,7 +74,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @RequiredLog(operation = "添加权限类型")
     @Transactional
     public JsonResult getpername(SysRole sysRole, Integer[] menuIds) {
-        String lang = session.getAttribute("language").toString();
+        String lang = request.getHeader("Accept-Language").substring(0,2);
         if("zh".equals(lang)){
             if(StringUtils.isEmpty(sysRole.getName().trim())){
                 return new JsonResult(new Throwable("权限名称不能为空"));
@@ -93,20 +93,20 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             return new JsonResult("新增成功");
         }else {
             if(StringUtils.isEmpty(sysRole.getName().trim())){
-                return new JsonResult(new Throwable("sddfs权限名称不能为空"));
+                return new JsonResult(new Throwable("No pueda estar vacío nombre del permiso "));
             }
             if(menuIds==null||menuIds.length==0){
-                return new JsonResult(new Throwable("sdfsdf请分配权限"));
+                return new JsonResult(new Throwable("Asigne permisos"));
             }
 
             Integer count= sysRoleMapper.findOneByName(sysRole.getName().trim());
             if(count>0){
-                return new JsonResult(new Throwable("sdfsdf权限名称重复"));
+                return new JsonResult(new Throwable("Nombre de permiso repetido"));
             }
             sysRole.setName(sysRole.getName().trim());
             sysRoleMapper.insert(sysRole);
             sysRoleMenuMapper.insertRoleMenus(menuIds,sysRole.getId());
-            return new JsonResult("sdfsdf新增成功");
+            return new JsonResult("Añadido con éxito ");
         }
 
     }
@@ -129,7 +129,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @RequiredLog(operation = "修改权限类型")
     @Transactional
     public JsonResult updateObject(SysRole sysRole, Integer... menuIds) {
-        String lang = session.getAttribute("language").toString();
+        String lang = request.getHeader("Accept-Language").substring(0,2);
         String json = "";
         if("zh".equals(lang)){
             if(StringUtils.isEmpty(sysRole.getName().trim())) return new JsonResult(new Throwable("权限类型名称不能为空"));
@@ -138,11 +138,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             if(oldRole != null && oldRole.getId() != sysRole.getId()) return new JsonResult(new Throwable("修改后的权限名称已存在"));
             json="修改成功！";
         }else {//西班牙语
-            if(StringUtils.isEmpty(sysRole.getName().trim())) return new JsonResult(new Throwable("权限类型名称不能为空"));
-            if(menuIds == null || menuIds.length == 0) return new JsonResult(new Throwable("请分配权限"));
+            if(StringUtils.isEmpty(sysRole.getName().trim())) return new JsonResult(new Throwable("No pueda estar vacío el nombre del tipo de permiso "));
+            if(menuIds == null || menuIds.length == 0) return new JsonResult(new Throwable("Asigne permisos"));
             SysRole oldRole = sysRoleMapper.findObjectByName(sysRole.getName().trim());
-            if(oldRole != null && oldRole.getId() != sysRole.getId()) return new JsonResult(new Throwable("修改后的权限名称已存在"));
-            json="sdfsdf修改成功！";
+            if(oldRole != null && oldRole.getId() != sysRole.getId()) return new JsonResult(new Throwable("Ya existe nombre de permiso modificado "));
+            json="Modificado exitosamente！";
         }
 
         sysRole.setName(sysRole.getName().trim());

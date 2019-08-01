@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -105,7 +106,14 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
         ApplicationHome home = new ApplicationHome(getClass());
         File jarF = home.getSource().getParentFile();
         String path = jarF.getParentFile().toString();
-        if (path == null || path.equals("")) return new JsonResult(new Throwable("获取项目根目录错误"));
+        String language=request.getHeader("Accept-Language").substring(0,2);
+        if (path == null || path.equals("")) {
+            if("zh".equals(language)){
+                return new JsonResult(new Throwable("获取项目根目录错误"));
+            } else {
+                return new JsonResult(new Throwable("Obtener error de directorio raíz del proyecto"));
+            }
+        }
         path = path+"cbjl/";
         String uuid = UUID.randomUUID().toString();
         File dir = new File(path);
@@ -116,7 +124,11 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
         try {
             file.transferTo(cbjlFile);
         } catch (IOException e) {
-            return new JsonResult(new Throwable("文件上传错误"));
+            if("zh".equals(language)){
+                return new JsonResult(new Throwable("文件上传错误"));
+            } else {
+                return new JsonResult(new Throwable("Error al subir el archivo"));
+            }
         }
         List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
         for(int i = cbjlList.size()- 1;i>=0;i--){//筛掉表内重复记录
@@ -136,14 +148,22 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
                 }
             }
         }else{
-            return new JsonResult(new Throwable("文件为空"));
+            if("zh".equals(language)){
+                return new JsonResult(new Throwable("文件为空"));
+            } else {
+                return new JsonResult(new Throwable("El archivo está vacío"));
+            }
         }
         num = num-cbjlList.size();
         Integer insertCount = null;
         if(cbjlList.size()>0){
             insertCount = tbCbjlMapper.insertCbjls(cbjlList);
         }else{
-            return new JsonResult(new Throwable("导入失败，数据重复或者电表不存在！"));
+            if("zh".equals(language)){
+                return new JsonResult(new Throwable("导入失败，数据重复或者电表不存在！"));
+            } else {
+                return new JsonResult(new Throwable("Fallo al importar , los datos están repetidos o el contador no existe!"));
+            }
         }
         if(insertCount != null && insertCount>0){
             Map<String,Long> map = new HashMap<>();
@@ -152,13 +172,25 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
             tbCbjlMapper.insertJfjls(map);
             Long insertJfjlCount = map.get("result");
             if (insertJfjlCount == null || insertJfjlCount <= 0){
-                return new JsonResult(new Throwable("电费计算失败"));
+                if("zh".equals(language)){
+                    return new JsonResult(new Throwable("电费计算失败"));
+                } else {
+                    return new JsonResult(new Throwable("Falló cálculo de la tarifa de luz"));
+                }
             }
         }
-        if(num>0){
-            return new JsonResult("成功导入"+cbjlList.size()+"条数据，无效数据"+num+"条");
-        }else{
-            return new JsonResult("导入成功");
+        if("zh".equals(language)){
+            if(num>0){
+                return new JsonResult("成功导入"+cbjlList.size()+"条数据，无效数据"+num+"条");
+            }else{
+                return new JsonResult("导入成功");
+            }
+        } else {
+            if(num>0){
+                return new JsonResult("Importado exitosamente "+cbjlList.size()+"datos,"+num+" datos inválidos");
+            }else{
+                return new JsonResult("Importado con éxito");
+            }
         }
     }
 }

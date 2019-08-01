@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,9 @@ import java.util.Map;
 public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> implements TbYhlxService {
     @Autowired
     TbYhlxMapper tbYhlxMapper;
+    @Autowired
+    HttpServletRequest request;
+
     @Override
     @RequiredLog(value = 0, operation = "获得所有用户类型信息")
     public Map<String, Object> findObject(Map<String, String> aoData) {
@@ -59,19 +63,38 @@ public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> impleme
     @Override
     @RequiredLog(operation = "添加用户类型")
     public JsonResult addYhlx(TbYhlx yhlx) {
-        if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("用户类型不能为空"));
-        if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
-        TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
-        if(oldYhlx != null) return new JsonResult(new Throwable("用户类型已存在，请更改用户类型名称"));
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("用户类型不能为空"));
+            if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
+            TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
+            if(oldYhlx != null) return new JsonResult(new Throwable("用户类型已存在，请更改用户类型名称"));
+        }else{
+            if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("El tipo de usuario no pueda estar vacío"));
+            if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("La tarifa eléctrica no pueda estar vacía o en 0"));
+            TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
+            if(oldYhlx != null) return new JsonResult(new Throwable("El tipo de usuario ya existe, cambie el nombre del tipo de usuario"));
+        }
+
         yhlx.setUserType(yhlx.getUserType().trim());
         tbYhlxMapper.insert(yhlx);
-        return new JsonResult("添加成功");
+        if("zh".equals(language)){
+            return new JsonResult("添加成功");
+        }else{
+            return new JsonResult("Agregado exitosamente");
+        }
     }
 
     @Override
     @RequiredLog(operation = "根据用户类型ID获取系统用户类型")
     public JsonResult getYhlx(Long id) {
-        if(id == null || id== 0L) return new JsonResult(new Throwable("用户不存在"));
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(id == null || id== 0L) return new JsonResult(new Throwable("用户不存在"));
+        }else{
+            if(id == null || id== 0L) return new JsonResult(new Throwable("El usuario no existe"));
+        }
+
         TbYhlx yhlx = tbYhlxMapper.selectById(id);
         return new JsonResult(yhlx);
     }
@@ -79,16 +102,32 @@ public class TbYhlxServiceImpl extends ServiceImpl<TbYhlxMapper, TbYhlx> impleme
     @Override
     @RequiredLog(operation = "修改用户类型信息")
     public JsonResult updateYhlx(TbYhlx yhlx) {
-        if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("用户类型不能为空"));
-        if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
-        TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
-        if(oldYhlx != null&& oldYhlx.getId()!=yhlx.getId()) return new JsonResult(new Throwable("用户类型已存在，请更改用户类型名称"));
+        String language = request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("用户类型不能为空"));
+            if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("电费费率不能为空或0"));
+            TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
+            if(oldYhlx != null&& oldYhlx.getId()!=yhlx.getId()) return new JsonResult(new Throwable("用户类型已存在，请更改用户类型名称"));
+        }else{
+            if(StringUtils.isEmpty(yhlx.getUserType().trim())) return new JsonResult(new Throwable("El tipo de usuario no pueda estar vacío"));
+            if(yhlx.getTate()==null||Double.doubleToLongBits(Double.valueOf(yhlx.getTate()))==Double.doubleToLongBits(0)) return new JsonResult(new Throwable("La tarifa eléctrica no pueda estar vacía o en 0"));
+            TbYhlx oldYhlx = tbYhlxMapper.findYhlxByUserType(yhlx.getUserType().trim());
+            if(oldYhlx != null&& oldYhlx.getId()!=yhlx.getId()) return new JsonResult(new Throwable("El tipo de usuario ya existe, cambie el nombre del tipo de usuario"));
+        }
+
         yhlx.setUserType(yhlx.getUserType().trim());
         yhlx.setModifiedTime(new Date());
-        if (tbYhlxMapper.updateById(yhlx) == 1) {
-            return new JsonResult("修改成功");
+        if("zh".equals(language)){
+            if (tbYhlxMapper.updateById(yhlx) == 1) {
+                return new JsonResult("修改成功");
+            }
+            return  new JsonResult(new Throwable("修改失败"));
+        }else{
+            if (tbYhlxMapper.updateById(yhlx) == 1) {
+                return new JsonResult("Modificado exitosamente");
+            }
+            return  new JsonResult(new Throwable("Fallado al modificar"));
         }
-        return  new JsonResult(new Throwable("修改失败"));
     }
 
 /*    @Override

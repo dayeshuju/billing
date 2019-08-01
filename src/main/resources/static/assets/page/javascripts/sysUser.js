@@ -113,7 +113,7 @@ function finduserEs() {
     }, {
         "aTargets": [7],
         "mRender": function (data, type, row) {
-            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>Modificar</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>重置密码</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href=" + (row.valid == 1 ? "#modal-lockuser" : "#modal-unlockuser") + " role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid == 1 ? "Bloquear" : "Desbloquear") + "</span></a></div>";
+            return " <div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-adduser' role='button' style='background-color:#00BB00' onclick=modifyuser(" + data + ")><i class='icon-pencil'></i>Modificar</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-resetpassword' role='button'><i class='icon-refresh'></i>Restablecer contraseña</a> <a class='btn btn-danger btn-mini' data-toggle='modal' href=" + (row.valid == 1 ? "#modal-lockuser" : "#modal-unlockuser") + " role='button' id='aclock" + data + "'><i class='icon-lock'></i><span id='clock" + data + "'>" + (row.valid == 1 ? "Bloquear" : "Desbloquear") + "</span></a></div>";
         }
     }, {
         "aTargets": [0],
@@ -263,7 +263,7 @@ function adduser() {
                     icon: 2
                 })
             }else{//西班牙语
-                layer.msg("真实姓名不能包含数字！", {
+                layer.msg("Nombre real no pueda contener números！", {
                     icon: 2
                 })
             }
@@ -314,7 +314,7 @@ function adduser() {
                 icon: 2
             })
         }else{//西班牙语
-            layer.msg("邮箱格式不正确！", {
+            layer.msg("El formato del correo es incorrecto！", {
                 icon: 2
             })
         }

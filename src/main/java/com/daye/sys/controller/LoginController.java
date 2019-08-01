@@ -27,12 +27,12 @@ public class LoginController {
                         password);//凭证信息
         //2.2对用户信息进行身份认证
         subject.login(token);
-        String lang = request.getSession().getAttribute("language").toString();
+        String lang = request.getHeader("Accept-Language").substring(0,2);
         String json = "";
         if("zh".equals(lang)){
             json = "登录成功";
         }else{
-            json= "Acceso concedido";
+            json= "Iniciado de sesión con éxito";
         }
         return new JsonResult(json);
     }

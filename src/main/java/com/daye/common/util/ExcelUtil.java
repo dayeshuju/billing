@@ -2,6 +2,7 @@ package com.daye.common.util;
 
 import com.daye.sys.entity.vt.VT_Jfjl;
 import org.apache.poi.hssf.usermodel.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import java.io.*;
 import java.util.List;
 
 public class ExcelUtil {
-
     public static void createExcel(HttpServletRequest request, HttpServletResponse response,
                                    List<VT_Jfjl> list, String fileName, List<String> title) {
         try {
@@ -78,9 +78,15 @@ public class ExcelUtil {
                         case 6:
                             if (list.get(j).getPayStatu()!=null) {
                                 int sta = list.get(j).getPayStatu();
-                                if(sta==0) cell.setCellValue("未缴费");
-                                if(sta==1) cell.setCellValue("欠费");
-                                if(sta==2) cell.setCellValue("已缴费");
+                                if("zh".equals(request.getSession().getAttribute("language").toString())){
+                                    if(sta==0) cell.setCellValue("未缴费");
+                                    if(sta==1) cell.setCellValue("欠费");
+                                    if(sta==2) cell.setCellValue("已缴费");
+                                }else {
+                                    if(sta==0) cell.setCellValue("Impago");
+                                    if(sta==1) cell.setCellValue("Pago pendiente");
+                                    if(sta==2) cell.setCellValue("Pagado");
+                                }
                             }
                             break;
                         case 7:
@@ -116,8 +122,13 @@ public class ExcelUtil {
                         case 13:
                             if (list.get(j).getReceiptStatus() != null) {
                                 int ptin = list.get(j).getPayStatu();
-                                if(ptin==0) cell.setCellValue("未打印");
-                                if(ptin==1) cell.setCellValue("打印");
+                                if("zh".equals(request.getSession().getAttribute("language").toString())){
+                                    if(ptin==0) cell.setCellValue("未打印");
+                                    if(ptin==1) cell.setCellValue("打印");
+                                }else{
+                                    if(ptin==0) cell.setCellValue("No imprimido");
+                                    if(ptin==1) cell.setCellValue("Imprimir");
+                                }
                             }
                             break;
 /*                        case 14:
@@ -128,8 +139,13 @@ public class ExcelUtil {
                         case 14:
                             if (list.get(j).getValid() != null) {
                                 int val = list.get(j).getValid();
-                                if(val==0) cell.setCellValue("禁用");
-                                if(val==1) cell.setCellValue("启用");
+                                if("zh".equals(request.getSession().getAttribute("language").toString())){
+                                    if(val==0) cell.setCellValue("禁用");
+                                    if(val==1) cell.setCellValue("启用");
+                                }else {
+                                    if(val==0) cell.setCellValue("Deshabilitar");
+                                    if(val==1) cell.setCellValue("Habilitar");
+                                }
                             }
                             break;
                         case 15:

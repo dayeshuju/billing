@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,8 @@ public class SytController {
 
     @Autowired
     SytService sytService;
+    @Autowired
+    HttpSession session;
 
     @RequestMapping("/getJfyhList")
     @RequiresPermissions("sys:tbsyt")
@@ -53,12 +56,17 @@ public class SytController {
     @RequestMapping("/printFactura")
     @RequiresPermissions("sys:tbsyt")
     public Object printFactura(Integer id, HttpServletResponse response){
+        String language = session.getAttribute("language").toString();
         Map<String,Object> datas = sytService.printFactura(id);
         ApplicationHome home = new ApplicationHome(getClass());
         File jarF = home.getSource();
         String path = jarF.getParentFile().getParentFile().toString();
         if(path == null || "".equals(path)){
-            new Throwable("获取项目根目录错误");
+            if("zh".equals(language)){
+                new Throwable("获取项目根目录错误");
+            }else{
+                new Throwable("error deoObtener directorio de raíz del proyecto");
+            }
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         // 生成收据路径
@@ -111,7 +119,11 @@ public class SytController {
             response.setHeader("Content-Disposition", "attachment;fileName="
                     + URLEncoder.encode(filename, "UTF-8"));
         }catch (Exception e){
-            new Throwable("生成收据出错");
+            if("zh".equals(language)){
+                new Throwable("生成收据出错");
+            }else{
+                new Throwable("Error al generar el recibo");
+            }
         }finally {
             try {
                 bos.close();

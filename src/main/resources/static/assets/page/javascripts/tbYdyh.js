@@ -238,7 +238,7 @@ function adduser() {
                 icon: 2
             })
         }else {//西班牙语
-            layer.msg("姓名不能包含数字！", {
+            layer.msg("Nombre y apellido no pueda contener números！", {
                 icon: 2
             })
         }

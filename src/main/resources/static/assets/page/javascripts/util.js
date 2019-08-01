@@ -187,12 +187,21 @@ function setFinishstate() {
 
         flag = 1;
     }
- 
- 
-    if (flag == 1) {
-        document.getElementById("finishstate").value = "正在推进";
-    } else {
-        document.getElementById("finishstate").value = "未开始";
+
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
+    if("zh"==lang){
+        if (flag == 1) {
+            document.getElementById("finishstate").value = "正在推进";
+        } else {
+            document.getElementById("finishstate").value = "未开始";
+        }
+    }else{
+        if (flag == 1) {
+            document.getElementById("finishstate").value = "Avanzando";
+        } else {
+            document.getElementById("finishstate").value = "No comenzado";
+        }
     }
 }
 
@@ -201,10 +210,16 @@ function setFinishstate() {
 function setfinishdate() {
  
     var inputv = $("#finishstate").val();
- 
-    if (inputv == '未开始') {
-        document.getElementById("finishdate").value = "";
-
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
+    if("zh"==lang){
+        if (inputv == '未开始') {
+            document.getElementById("finishdate").value = "";
+        }
+    }else{
+        if (inputv == 'No comenzado') {
+            document.getElementById("finishdate").value = "";
+        }
     }
 
 }
@@ -228,33 +243,65 @@ function setlight(conferencedate, finishdate, finishstate) { //红 1   黄2   �
 
     var time1 = new Date(finishdate).getTime() - now.getTime(); //时间差的毫秒数    
 
- 
-    if ((finishstate == '未开始') || (finishstate == '正在推进')) {
+    var inputv = $("#finishstate").val();
+    var lang = navigator.language||navigator.userLanguage;
+    lang = lang.substr(0, 2);
+    if("zh"==lang){
+        if ((finishstate == '未开始') || (finishstate == '正在推进')) {
 
-        ret = 3;
- 
-        if ((time1 / time * 100 <= 20) && (finishstate == '正在推进')) {
+            ret = 3;
+
+            if ((time1 / time * 100 <= 20) && (finishstate == '正在推进')) {
 
 
-            ret = 2;
+                ret = 2;
 
-        }
+            }
 
-        if (time1 < 0) {
+            if (time1 < 0) {
+
+                ret = 1;
+
+            }
+
+        } else if (finishstate == '未完成') {
 
             ret = 1;
 
+        } else { //逾期完成   按期完成  提前完成  暂停督查
+
+            ret = 4;
+
+
         }
+    }else{
+        if ((finishstate == 'No comenzado') || (finishstate == 'Avanzando')) {
 
-    } else if (finishstate == '未完成') {
+            ret = 3;
 
-        ret = 1;
-
-    } else { //逾期完成   按期完成  提前完成  暂停督查 
-
-        ret = 4;
+            if ((time1 / time * 100 <= 20) && (finishstate == 'Avanzando')) {
 
 
+                ret = 2;
+
+            }
+
+            if (time1 < 0) {
+
+                ret = 1;
+
+            }
+
+        } else if (finishstate == 'No acabado') {
+
+            ret = 1;
+
+        } else { //逾期完成   按期完成  提前完成  暂停督查
+
+            ret = 4;
+
+
+        }
     }
 
     return ret;

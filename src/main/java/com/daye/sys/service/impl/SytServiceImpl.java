@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +34,8 @@ public class SytServiceImpl implements SytService {
     TbYdyhMapper tbYdyhMapper;
     @Autowired
     TbYhlxMapper tbYhlxMapper;
+    @Autowired
+    HttpServletRequest request;
 
     @Override
     @RequiredLog(operation = "获取未缴费及欠费用户")
@@ -77,16 +80,27 @@ public class SytServiceImpl implements SytService {
     @RequiredLog(operation = "完成缴费")
     public JsonResult saveJfyh(Integer id, Double actualAmount, String note,Integer casher) {
         TbJfjl jfjl = tbJfjlMapper.selectById(id);
-        if(actualAmount == null) return new JsonResult(new Throwable("请输入实缴电费"));
-        if(Double.doubleToLongBits(jfjl.getAmountDue()) != Double.doubleToLongBits(actualAmount)) return new JsonResult(new Throwable("实缴电费与应缴电费金额不符"));
+        String language=request.getHeader("Accept-Language").substring(0,2);
+        if("zh".equals(language)){
+            if(actualAmount == null) return new JsonResult(new Throwable("请输入实缴电费"));
+            if(Double.doubleToLongBits(jfjl.getAmountDue()) != Double.doubleToLongBits(actualAmount)) return new JsonResult(new Throwable("实缴电费与应缴电费金额不符"));
+        }else {
+            if(actualAmount == null) return new JsonResult(new Throwable("Ingrese pago real de luz"));
+            if(Double.doubleToLongBits(jfjl.getAmountDue()) != Double.doubleToLongBits(actualAmount)) return new JsonResult(new Throwable("Pago real de luz no coincide con monto de luz a pagar"));
+        }
         jfjl.setActualAmount(actualAmount);
         jfjl.setNote(note);
         jfjl.setPayStatus(2);       // 2：已缴费
         jfjl.setPayTime(new Date());
         jfjl.setModifiedTime(new Date());
         jfjl.setCashier(casher);
-        if(tbJfjlMapper.updateById(jfjl) == 1) return new JsonResult("缴费成功");
-        return new JsonResult(new Throwable("缴费失败"));
+        if("zh".equals(language)){
+            if(tbJfjlMapper.updateById(jfjl) == 1) return new JsonResult("缴费成功");
+            return new JsonResult(new Throwable("缴费失败"));
+        }else{
+            if(tbJfjlMapper.updateById(jfjl) == 1) return new JsonResult("Pagado exitoso");
+            return new JsonResult(new Throwable("Pago fallido"));
+        }
     }
 
     @Override

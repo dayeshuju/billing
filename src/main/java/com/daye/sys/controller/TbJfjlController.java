@@ -77,26 +77,51 @@ public class TbJfjlController {
         List<VT_Jfjl> jfjlList = tbJfjlService.exportJfjl(payStatus,meterId,idCode,startTime,endTime);
 
         List<String> titles = new ArrayList<>();
-        titles.add("序号");
-        titles.add("表号");
-        titles.add("姓名");
-        titles.add("身份证号");
-        titles.add("用户地址");
-        titles.add("用户电话");
-        titles.add("缴费状态");
-        titles.add("用电量");
-        titles.add("电费费率");
-        titles.add("应缴电费");
-        titles.add("实缴电费");
-        titles.add("缴费记录创建时间");
-        titles.add("缴费记录操作时间");
-        titles.add("是否打印");
-        titles.add("缴费备注");
-        titles.add("用户状态");
-        titles.add("用户创建时间");
-        titles.add("操作时间");
-        titles.add("用户备注");
-        ExcelUtil.createExcel(request,response,jfjlList,startTime+"至"+endTime+"缴费记录",titles);
+        String language = request.getSession().getAttribute("language").toString();
+        if("zh".equals(language)){
+            titles.add("序号");
+            titles.add("表号");
+            titles.add("姓名");
+            titles.add("身份证号");
+            titles.add("用户地址");
+            titles.add("用户电话");
+            titles.add("缴费状态");
+            titles.add("用电量");
+            titles.add("电费费率");
+            titles.add("应缴电费");
+            titles.add("实缴电费");
+            titles.add("缴费记录创建时间");
+            titles.add("缴费记录操作时间");
+            titles.add("是否打印");
+            titles.add("缴费备注");
+            titles.add("用户状态");
+            titles.add("用户创建时间");
+            titles.add("操作时间");
+            titles.add("用户备注");
+            ExcelUtil.createExcel(request,response,jfjlList,startTime+"至"+endTime+"缴费记录",titles);
+        }else{
+            titles.add("Serie");
+            titles.add("Contador No");
+            titles.add("Nombre y apellido");
+            titles.add("DNI No");
+            titles.add("Direccion de usuario");
+            titles.add("Telefono de usuario");
+            titles.add("Estado de pago");
+            titles.add("Consumo de luz");
+            titles.add("Tarifa de luz");
+            titles.add("luz a pagar");
+            titles.add("Pago real de luz.");
+            titles.add("Hora de crear registro de pago");
+            titles.add("Hora de operar registro de pago");
+            titles.add("Si imprimir");
+            titles.add("Nota de pago");
+            titles.add("Estado del usuario");
+            titles.add("Hora de crear usuario");
+            titles.add("Hora de operacion");
+            titles.add("Nota de usuario");
+            ExcelUtil.createExcel(request,response,jfjlList,startTime+"A"+endTime+"Registro de pago",titles);
+        }
+
 
         return  null;
     }
