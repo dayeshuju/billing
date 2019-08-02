@@ -131,12 +131,13 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
             }
         }
         List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
-        for(int i = cbjlList.size()- 1;i>=0;i--){//筛掉表内重复记录
+        for(int i = cbjlList.size()- 1;i>0;i--){//筛掉表内重复记录
             for(int j = cbjlList.size() -2;j>=0;j--){
                 if(cbjlList.get(i).getMeterId()==cbjlList.get(j).getMeterId()){
-                    if(cbjlList.get(i).getMeterNum()< cbjlList.get(j).getMeterNum()){
-                        cbjlList.remove(i);
-                    }else cbjlList.remove(j);
+                    if(cbjlList.get(i).getMeterNum()> cbjlList.get(j).getMeterNum()){
+                        cbjlList.set(j,cbjlList.get(i));
+                    }
+                    cbjlList.remove(i);
                 }
             }
         }

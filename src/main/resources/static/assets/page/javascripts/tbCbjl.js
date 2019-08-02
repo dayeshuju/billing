@@ -127,7 +127,22 @@ function saveCbjlMeterId(meterId) {
 function getHistoryCbjl() {
     var startTime = $("#starttime").val();
     var endTime = $("#endtime").val();
-    initform(startTime,endTime);
+    $("#starttime").val(startTime);
+    $("#endtime").val(endTime);
+    $("#cellBox").html(`<div class=\"span6 delDiv\"></div><div class=\"span6 text-right delDiv\"></div>
+                              <table class='data-table data-table-column-filter table table-bordered table-striped table-hover'
+                                       style='margin-bottom:0;' id=\"historyPlist\">
+                                    <thead>
+                                    <tr>
+                                        <th th:text="#{serialNumber}">序号</th>
+                                        <th th:text="#{username}">姓名</th>
+                                        <th th:text="#{IDCardNumber}">身份证号</th>
+                                        <th th:text="#{meterNumber}">表号</th>
+                                        <th th:text="#{cbjl.recordTime}">抄表时间</th>
+                                        <th th:text="#{cbjl.meterValue}">表示数</th>
+                                    </tr>
+                                    </thead>
+                                </table>`);
     $(".delDiv").remove();
     var meterId = $("#meterId").val();
     var lang = navigator.language||navigator.userLanguage;
@@ -222,9 +237,6 @@ function getHistoryCbjl() {
             }, {
                 mDataProp: "meterNum",
                 sTitle: "表示数"
-            }, {
-                mDataProp: "id",
-                sTitle: "操作"
             }
 
             ],
@@ -234,12 +246,7 @@ function getHistoryCbjl() {
             }, {
                 "sDefaultContent": '',
                 "aTargets": ['_all']
-            }/*, {
-            "aTargets": [6],
-            "mRender": function (data, type, row) {
-                return " <div class='text-left'><a class='btn btn-danger btn-mini' data-toggle='modal' href='#modal-deletecbjl' role='button' onclick=saveCbjlId(" + data + ")><i class='icon-remove'></i>删除</a></div>";
             }
-        }*/
             ],
 
             fnServerData: function(sSource, aoData, fnCallback) {
@@ -315,11 +322,7 @@ function getHistoryCbjl() {
             }, {
                 mDataProp: "meterNum",
                 sTitle: "Cifras en contador"
-            }, {
-                mDataProp: "id",
-                sTitle: "Operar"
             }
-
             ],
             aoColumnDefs: [{
                 "bSortable": false,
