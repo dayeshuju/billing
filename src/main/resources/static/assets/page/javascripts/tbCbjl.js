@@ -365,7 +365,6 @@ function getHistoryCbjl() {
 }
 
 function saveCbjlId(id){
-    alert(id);
     $("#cbjlId").val(id);
 }
 

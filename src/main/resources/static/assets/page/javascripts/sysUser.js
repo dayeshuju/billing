@@ -161,7 +161,6 @@ $('#plist tbody tr').live('click', function () {
 //重置密码
 function resetPassword() {
     var id = $("#id").val();
-    alert(id);
     var params = {
         id: id
     }
@@ -183,7 +182,6 @@ function resetPassword() {
 
 function lockuser() {
     var id = $("#id").val();
-    alert(id);
     var url = "sysUsers/resetStatus";
     var params = {
         id: id
