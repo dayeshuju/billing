@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -30,7 +31,7 @@ public class SytController {
     @Autowired
     SytService sytService;
     @Autowired
-    HttpSession session;
+    HttpServletRequest request;
 
     @RequestMapping("/getJfyhList")
     @RequiresPermissions("sys:tbsyt")
@@ -56,7 +57,7 @@ public class SytController {
     @RequestMapping("/printFactura")
     @RequiresPermissions("sys:tbsyt")
     public Object printFactura(Integer id, HttpServletResponse response){
-        String language = session.getAttribute("language").toString();
+        String language = request.getHeader("Accept-Language").substring(0,2);
         Map<String,Object> datas = sytService.printFactura(id);
         ApplicationHome home = new ApplicationHome(getClass());
         File jarF = home.getSource();

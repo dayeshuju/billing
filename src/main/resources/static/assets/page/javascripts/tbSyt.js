@@ -70,7 +70,7 @@ function findJfjl() {
         "mRender": function (data, type, row) {
             var str = new Array();
             str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a> ");
-            if(row.receiptStatus == 1){
+            if(row.payStatus == 2){
                 str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a>");
             }
             return str.join("");
@@ -128,7 +128,7 @@ function findJfjlEs() {
         "mRender": function (data, type, row) {
             var str = new Array();
             str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>Cobro</a> ");
-            if(row.receiptStatus == 1){
+            if(row.payStatus ==2){
                 str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>Imprimir recibo</a>");
             }
             return str.join("");
@@ -181,6 +181,8 @@ function lookJfyhMsg(id) {
             $("#periodElecNum").text(result.data.periodElecNum);
             $("#tate").text(result.data.tate);
             $("#amountDue").text(result.data.amountDue);
+            $("#actualAmount").text(result.data.actualAmount);
+            $("#note").text(result.data.note);
         }
     })
 }
@@ -197,11 +199,21 @@ function saveJfjl() {
     var url="syt/saveJfyh";
     $.post(url,params,function (result) {
         if(result.state == 1){
+            layer.msg(result.message,{
+                icon:1
+            });
             $("#modal-lookmsg").modal('hide');
         }else{
             layer.msg(result.message,{
                 icon:2
             })
+        }
+        var lang = navigator.language||navigator.userLanguage;
+        lang = lang.substr(0, 2);
+        if(lang == 'zh'){
+            findJfjl();
+        }else{
+            findJfjlEs();
         }
     })
 }
@@ -212,5 +224,4 @@ function print(sytId) {
     setTimeout(function () {
         newWindow.print();
     },2000);
-
 }

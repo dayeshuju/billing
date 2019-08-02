@@ -161,6 +161,7 @@ $('#plist tbody tr').live('click', function () {
 //重置密码
 function resetPassword() {
     var id = $("#id").val();
+    alert(id);
     var params = {
         id: id
     }
@@ -182,26 +183,47 @@ function resetPassword() {
 
 function lockuser() {
     var id = $("#id").val();
+    alert(id);
     var url = "sysUsers/resetStatus";
     var params = {
         id: id
     }
     $.post(url, params, function (result) {
         if (result.state == 1) {
-            if (result.data.valid == 1) {
-                $('#modal-unlockuser').modal('hide');
-                $("#clock" + id).html("Bloquear");
-                $("#aclock" + id).attr("href", "#modal-lockuser");
-                layer.msg(result.data.message, {
-                    icon: 1
-                });
-            } else if (result.data.valid == 0) {
-                $('#modal-lockuser').modal('hide');
-                $("#clock" + id).html("Desbloquear");
-                $("#aclock" + id).attr("href", "#modal-unlockuser");
-                layer.msg(result.data.message, {
-                    icon: 1
-                });
+            var lang = navigator.language||navigator.userLanguage;
+            lang = lang.substr(0, 2);
+            if("zh"==lang){
+              if (result.data.valid == 1) {
+                 $('#modal-unlockuser').modal('hide');
+                 $("#clock" + id).html("锁定");
+                 $("#aclock" + id).attr("href", "#modal-lockuser");
+                    layer.msg(result.data.message, {
+                       icon: 1
+                  });
+              } else if (result.data.valid == 0) {
+                   $('#modal-lockuser').modal('hide');
+                   $("#clock" + id).html("解锁");
+                   $("#aclock" + id).attr("href", "#modal-unlockuser");
+                   layer.msg(result.data.message, {
+                      icon: 1
+                   });
+                }
+             }else {
+                if (result.data.valid == 1) {
+                    $('#modal-unlockuser').modal('hide');
+                    $("#clock" + id).html("Bloquear");
+                    $("#aclock" + id).attr("href", "#modal-lockuser");
+                    layer.msg(result.data.message, {
+                       icon: 1
+                   });
+              } else if (result.data.valid == 0) {
+                    $('#modal-lockuser').modal('hide');
+                   $("#clock" + id).html("Desbloquear");
+                   $("#aclock" + id).attr("href", "#modal-unlockuser");
+                   layer.msg(result.data.message, {
+                        icon: 1
+                  });
+                }
             }
         } else if (result.state == 0) {
             $('#modal-lockuser').modal('hide');

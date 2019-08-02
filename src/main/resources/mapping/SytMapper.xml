@@ -36,7 +36,7 @@
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl">
         select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,cast(c.amountDue as char(50)) amountDue,date_format(c.regisTime,'%Y-%m-%d') regisTime ,
-        c.createdTime,c.receiptStatus receiptStatus
+        c.payStatus payStatus
         from tbYdyh b,tbJfjl c,(SELECT @i:=#{iDisplayStart}) t
         <where>
             <include refid="findObject"></include>
@@ -44,7 +44,7 @@
         </where>
     </select>
     <select id="getJfyhById" resultType="com.daye.sys.entity.vt.VT_Jfjl">
-        select a.name,a.idCode,a.address,b.meterId,b.tate,cast(b.periodElecNum as char(50)) periodElecNum,
+        select a.name,a.idCode,a.address,b.meterId,b.tate,cast(b.periodElecNum as char(50)) periodElecNum,cast(b.actualAmount as char(50)) actualAmount,b.note note,
         cast(b.amountDue as char(50)) amountDue from tbYdyh a,tbJfjl b
         <where>
             b.id=#{id} and a.id=b.ydyhId

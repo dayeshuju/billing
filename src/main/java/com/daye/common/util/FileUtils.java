@@ -15,7 +15,7 @@ import java.util.List;
 
 public class FileUtils {
 @Autowired
-static HttpSession session;
+static HttpServletRequest request;
     public static List<TbCbjl> readCbjlCsv(File cbjlFile){
         List<TbCbjl> cbjlList = new ArrayList<>();
         try {
@@ -31,7 +31,7 @@ static HttpSession session;
             }
         } catch (Exception e) {
             if(cbjlFile.exists()) cbjlFile.delete();
-            if("zh".equals(session.getAttribute("language").toString())){
+            if("zh".equals(request.getHeader("Accept-Language").substring(0,2))){
                 throw new ServiceException("抄表记录读取错误");
             }else{
                 throw new ServiceException("Error de leer el registro de lectura del contador");

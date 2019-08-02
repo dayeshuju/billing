@@ -110,7 +110,7 @@
         var d, e = c.elem.getBoundingClientRect();
         a.style.left = e.left + (b ? 0 : c.scroll(1)) + "px", d = e.bottom + a.offsetHeight / 1.5 <= c.winarea() ? e.bottom - 1 : e.top > a.offsetHeight / 1.5 ? e.top - a.offsetHeight + 1 : c.winarea() - a.offsetHeight, a.style.top = d + (b ? 0 : c.scroll()) + "px" }, c.follow = function(a) { c.options.fixed ? (a.style.position = "fixed", c.orien(a, 1)) : (a.style.position = "absolute", c.orien(a)) }, c.viewtb = function() {
         var a, b = [],
-            f = ["日", "一", "二", "三", "四", "五", "六"],
+            f = ["SUN", "MON", "TUS", "WED", "THU", "FRI", "SAT"],
             h = {},
             i = d[e]("table"),
             j = d[e]("thead");
