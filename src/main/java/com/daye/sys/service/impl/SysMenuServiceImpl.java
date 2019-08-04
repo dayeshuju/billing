@@ -12,7 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -28,6 +28,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Autowired
     SysMenuMapper sysMenuMapper;
+    @Autowired
+    HttpServletRequest request;
 
     @Override
     @RequiredLog(operation = "根据权限获得菜单信息")
@@ -53,7 +55,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     @RequiredLog(operation = "获得菜单树")
     public JsonResult findZtreeMenuNodes() {
-        List<Node> list = sysMenuMapper.findZtreeMenuNodes();
+        String lang = request.getHeader("Accept-Language").substring(0,2);
+        List<Node> list = sysMenuMapper.findZtreeMenuNodes(lang);
         return new JsonResult(list);
     }
 }

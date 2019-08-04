@@ -9,11 +9,9 @@ import com.daye.sys.mapper.SysRoleMenuMapper;
 import com.daye.sys.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +70,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     @RequiredLog(operation = "添加权限类型")
-    @Transactional
+    //@Transactional
     public JsonResult getpername(SysRole sysRole, Integer[] menuIds) {
         String lang = request.getHeader("Accept-Language").substring(0,2);
         if("zh".equals(lang)){
@@ -126,8 +124,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
+    //@Transactional
     @RequiredLog(operation = "修改权限类型")
-    @Transactional
     public JsonResult updateObject(SysRole sysRole, Integer... menuIds) {
         String lang = request.getHeader("Accept-Language").substring(0,2);
         String json = "";

@@ -11,7 +11,14 @@
         </foreach>
     </select>
     <select id="findZtreeMenuNodes" resultType="com.daye.common.vo.Node">
-        select id,name,parentId from sysMenus
+        select id,
+        <if test="lang == 'zh'">
+            zhname name,
+        </if>
+        <if test="lang == 'es'">
+            esname name,
+        </if>
+        parentId from sysMenus
         <where>
             id != 2 or parentId != 2
         </where>

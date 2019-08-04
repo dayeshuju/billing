@@ -23,5 +23,5 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     @Select({"SELECT * FROM sysMenus"})
     List<SysMenu> findObject();
 
-    List<Node> findZtreeMenuNodes();
+    List<Node> findZtreeMenuNodes(@Param("lang") String lang);
 }
