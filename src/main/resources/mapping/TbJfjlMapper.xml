@@ -43,17 +43,19 @@
         group by c.ydyhId) d
     </select>
     <select id="findObject" resultType="com.daye.sys.entity.vt.VT_Jfjl" >
-        select (@i:=@i+1) sort,c.id,b.name,b.idCode,c.meterId,c.payTime,
-                c.payStatus  payStatu , c.createdTime
-        from tbYdyh b,tbJfjl c,(SELECT MAX(createdTime)createdTime,meterId from tbJfjl GROUP BY meterId) d,
-        (SELECT @i:=#{iDisplayStart}) t
-        <where>
-            <include refid="findObject"></include>
-            AND c.meterId =d.meterId AND c.createdTime = d.createdTime
-            GROUP BY c.meterId,c.ydyhId
-            order by c.createdTime desc
-            limit #{iDisplayStart},#{iDisplayLength}
-        </where>
+        select (@i:=@i+1) sort,tt.* from (SELECT @i:=#{iDisplayStart}) t,(
+            select c.id,b.name,b.idCode,c.meterId,c.payTime,
+            c.payStatus  payStatu , c.createdTime
+            from tbYdyh b,tbJfjl c,(SELECT MAX(createdTime)createdTime,meterId from tbJfjl GROUP BY meterId) d
+            <where>
+                <include refid="findObject"></include>
+                AND c.meterId =d.meterId AND c.createdTime = d.createdTime
+                GROUP BY c.meterId,c.ydyhId
+                order by c.createdTime desc
+                limit #{iDisplayStart},#{iDisplayLength}
+            </where>
+        ) tt
+
     </select>
 
     <sql id="findObjectById">
