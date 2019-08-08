@@ -34,7 +34,7 @@ public class TbJfjlServiceImpl extends ServiceImpl<TbJfjlMapper, TbJfjl> impleme
     HttpServletRequest request;
 
     @Override
-    @RequiredLog(operation = "获取全部的缴费记录")
+    @RequiredLog(operation = "获取最近一期缴费记录")
     public Map<String, Object> findObject(Map<String, String> aoData) {
         String language = request.getHeader("Accept-Language").substring(0,2);
         VT_Jfjl vt_jfjl = new VT_Jfjl();
