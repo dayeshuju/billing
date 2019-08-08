@@ -12,10 +12,10 @@
     </select>
     <select id="findZtreeMenuNodes" resultType="com.daye.common.vo.Node">
         select id,
-        <if test="lang == 'zh'">
+        <if test="lang == 'zh'.toString()">
             zhname name,
         </if>
-        <if test="lang == 'es'">
+        <if test="lang == 'es'.toString()">
             esname name,
         </if>
         parentId from sysMenus

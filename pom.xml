@@ -42,18 +42,18 @@
             <optional>true</optional>
         </dependency>-->
 
-        <!--<dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>-->
+        </dependency>
 
         <!--mariadb-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>2.4.3</version>
-        </dependency>
+        </dependency>-->
 
 
         <dependency>
