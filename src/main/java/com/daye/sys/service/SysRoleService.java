@@ -22,7 +22,7 @@ public interface SysRoleService extends IService<SysRole> {
     Map<String, Object> getAuthoritylist(Map<String, String> aoData);
 
 
-    JsonResult getpername(SysRole sysRole, Integer[] menuIds);
+    JsonResult addAuthority(SysRole sysRole, Integer[] menuIds);
 
     JsonResult findOne(Integer id);
 

@@ -71,7 +71,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @RequiredLog(operation = "添加权限类型")
     //@Transactional
-    public JsonResult getpername(SysRole sysRole, Integer[] menuIds) {
+    public JsonResult addAuthority(SysRole sysRole, Integer[] menuIds) {
         String lang = request.getHeader("Accept-Language").substring(0,2);
         if("zh".equals(lang)){
             if(StringUtils.isEmpty(sysRole.getName().trim())){
