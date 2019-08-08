@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -81,7 +80,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    @RequiredLog(value = 0, operation = "获得所有用户信息")
+    @RequiredLog(value = 0, operation = "获得所有系统用户信息")
     public Map<String,Object> findObject(Map<String,String> aoData) {
 
         SysUser user = new SysUser();
