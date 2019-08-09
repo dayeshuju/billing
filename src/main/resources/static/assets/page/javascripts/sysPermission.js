@@ -214,7 +214,7 @@ function addauthority() {
     if(id>0){
         url = "sysRoles/updateObject"
     }else{
-        url = "sysRoles/addpername";
+        url = "sysRoles/addAuthority";
     }
 
     $.post(url, params, function (result) {

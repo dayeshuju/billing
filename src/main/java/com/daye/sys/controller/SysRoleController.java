@@ -44,9 +44,9 @@ public class SysRoleController {
         return map;
     }
 
-    @RequestMapping("/addpername")
+    @RequestMapping("/addAuthority")
     @RequiresPermissions("sys:permission")
-    public JsonResult getpername(SysRole sysRole,Integer... menuIds ){
+    public JsonResult addAuthority(SysRole sysRole,Integer... menuIds ){
 
         return sysRoleService.addAuthority(sysRole,menuIds);
     }
