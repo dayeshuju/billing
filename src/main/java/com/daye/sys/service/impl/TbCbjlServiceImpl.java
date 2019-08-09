@@ -130,7 +130,7 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
                 return new JsonResult(new Throwable("Error al subir el archivo"));
             }
         }
-        List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile);
+        List<TbCbjl> cbjlList = FileUtils.readCbjlCsv(cbjlFile,language);
         for(int i = cbjlList.size()- 1;i>0;i--){//筛掉表内重复记录
             for(int j = cbjlList.size() -2;j>=0;j--){
                 if(cbjlList.get(i).getMeterId().equals(cbjlList.get(j).getMeterId())){

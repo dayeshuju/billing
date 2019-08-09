@@ -3,10 +3,7 @@ package com.daye.common.util;
 import com.csvreader.CsvReader;
 import com.daye.common.exception.ServiceException;
 import com.daye.sys.entity.TbCbjl;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -14,9 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtils {
-@Autowired
-static HttpServletRequest request;
-    public static List<TbCbjl> readCbjlCsv(File cbjlFile){
+
+    public static List<TbCbjl> readCbjlCsv(File cbjlFile,String language){
         List<TbCbjl> cbjlList = new ArrayList<>();
         try {
             CsvReader reader = new CsvReader(cbjlFile.getPath(),',', Charset.forName("UTF-8"));
@@ -31,7 +27,7 @@ static HttpServletRequest request;
             }
         } catch (Exception e) {
             if(cbjlFile.exists()) cbjlFile.delete();
-            if("zh".equals(request.getHeader("Accept-Language").substring(0,2))){
+            if("zh".equals(language)){
                 throw new ServiceException("抄表记录读取错误");
             }else{
                 throw new ServiceException("Error de leer el registro de lectura del contador");
