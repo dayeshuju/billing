@@ -12,7 +12,7 @@ $(document).ready(function () {
 function findSftj() {
     /*定义列id和名称*/
     var aoColumns = [{
-        mDataProp: "id",
+        mDataProp: "sort",
         sTile: "序号",
         sWidth: "50px"
     }, {
@@ -51,7 +51,7 @@ function findSftj() {
 function findSftjEs(){
     /*定义列id和名称*/
     var aoColumns = [{
-        mDataProp: "id",
+        mDataProp: "sort",
         sTile: "Serie",
         sWidth: "50px"
     }, {
