@@ -43,5 +43,5 @@ public interface TbCbjlMapper extends BaseMapper<TbCbjl> {
 
     void cleanUp2Y();
 
-    TbCbjl findCbjlById(@Param("id")Integer id);
+    //TbCbjl findCbjlById(@Param("id")Integer id);
 }

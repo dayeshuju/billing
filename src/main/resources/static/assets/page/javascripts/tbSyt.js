@@ -69,9 +69,11 @@ function findJfjl() {
         "aTargets": [6],
         "mRender": function (data, type, row) {
             var str = new Array();
-            str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a> ");
+            //str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a> ");
             if(row.payStatus == 2){
-                str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a>");
+                str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>打印收据</a></div>");
+            }else{
+                str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>收费</a></div>");
             }
             return str.join("");
         }
@@ -127,9 +129,11 @@ function findJfjlEs() {
         "aTargets": [6],
         "mRender": function (data, type, row) {
             var str = new Array();
-            str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>Cobro</a> ");
+            //str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>Cobro</a> ");
             if(row.payStatus ==2){
-                str.push(" <a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>Imprimir recibo</a>");
+                str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-print' role='button' style='background-color:#00BB00' onclick=print(" + data + ")><i class='icon-print'></i>Imprimir recibo</a></div>");
+            }else{
+                str.push("<div class='text-left'><a class='btn btn-success btn-mini' data-toggle='modal' href='#modal-lookmsg' role='button' style='background-color:#00BB00' onclick=lookJfyhMsg(" + data + ")><i class='icon-search'></i>Cobro</a></div>");
             }
             return str.join("");
         }
