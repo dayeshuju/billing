@@ -77,7 +77,7 @@ public class TbJfjlController {
         List<VT_Jfjl> jfjlList = tbJfjlService.exportJfjl(payStatus,meterId,idCode,startTime,endTime);
 
         List<String> titles = new ArrayList<>();
-        String language = request.getSession().getAttribute("language").toString();
+        String language = request.getHeader("Accept-Language").substring(0,2);
         if("zh".equals(language)){
             titles.add("序号");
             titles.add("表号");
@@ -98,7 +98,7 @@ public class TbJfjlController {
             titles.add("用户创建时间");
             titles.add("操作时间");
             titles.add("用户备注");
-            ExcelUtil.createExcel(request,response,jfjlList,startTime+"至"+endTime+"缴费记录",titles);
+            ExcelUtil.createExcel(language,response,jfjlList,startTime+"至"+endTime+"缴费记录",titles);
         }else{
             titles.add("Serie");
             titles.add("Contador No");
@@ -119,7 +119,7 @@ public class TbJfjlController {
             titles.add("Hora de crear usuario");
             titles.add("Hora de operacion");
             titles.add("Nota de usuario");
-            ExcelUtil.createExcel(request,response,jfjlList,startTime+"A"+endTime+"Registro de pago",titles);
+            ExcelUtil.createExcel(language,response,jfjlList,startTime+"A"+endTime+"Registro de pago",titles);
         }
 
 

@@ -2,16 +2,14 @@ package com.daye.common.util;
 
 import com.daye.sys.entity.vt.VT_Jfjl;
 import org.apache.poi.hssf.usermodel.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
 public class ExcelUtil {
-    public static void createExcel(HttpServletRequest request, HttpServletResponse response,
+    public static void createExcel(String language, HttpServletResponse response,
                                    List<VT_Jfjl> list, String fileName, List<String> title) {
         try {
             // 创建Excel的工作书册 Workbook,对应到一个excel文档
@@ -78,7 +76,7 @@ public class ExcelUtil {
                         case 6:
                             if (list.get(j).getPayStatu()!=null) {
                                 int sta = list.get(j).getPayStatu();
-                                if("zh".equals(request.getSession().getAttribute("language").toString())){
+                                if("zh".equals(language)){
                                     if(sta==0) cell.setCellValue("未缴费");
                                     if(sta==1) cell.setCellValue("欠费");
                                     if(sta==2) cell.setCellValue("已缴费");
@@ -122,7 +120,7 @@ public class ExcelUtil {
                         case 13:
                             if (list.get(j).getReceiptStatus() != null) {
                                 int ptin = list.get(j).getPayStatu();
-                                if("zh".equals(request.getSession().getAttribute("language").toString())){
+                                if("zh".equals(language)){
                                     if(ptin==0) cell.setCellValue("未打印");
                                     if(ptin==1) cell.setCellValue("打印");
                                 }else{
@@ -139,7 +137,7 @@ public class ExcelUtil {
                         case 14:
                             if (list.get(j).getValid() != null) {
                                 int val = list.get(j).getValid();
-                                if("zh".equals(request.getSession().getAttribute("language").toString())){
+                                if("zh".equals(language)){
                                     if(val==0) cell.setCellValue("禁用");
                                     if(val==1) cell.setCellValue("启用");
                                 }else {
