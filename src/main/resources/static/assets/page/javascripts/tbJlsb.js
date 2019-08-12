@@ -76,7 +76,7 @@ function findjlsbEs() {
         sTitle: "Contador No"
     }, {
         mDataProp: "meterBoxId",
-        sTitle: "Contador No"
+        sTitle: "Contador caja No"
     }, {
         mDataProp: "name",
         sTitle: "Nombre y apellido"
