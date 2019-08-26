@@ -12,16 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -114,7 +114,7 @@ public class TbCbjlServiceImpl extends ServiceImpl<TbCbjlMapper, TbCbjl> impleme
                 return new JsonResult(new Throwable("Obtener error de directorio raíz del proyecto"));
             }
         }
-        path = path+"cbjl/";
+        path = path+"/cbjl/";
         String uuid = UUID.randomUUID().toString();
         File dir = new File(path);
         if(!dir.exists()){
