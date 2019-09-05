@@ -23,4 +23,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     List<SysUser> findObject(@Param("user") SysUser user,@Param("iDisplayStart") Integer iDisplayStart,@Param("iDisplayLength") Integer iDisplayLength,@Param("sSearch") String sSearch);
 
     Integer findCount(@Param("user") SysUser user,@Param("sSearch") String sSearch);
+
 }

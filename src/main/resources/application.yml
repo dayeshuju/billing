@@ -9,7 +9,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/daye_billing?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    url: jdbc:mysql://localhost:3306/billing?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    schema: classpath:billing.sql
+    separator: $$$
+    initialization-mode: always
+    continue-on-error: true
   thymeleaf:
     mode: LEGACYHTML5
     encoding: UTF-8
