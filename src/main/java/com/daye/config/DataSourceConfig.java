@@ -49,6 +49,7 @@ public class DataSourceConfig {
             String url02 = url01.substring(0,url01.lastIndexOf("/"));
 
             String datasourceName = url01.substring(url01.lastIndexOf("/")+1);
+            url02 = url02+"?serverTimezone=Hongkong";
             // 连接已经存在的数据库，如：mysql
             Connection connection = DriverManager.getConnection(url02, username, password);
             Statement statement = connection.createStatement();

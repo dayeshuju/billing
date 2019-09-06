@@ -41,19 +41,19 @@ CREATE TABLE `sysMenus` (
 -- ----------------------------
 -- Records of sysMenus
 -- ----------------------------
-INSERT INTO `sysMenus` VALUES ('1', '系统用户管理', 'Gestión de usuarios del sistema', 'sysUserId', 'sysUser', '1', '1', '18', 'sys:user', '2019-06-22 15:21:42', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('2', '权限管理', 'Gestion de permiso', 'sysPermission', 'sysPermission', '1', '2', '18', 'sys:permission', '2019-06-22 15:43:32', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('3', '用户类型管理', 'Gestión de tipos de usuario', 'tbYhlx', 'tbYhlx', '1', '3', '18', 'sys:tbyhlx', '2019-06-22 15:44:49', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('1', '系统用户管理', 'Gestión de usuarios del sistema', 'sysUserId', 'sysUser', '1', '1', '12', 'sys:user', '2019-06-22 15:21:42', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('2', '权限管理', 'Gestion de permiso', 'sysPermission', 'sysPermission', '1', '2', '12', 'sys:permission', '2019-06-22 15:43:32', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('3', '用户类型管理', 'Gestión de tipos de usuario', 'tbYhlx', 'tbYhlx', '1', '3', '12', 'sys:tbyhlx', '2019-06-22 15:44:49', null, null);$$$
 INSERT INTO `sysMenus` VALUES ('4', '个人设置', 'Ajustes personales', 'sysUserSelf', null, '1', '3', null, 'sys:userself', '2019-06-22 16:39:52', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('5', '收银台', 'Caja', 'tbSyt', 'tbSyt', '1', '1', '16', 'sys:tbsyt', '2019-06-27 20:51:11', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('6', '缴费记录管理', 'Gestión de registros de pago', 'tbJfjl', 'tbJfjl', '1', '1', '17', 'sys:tbjfjl', '2019-06-27 20:52:14', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('7', '用电用户管理', 'Gestión de usuarios consumidores', 'tbYdyh', 'tbYdyh', '1', '2', '17', 'sys:tbydyh', '2019-06-27 20:53:01', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('8', '抄表记录管理', 'Gestión de lectura de contadores', 'tbCbjl', 'tbCbjl', '1', '3', '17', 'sys:tbCbjl', '2019-06-27 20:53:37', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('9', '计量设备管理', 'Gestión de medidores', 'tbJlsb', 'tbJlsb', '1', '4', '17', 'sys:tbjlsb', '2019-06-27 20:54:29', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('5', '收银台', 'Caja', 'tbSyt', 'tbSyt', '1', '1', '10', 'sys:tbsyt', '2019-06-27 20:51:11', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('6', '缴费记录管理', 'Gestión de registros de pago', 'tbJfjl', 'tbJfjl', '1', '1', '11', 'sys:tbjfjl', '2019-06-27 20:52:14', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('7', '用电用户管理', 'Gestión de usuarios consumidores', 'tbYdyh', 'tbYdyh', '1', '2', '11', 'sys:tbydyh', '2019-06-27 20:53:01', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('8', '抄表记录管理', 'Gestión de lectura de contadores', 'tbCbjl', 'tbCbjl', '1', '3', '11', 'sys:tbCbjl', '2019-06-27 20:53:37', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('9', '计量设备管理', 'Gestión de medidores', 'tbJlsb', 'tbJlsb', '1', '4', '11', 'sys:tbjlsb', '2019-06-27 20:54:29', null, null);$$$
 INSERT INTO `sysMenus` VALUES ('10', '缴费功能', 'Funcion de pago', 'jfgn', null, '1', '1', null, 'sys:jfgn', '2019-06-27 23:05:19', null, null);$$$
 INSERT INTO `sysMenus` VALUES ('11', '数据管理', 'Gestión de datos', 'sjgl', null, '1', '2', null, 'sys:sjgl', '2019-06-27 23:05:57', null, null);$$$
 INSERT INTO `sysMenus` VALUES ('12', '系统管理', 'Gestion del sistema', 'xtgl', null, '1', '4', null, 'sys:xtgl', '2019-06-27 23:06:41', null, null);$$$
-INSERT INTO `sysMenus` VALUES ('13', '收费统计管理', 'Gestión de estadísticas de carga', 'tbSftj', 'tbSftj', '1', '5', '17', 'sys:tbsftj', '2019-07-23 11:05:27', null, null);$$$
+INSERT INTO `sysMenus` VALUES ('13', '收费统计管理', 'Gestión de estadísticas de carga', 'tbSftj', 'tbSftj', '1', '5', '11', 'sys:tbsftj', '2019-07-23 11:05:27', null, null);$$$
 INSERT INTO `sysMenus` VALUES ('14', '修改密码', 'Cambiar contraseña', 'changePassword', 'changePassword', '1', '1', '4', 'sys:changePassword', '2019-07-23 13:32:00', null, null);$$$
 
 -- ----------------------------
@@ -233,7 +233,7 @@ CREATE TABLE `tbYhlx` (
 -- ----------------------------
 -- Procedure structure for insertJfjlFromCbjl
 -- ----------------------------
-CREATE DEFINER=`daye`@`%` PROCEDURE `insertJfjlFromCbjl`(IN `v_count` int,IN `v_insId` int,OUT `v_insCount` int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertJfjlFromCbjl`(IN `v_count` int,IN `v_insId` int,OUT `v_insCount` int)
 BEGIN
 	DECLARE v_meterId VARCHAR(50);  			-- 要插入缴费记录的表号
 	DECLARE v_regisTime DATETIME;
@@ -247,7 +247,7 @@ BEGIN
 	START TRANSACTION;
 	set i=0;
 	set v_insCount=0;
-	WHILE i<v_count DO
+	TT:WHILE i<v_count DO
 		set v_scbss=null;
 		select meterId into v_meterId from tbCbjl where id=(v_insId+i);
 		select regisTime into v_regisTime from tbCbjl where id=(v_insId+i);
@@ -264,7 +264,12 @@ BEGIN
 		if v_periodElecNum <>0 THEN
 			SELECT a.tate INTO v_tate from tbYhlx a,tbYdyh b where a.id=b.userTypeId and b.id=v_ydyhId;
 			SET v_amountDue=v_tate*v_periodElecNum;
-			INSERT INTO tbJfjl (meterId,ydyhId,periodElecNum,amountDue,regisTime,tate)
+			IF v_tate IS NULL THEN
+			    DELETE FROM tbcbjl WHERE id=(v_insId+i);
+                set v_insCount=0;
+                LEAVE TT;
+            END IF;
+		    INSERT INTO tbJfjl (meterId,ydyhId,periodElecNum,amountDue,regisTime,tate)
 			VALUES (v_meterId,v_ydyhId,v_periodElecNum,v_amountDue,v_regisTime,v_tate);
 			set v_insCount=v_insCount+1;
 		END IF;
