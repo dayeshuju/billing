@@ -153,14 +153,14 @@ $('#plist tbody tr').live('click', function () {
     var nTds = $('td', this);
     var sday = $(nTds[0]).text(); //得到第1列的值------uid
 
-    document.getElementById("autId").value = sday;
+    $("#id").val(sday);
 
 });
 
 /*删除确认按钮onclick*/
 /*$('#deleterow').click(function () {
 
-    var id = $("#autId").val();
+    var id = $("#id").val();
 
     var params = {
         id: id
@@ -193,7 +193,7 @@ $('#plist tbody tr').live('click', function () {
 
 /*添加、修改保存按钮onclick*/
 function addauthority() {
-    var id = $("#autId").val();
+    var id = $("#id").val();
     var autName = $("#add_autName").val();
     var add_autNote = $("#add_autNote").val();
 //获取选中节点的信息
@@ -237,7 +237,7 @@ function addauthority() {
 
 
 function initform() {
-    $("#autId").val("");
+    $("#id").val("");
     $("#add_autName").val("");
     $("#add_autNote").val("");
     $("#menuTree").html("");
